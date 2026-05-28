@@ -39,7 +39,7 @@ export class FireworkSystem {
     this.launchPosition = this.launchZone.center.clone();
     this.autoLaunchEnabled = true;
     this.autoLaunchTimer = 0;
-    this.autoLaunchInterval = 3; // seconds between auto launches
+    this.autoLaunchInterval = 0.8; // seconds between auto launches
     this.shellSequence = 0;
     this.diagnostics = {
       launched: 0,

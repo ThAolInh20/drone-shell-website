@@ -416,3 +416,518 @@ code {
     border-right-color: var(--border);
   }
 }
+
+/* --- Enterprise Premium UI Styling --- */
+
+#enterprise-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  color: #f3f4f6;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 20%, rgba(10, 15, 30, 0.2) 0%, rgba(7, 9, 15, 0.5) 100%);
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Zen Mode active state */
+#enterprise-ui.zen-active {
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none !important;
+}
+
+/* Glassmorphism Panel base */
+.glass-panel {
+  background: rgba(10, 15, 30, 0.45);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+  pointer-events: auto;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  margin: 20px 40px 0;
+  border-radius: 20px;
+  position: sticky;
+  top: 20px;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  color: #00f5ff;
+  filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.4));
+  animation: logoPulse 3s ease-in-out infinite;
+}
+
+.logo-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+}
+
+.logo .badge {
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(188, 0, 221, 0.15));
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  color: #00f5ff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 99px;
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-links a {
+  color: rgba(243, 244, 246, 0.8);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #00f5ff;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #00f5ff;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Main content */
+.main-content {
+  flex-grow: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 60px 0 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px;
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #00f5ff 30%, #bc00dd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.25));
+}
+
+.hero-desc {
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(243, 244, 246, 0.7);
+  margin-bottom: 40px;
+  pointer-events: auto;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  pointer-events: auto;
+}
+
+/* Buttons */
+.btn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  border: none;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.btn-consulting {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 8px 20px;
+}
+
+.btn-consulting:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00f5ff, #bc00dd);
+  background-size: 200% 200%;
+  color: #060913;
+  font-weight: 700;
+  box-shadow: 0 8px 30px rgba(0, 245, 255, 0.3);
+  animation: gradientFlow 4s ease infinite;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(0, 245, 255, 0.45);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Products Section */
+.products-section {
+  padding: 20px 0;
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 48px;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.product-card {
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(0, 245, 255, 0.25);
+  box-shadow: 0 15px 45px -10px rgba(0, 245, 255, 0.15);
+}
+
+.card-icon {
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.12), rgba(188, 0, 221, 0.12));
+  border: 1px solid rgba(0, 245, 255, 0.2);
+  color: #00f5ff;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover .card-icon {
+  color: #ffffff;
+  background: linear-gradient(135deg, #00f5ff, #bc00dd);
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+}
+
+.product-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  margin: 0 0 16px;
+  color: #ffffff;
+  z-index: 1;
+}
+
+.product-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(243, 244, 246, 0.65);
+  margin: 0 0 28px;
+  flex-grow: 1;
+  z-index: 1;
+}
+
+.card-link {
+  color: #00f5ff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.card-link:hover {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+/* Control Panel Widget */
+.control-panel {
+  position: fixed;
+  bottom: 30px;
+  left: 40px;
+  width: 320px;
+  padding: 20px;
+  z-index: 100;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.panel-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+.status-indicator {
+  font-size: 11px;
+  font-weight: 600;
+  color: #00ff88;
+  background: rgba(0, 255, 136, 0.1);
+  padding: 2px 8px;
+  border-radius: 99px;
+  animation: breathe 2s infinite ease-in-out;
+}
+
+.preset-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.btn-preset {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-preset:hover {
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(188, 0, 221, 0.15));
+  border-color: #00f5ff;
+  color: #00f5ff;
+  transform: translateY(-1px);
+}
+
+.btn-preset:active {
+  transform: translateY(1px);
+}
+
+.panel-desc {
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(243, 244, 246, 0.5);
+  text-align: center;
+}
+
+/* Zen Mode Floating Exit Button */
+.btn-zen-close {
+  position: fixed;
+  top: 30px;
+  right: 40px;
+  z-index: 1000;
+  background: rgba(10, 15, 30, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 12px 24px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-zen-close:hover {
+  background: rgba(255, 0, 0, 0.15);
+  border-color: rgba(255, 0, 0, 0.4);
+  color: #ff5555;
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer p {
+  font-size: 12px;
+  color: rgba(243, 244, 246, 0.45);
+}
+
+/* Keyframes & Animations */
+@keyframes logoPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.4));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.7));
+    transform: scale(1.05);
+  }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 1024px) {
+  .navbar {
+    margin: 15px 15px 0;
+    padding: 12px 24px;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+
+  .main-content {
+    gap: 60px;
+    padding: 20px 16px;
+  }
+
+  .hero-title {
+    font-size: 44px;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .control-panel {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: auto;
+    margin: 0 16px 20px;
+  }
+
+  .btn-zen-close {
+    right: 20px;
+    top: 20px;
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+}
+

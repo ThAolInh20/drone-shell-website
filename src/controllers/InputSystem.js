@@ -292,11 +292,7 @@ export class InputSystem {
   }
 
   onKeyDown(event) {
-    if (event.code === 'Escape') {
-      event.preventDefault();
-      this.togglePause();
-      return;
-    }
+    // ESC key pausing disabled for clean corporate landing page experience
 
     if (!this.controls.isLocked || this.paused) return;
     switch (event.code) {

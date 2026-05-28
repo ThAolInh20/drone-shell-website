@@ -29,8 +29,9 @@ const fireworkSystem = new FireworkSystem(sceneManager.instance, trailSystem);
 const smokeSystem = new SmokeSystem(sceneManager);
 const skyLightReactionSystem = new SkyLightReactionSystem(sceneManager);
 const cometSystem = new CometSystem(sceneManager.instance, trailSystem, smokeSystem);
-const audioSystem = new AudioSystem(cameraManager);
-audioSystem.preload();
+// const audioSystem = new AudioSystem(cameraManager);
+// audioSystem.preload();
+const audioSystem = null;
 const postProcessing = renderingConfig.post.enabled
   ? new PostProcessingPipeline(renderer.instance, sceneManager.instance, cameraManager.instance, renderingConfig)
   : null;
@@ -62,8 +63,14 @@ const timelineEditor = new TimelineEditor(showDirector);
 inputSystem.showDirector = showDirector;
 inputSystem.timelineEditor = timelineEditor;
 
+// Document-wide first-click audio resume
+document.addEventListener('click', () => {
+  if (audioSystem) audioSystem.resume();
+}, { once: true });
+
+// Canvas click triggers fireworks (bubbles up from pointer-events: none empty spaces on overlay)
 renderer.instance.domElement.addEventListener('click', () => {
-  audioSystem.resume();
+  if (audioSystem) audioSystem.resume();
   if (!inputSystem.isPaused()) {
     const preset = inputSystem.getSelectedPreset();
     if (preset && preset.type === 'comet_cluster') {
@@ -73,6 +80,40 @@ renderer.instance.domElement.addEventListener('click', () => {
     }
   }
 });
+
+// --- Enterprise UI & Zen Mode Interactive Controllers ---
+const enterpriseUI = document.getElementById('enterprise-ui');
+const btnZenMode = document.getElementById('btn-zen-mode');
+const btnZenClose = document.getElementById('btn-zen-close');
+
+if (btnZenMode && btnZenClose && enterpriseUI) {
+  // Activate Zen Mode (Hide corporate overlay to see full fireworks screen)
+  btnZenMode.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent launching a firework on the click point
+    enterpriseUI.classList.add('zen-active');
+    btnZenClose.style.display = 'block';
+  });
+
+  // Deactivate Zen Mode (Restore corporate landing page overlay)
+  btnZenClose.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent launching a firework
+    enterpriseUI.classList.remove('zen-active');
+    btnZenClose.style.display = 'none';
+  });
+}
+
+// Card hover glowing light coordinates tracker (for subtle premium UX)
+const cards = document.querySelectorAll('.product-card');
+cards.forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  });
+});
+
 
 
 function animate() {
@@ -109,3 +150,40 @@ function animate() {
 
 // Start simulation
 animate();
+
+// --- Smoothly Dismiss Premium Page Preloader ---
+function hidePreloader() {
+  const loader = document.getElementById('app-loader');
+  if (loader) {
+    const progressFill = loader.querySelector('.loader-progress-fill');
+    if (progressFill) {
+      // Instantly top off progress bar to indicate completed status
+      progressFill.style.animation = 'none';
+      progressFill.style.width = '100%';
+    }
+    
+    const statusText = loader.querySelector('.loader-status');
+    if (statusText) {
+      statusText.textContent = 'Systems Online!';
+      statusText.style.color = '#00f5ff';
+      statusText.style.textShadow = '0 0 8px rgba(0, 245, 255, 0.5)';
+    }
+
+    // Trigger fading transitions
+    setTimeout(() => {
+      loader.classList.add('fade-out');
+      
+      // Cleanup DOM node to release memory after fade transition completes
+      setTimeout(() => {
+        loader.remove();
+      }, 600);
+    }, 450);
+  }
+}
+
+// Wait for full load to avoid premature dismissal of loading screen
+if (document.readyState === 'complete') {
+  hidePreloader();
+} else {
+  window.addEventListener('load', hidePreloader);
+}
