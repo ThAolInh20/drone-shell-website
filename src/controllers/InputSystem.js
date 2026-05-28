@@ -7,10 +7,10 @@ export class InputSystem {
     this.fireworkSystem = fireworkSystem;
     this.paused = false;
     this.selectedPresetKey = 'random';
-    
+
     this.sequenceOptions = sequences;
     this.selectedSequenceKey = sequences.length > 0 ? sequences[0].key : null;
-    
+
     // Movement state
     this.keys = {
       forward: false,
@@ -37,13 +37,13 @@ export class InputSystem {
     this.presetOptions = this.fireworkSystem?.shellPresetFactory?.getPresetMenuEntries?.() ?? [
       { key: 'random', label: 'Random' }
     ];
-    
-    // Click to lock cursor
-    domElement.addEventListener('click', () => {
-      if (!this.controls.isLocked && !this.paused) {
-        this.controls.lock();
-      }
-    });
+
+    // Click to lock cursor disabled for fixed view angle
+    // domElement.addEventListener('click', () => {
+    //   if (!this.controls.isLocked && !this.paused) {
+    //     this.controls.lock();
+    //   }
+    // });
 
     document.addEventListener('pointerlockchange', () => {
       if (document.pointerLockElement === domElement) {
@@ -74,56 +74,17 @@ export class InputSystem {
       this.status.diagnostics = event.detail;
       this.updateStatusOverlay();
     });
-    
+
     // Instruction overlay
     this.setupInstructions();
     this.setupPauseMenu();
   }
-  
+
   setupInstructions() {
-    // Crosshair dot
-    const crosshair = document.createElement('div');
-    crosshair.style.position = 'absolute';
-    crosshair.style.top = '50%';
-    crosshair.style.left = '50%';
-    crosshair.style.width = '4px';
-    crosshair.style.height = '4px';
-    crosshair.style.marginLeft = '-2px';
-    crosshair.style.marginTop = '-2px';
-    crosshair.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
-    crosshair.style.borderRadius = '50%';
-    crosshair.style.pointerEvents = 'none';
-    crosshair.style.zIndex = '100';
-    document.body.appendChild(crosshair);
+    // Instructions and crosshair removed to keep presentation view 100% clean
+    this.instructions = { style: {} };
 
-    this.instructions = document.createElement('div');
-    this.instructions.style.position = 'absolute';
-    this.instructions.style.top = '50%';
-    this.instructions.style.width = '100%';
-    this.instructions.style.textAlign = 'center';
-    this.instructions.style.color = '#fff';
-    this.instructions.style.fontFamily = 'monospace';
-    this.instructions.style.fontSize = '18px';
-    this.instructions.style.pointerEvents = 'none';
-    this.instructions.innerHTML = 'Click to Look Around<br/><br/>W A S D to Move<br/><br/>Click while locked to launch the selected firework<br/><br/>Press ESC for the firework menu<br/><br/>Press SPACE for auto-launch mode<br/><br/>Press ENTER to play Demo Show';
-    this.instructions.style.textShadow = '0px 0px 5px rgba(0,0,0,1)';
-    document.body.appendChild(this.instructions);
-
-    this.statusOverlay = document.createElement('div');
-    this.statusOverlay.style.position = 'absolute';
-    this.statusOverlay.style.top = '12px';
-    this.statusOverlay.style.left = '12px';
-    this.statusOverlay.style.padding = '8px 12px';
-    this.statusOverlay.style.background = 'rgba(0, 0, 0, 0.55)';
-    this.statusOverlay.style.color = '#fff';
-    this.statusOverlay.style.fontFamily = 'monospace';
-    this.statusOverlay.style.fontSize = '12px';
-    this.statusOverlay.style.lineHeight = '1.4';
-    this.statusOverlay.style.borderRadius = '8px';
-    this.statusOverlay.style.zIndex = '100';
-    this.statusOverlay.style.pointerEvents = 'none';
-    document.body.appendChild(this.statusOverlay);
-    this.updateStatusOverlay();
+    // statusOverlay removed to keep presentation view clean
 
     this.controls.addEventListener('lock', () => {
       this.instructions.style.display = 'none';
@@ -208,20 +169,7 @@ export class InputSystem {
     this.resumeButton.textContent = 'Resume';
     this.resumeButton.addEventListener('click', () => this.resume());
 
-    this.timelineButton = document.createElement('button');
-    this.timelineButton.type = 'button';
-    this.timelineButton.className = 'firework-pause-button';
-    this.timelineButton.textContent = 'Timeline (Ctrl+T)';
-    this.timelineButton.style.marginLeft = '10px';
-    this.timelineButton.style.backgroundColor = '#1976d2'; // distinct color
-    this.timelineButton.addEventListener('click', () => {
-      if (this.timelineEditor) {
-        this.timelineEditor.toggle();
-      }
-    });
-
     buttonRow.appendChild(this.resumeButton);
-    buttonRow.appendChild(this.timelineButton);
     label.appendChild(this.presetSelect);
     panel.appendChild(this.selectedPresetHighlight);
     panel.appendChild(title);
@@ -229,84 +177,6 @@ export class InputSystem {
     panel.appendChild(label);
     panel.appendChild(seqLabel);
     panel.appendChild(buttonRow);
-
-    // Section "Tools & Navigation" to switch other editor sites (requested by USER inside pause menu)
-    const navSection = document.createElement('div');
-    navSection.style.marginTop = '20px';
-    navSection.style.paddingTop = '16px';
-    navSection.style.borderTop = '1px solid rgba(255, 255, 255, 0.12)';
-    navSection.style.display = 'flex';
-    navSection.style.flexDirection = 'column';
-    navSection.style.gap = '10px';
-
-    const navTitle = document.createElement('div');
-    navTitle.className = 'firework-pause-label';
-    navTitle.style.marginBottom = '4px';
-    navTitle.textContent = 'Tools & Editors';
-
-    const navButtons = document.createElement('div');
-    navButtons.style.display = 'flex';
-    navButtons.style.gap = '10px';
-
-    const btnTimeline = document.createElement('button');
-    btnTimeline.type = 'button';
-    btnTimeline.className = 'firework-pause-button';
-    btnTimeline.style.flex = '1';
-    btnTimeline.style.background = 'linear-gradient(180deg, #1e3c72 0%, #2a5298 100%)';
-    btnTimeline.style.color = '#fff';
-    btnTimeline.style.border = '1px solid rgba(0, 243, 255, 0.3)';
-    btnTimeline.style.boxShadow = '0 6px 15px rgba(42, 82, 152, 0.3)';
-    btnTimeline.style.fontSize = '13px';
-    btnTimeline.style.fontWeight = 'bold';
-    btnTimeline.style.padding = '10px 14px';
-    btnTimeline.style.borderRadius = '999px';
-    btnTimeline.style.cursor = 'pointer';
-    btnTimeline.style.transition = 'all 0.3s ease';
-    btnTimeline.innerHTML = '🎞️ Timeline Editor';
-    btnTimeline.addEventListener('mouseover', () => {
-      btnTimeline.style.filter = 'brightness(1.15)';
-      btnTimeline.style.boxShadow = '0 0 15px rgba(0, 243, 255, 0.4)';
-    });
-    btnTimeline.addEventListener('mouseout', () => {
-      btnTimeline.style.filter = 'none';
-      btnTimeline.style.boxShadow = '0 6px 15px rgba(42, 82, 152, 0.3)';
-    });
-    btnTimeline.addEventListener('click', () => {
-      window.location.href = 'editor.html';
-    });
-
-    const btnStatic = document.createElement('button');
-    btnStatic.type = 'button';
-    btnStatic.className = 'firework-pause-button';
-    btnStatic.style.flex = '1';
-    btnStatic.style.background = 'linear-gradient(180deg, #aa3bff 0%, #8a1bef 100%)';
-    btnStatic.style.color = '#fff';
-    btnStatic.style.border = '1px solid rgba(170, 59, 255, 0.3)';
-    btnStatic.style.boxShadow = '0 6px 15px rgba(170, 59, 255, 0.3)';
-    btnStatic.style.fontSize = '13px';
-    btnStatic.style.fontWeight = 'bold';
-    btnStatic.style.padding = '10px 14px';
-    btnStatic.style.borderRadius = '999px';
-    btnStatic.style.cursor = 'pointer';
-    btnStatic.style.transition = 'all 0.3s ease';
-    btnStatic.innerHTML = '📐 Static Editor';
-    btnStatic.addEventListener('mouseover', () => {
-      btnStatic.style.filter = 'brightness(1.15)';
-      btnStatic.style.boxShadow = '0 0 15px rgba(170, 59, 255, 0.4)';
-    });
-    btnStatic.addEventListener('mouseout', () => {
-      btnStatic.style.filter = 'none';
-      btnStatic.style.boxShadow = '0 6px 15px rgba(170, 59, 255, 0.3)';
-    });
-    btnStatic.addEventListener('click', () => {
-      window.location.href = 'formation.html';
-    });
-
-    navButtons.appendChild(btnTimeline);
-    navButtons.appendChild(btnStatic);
-    navSection.appendChild(navTitle);
-    navSection.appendChild(navButtons);
-    panel.appendChild(navSection);
 
     this.pauseOverlay.appendChild(panel);
     document.body.appendChild(this.pauseOverlay);

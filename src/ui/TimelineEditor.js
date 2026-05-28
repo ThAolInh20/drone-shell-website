@@ -310,10 +310,6 @@ export class TimelineEditor {
         }
       }
 
-      if (e.code === 'KeyT' && e.shiftKey) {
-        e.preventDefault();
-        this.toggle();
-      }
       if (e.key === ')' || (e.shiftKey && e.key === '0')) {
         e.preventDefault();
         const zoomLevels = [25, 50, 100, 200];

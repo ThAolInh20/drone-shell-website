@@ -37,7 +37,7 @@ export class FireworkSystem {
     this.shellPresetFactory = new ShellPresetFactory();
     this.launchZone = LAUNCH_ZONE_CONFIG;
     this.launchPosition = this.launchZone.center.clone();
-    this.autoLaunchEnabled = false;
+    this.autoLaunchEnabled = true;
     this.autoLaunchTimer = 0;
     this.autoLaunchInterval = 3; // seconds between auto launches
     this.shellSequence = 0;

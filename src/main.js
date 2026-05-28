@@ -16,8 +16,6 @@ import { ShowDirector } from './directors/ShowDirector.js';
 import { DroneSystem } from './systems/DroneSystem.js';
 import { DroneShowSequencer } from './directors/DroneShowSequencer.js';
 import { TimelineEditor } from './ui/TimelineEditor.js';
-import droneDemoData from '../config/sequences/droneDemo.json';
-import { PerformanceMonitor } from './core/PerformanceMonitor.js';
 import { renderingConfig } from './config/rendering.js';
 import './style.css';
 
@@ -26,7 +24,6 @@ const clock = new Clock();
 const renderer = new Renderer();
 const cameraManager = new CameraManager();
 const sceneManager = new SceneManager();
-const performanceMonitor = new PerformanceMonitor();
 const trailSystem = new TrailSystem(sceneManager.instance);
 const fireworkSystem = new FireworkSystem(sceneManager.instance, trailSystem);
 const smokeSystem = new SmokeSystem(sceneManager);
@@ -67,7 +64,7 @@ inputSystem.timelineEditor = timelineEditor;
 
 renderer.instance.domElement.addEventListener('click', () => {
   audioSystem.resume();
-  if (inputSystem.controls.isLocked && !inputSystem.isPaused()) {
+  if (!inputSystem.isPaused()) {
     const preset = inputSystem.getSelectedPreset();
     if (preset && preset.type === 'comet_cluster') {
       cometSystem.launchRandom(preset, { effectOverrides: { instantBurst: false } });
@@ -77,22 +74,11 @@ renderer.instance.domElement.addEventListener('click', () => {
   }
 });
 
-window.addEventListener('keydown', (e) => {
-  if (e.code === 'KeyY' && e.shiftKey) {
-    if (performanceMonitor.overlay) {
-      performanceMonitor.overlay.style.display = performanceMonitor.overlay.style.display === 'none' ? '' : 'none';
-    }
-    if (inputSystem.statusOverlay) {
-      inputSystem.statusOverlay.style.display = inputSystem.statusOverlay.style.display === 'none' ? '' : 'none';
-    }
-  }
-});
 
 function animate() {
   requestAnimationFrame(animate);
 
   clock.update();
-  performanceMonitor.update(clock.deltaTime);
   
   // Systems update
   if (!inputSystem.isPaused()) {
