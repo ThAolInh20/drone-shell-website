@@ -28,4 +28,6 @@ Tải ứng dụng chạy trên Desktop (Pre-built Desktop App via Releases)
 ## Tương lai phát triển:
 - Có thể phát triển cộng đồng chia sẻ các mô hình được tạo bởi chính phần mềm này.
 
+## Contact
+- Email: aotrame@gmai.com
 

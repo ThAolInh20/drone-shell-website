@@ -31,3 +31,6 @@ To run the firework and drone show editor directly as a desktop application with
 ## Future Roadmap
 
 - Building a community platform for sharing drone and show models created directly using this software.
+
+## Contact
+- Email: aotrame@gmai.com
