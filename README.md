@@ -1,42 +1,33 @@
 # Shell Drone Animation
 
-**Shell Drone Animation** is an interactive 3D web application that allows users to simulate and choreograph firework shows combined with artistic drone light shows. The application is designed to deliver immersive visual experiences, built on top of **Three.js** and **Vite**.
+<p align="center">
+  <strong>English</strong> | <a href="README-vn.md">Tiếng Việt</a>
+</p>
 
-This project is 90% developed using Antigravity, with BMAD contributing to accelerating the development process.
+**Shell Drone** is an interactive 3D web application that allows users to simulate and choreograph firework shows combined with artistic drone light shows. The application is designed to deliver immersive visual experiences, built on top of **Three.js** and **Vite**, and packaged into a desktop application using **Electron**.
+
+The software is built with 3 main modules: Show UI, Drone Script Editor UI, and Drone Formation Editor UI.
 
 ## Key Features
 
-- **3D Simulation:** Realistic firework effects and lighting in a three-dimensional environment.
-- **Timeline Editor:** An intuitive user interface to choreograph fireworks, add audio tracks, and synchronize sequences over time.
-- **Flexible Customization:** Manage firework configurations, physical parameters, and camera viewpoints.
-- **3D Static Drone Formation:** Design and generate formations for the drone fleet.
-- **3D Timeline Drone Editor:** Design and edit drone animation timelines in real-time.
+- **Show UI**: The main screen to simulate and showcase the fireworks and drone performances.
+- **Drone Script Editor UI**: The workspace to edit drone animation scripts, choreograph movement steps for each drone group, and adjust related paths and effects.
+- **Drone Formation Editor UI**: The workspace to design and edit the 3D static drone formations.
 
 ---
 
-## Repository Structure and Deployment Status
+## Highlights
 
-The repository follows this branching strategy:
-- **Desktop Application (Windows):** To run the firework and drone show editor directly as a Desktop application without setting up a code environment:
-  **[https://github.com/ThAolInh20/Shell-Drone_3d/releases](https://github.com/ThAolInh20/Shell-Drone_3d/releases)**
-- **Web Deployment (Live Demo):** The project is fully deployed. You can view the live demo and experience it directly in your browser at:
-  **[https://shell3d.netlify.app/](https://shell3d.netlify.app/)**
-- **Development Source Code:** The entire source code, commit history, and local setup instructions are hosted on the `dev` branch. Please switch to the [`dev`](https://github.com/ThAolInh20/Shell-Drone_3d/tree/dev) branch to view the detailed source code and contribute to the project.
+- **JSON Outputs**: All outputs are exported as `.json` files, making sharing drone models, animations, and choreography sequences extremely flexible and accessible.
 
----
+## Download & Installation
 
-## 📥 Download & Installation
-
-### 🚀 1. Pre-built Desktop Application (Via GitHub Releases)
-To run the firework and drone show editor directly as a Desktop application without configuring a local development environment:
+### Pre-built Desktop Application (Via GitHub Releases)
+To run the firework and drone show editor directly as a desktop application without configuring a local development environment:
 1. Navigate to the **[GitHub Releases](https://github.com/ThAolInh20/Shell-Drone_3d/releases)** page of the repository.
 2. Locate the latest release (tag) and download the appropriate installer for Windows (e.g., `ShellDroneEditor Setup 1.x.x.exe` or the standalone portable `ShellDroneEditor 1.x.x.exe`).
-3. Open the downloaded file to install or launch the application directly.
+3. Extract the downloaded archive and run the `.exe` file inside the extracted folder to start using the application.
 
-### 💻 2. Cloning/Downloading Specific Versions (Via Git Tags)
-If you are a developer looking to contribute or compile the project from a specific version (tag):
-* Clone the repository specifying the desired tag name using the `--branch` option:
-  ```bash
-  git clone --branch <tag_name> https://github.com/ThAolInh20/Shell-Drone_3d.git
-  ```
-* Alternatively, visit the **[Tags](https://github.com/ThAolInh20/Shell-Drone_3d/tags)** section on GitHub, select your target version tag, and click **Download ZIP** to download the compressed source code package.
+## Future Roadmap
+
+- Building a community platform for sharing drone and show models created directly using this software.
