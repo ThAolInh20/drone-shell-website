@@ -68,8 +68,11 @@ document.addEventListener('click', () => {
   if (audioSystem) audioSystem.resume();
 }, { once: true });
 
+let isInDocsView = false;
+
 // Canvas click triggers fireworks (bubbles up from pointer-events: none empty spaces on overlay)
 renderer.instance.domElement.addEventListener('click', () => {
+  if (isInDocsView) return; // Prevent firework firing during docs reading
   if (audioSystem) audioSystem.resume();
   if (!inputSystem.isPaused()) {
     const preset = inputSystem.getSelectedPreset();
@@ -122,7 +125,15 @@ function animate() {
   clock.update();
   
   // Systems update
-  if (!inputSystem.isPaused()) {
+  if (isInDocsView) {
+    // Stop automated director/sequencer, but keep updating active particles
+    // so in-flight fireworks detonate and fade away cleanly.
+    fireworkSystem.update(clock.deltaTime);
+    if (cometSystem) cometSystem.update(clock.deltaTime);
+    if (trailSystem) trailSystem.update(clock.deltaTime);
+    smokeSystem.update(clock.deltaTime);
+    skyLightReactionSystem.update(clock.deltaTime);
+  } else if (!inputSystem.isPaused()) {
     movementSystem.update(clock.deltaTime);
     showDirector.update(clock.deltaTime);
     fireworkSequencer.update(clock.deltaTime);
@@ -150,6 +161,445 @@ function animate() {
 
 // Start simulation
 animate();
+
+// --- Documentation Feature (Dynamic Scan, Parser, Routing & State) ---
+
+// 1. Definition of categories for Vietnamese styling
+const CATEGORY_LABELS = {
+  'root': 'Tổng quan',
+  'animated-editor': 'Biên tập Hoạt ảnh',
+  'show-viewer': 'Trình xem & Trình diễn',
+  'static-formation': 'Thiết kế Đội hình Tĩnh'
+};
+
+// 2. Scan markdown files using Vite's glob import
+const rawDocs = import.meta.glob('./content/**/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true
+});
+
+// State variables
+let currentDocPath = '';
+const parsedDocs = []; // List of all parsed docs (flat array for pagination)
+
+// Elements
+const sidebarNav = document.getElementById('docs-sidebar-nav');
+const docsContainer = document.getElementById('docs-container');
+const docTitleDisplay = document.getElementById('doc-title-display');
+const docsBody = document.getElementById('docs-body');
+const navDocsBtn = document.getElementById('nav-docs');
+const btnDocsClose = document.getElementById('btn-docs-close');
+const btnDocPrev = document.getElementById('btn-doc-prev');
+const btnDocNext = document.getElementById('btn-doc-next');
+const docProgressText = document.getElementById('doc-progress-text');
+
+// Helper to extract title from content
+function extractDocTitle(content, filename) {
+  // Try Frontmatter: "title: ... "
+  const fmMatch = content.match(/^(?:---\r?\n[\s\S]*?\btitle:\s*([^\r\n]+)[\s\S]*?---)/i);
+  if (fmMatch && fmMatch[1]) {
+    return fmMatch[1].trim();
+  }
+  // Try H1 heading: "# ... "
+  const h1Match = content.match(/^#\s+([^\r\n]+)/m);
+  if (h1Match && h1Match[1]) {
+    return h1Match[1].trim();
+  }
+  // Fallback: capitalize filename
+  const cleanName = filename.replace(/\.md$/, '').replace(/-/g, ' ');
+  return cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+}
+
+// Build internal docs database
+Object.entries(rawDocs).forEach(([key, rawContent]) => {
+  // key example: "./content/animated-editor/README.md"
+  const cleanPath = key.replace('./content/', ''); // "animated-editor/README.md"
+  
+  // Extract category
+  let category = 'root';
+  if (cleanPath.includes('/')) {
+    category = cleanPath.split('/')[0];
+  }
+  
+  const filename = cleanPath.substring(cleanPath.lastIndexOf('/') + 1);
+  const title = extractDocTitle(rawContent, filename);
+  
+  parsedDocs.push({
+    path: cleanPath,
+    category,
+    filename,
+    title,
+    content: rawContent
+  });
+});
+
+// Sort documents: README.md first in category, then alphabetical
+parsedDocs.sort((a, b) => {
+  if (a.category !== b.category) {
+    const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor'];
+    return categoriesOrder.indexOf(a.category) - categoriesOrder.indexOf(b.category);
+  }
+  
+  if (a.filename === 'README.md') return -1;
+  if (b.filename === 'README.md') return 1;
+  
+  return a.filename.localeCompare(b.filename);
+});
+
+// Render sidebar navigation HTML
+function renderSidebar() {
+  if (!sidebarNav) return;
+  sidebarNav.innerHTML = '';
+  
+  // Group by category
+  const grouped = {};
+  parsedDocs.forEach(doc => {
+    if (!grouped[doc.category]) {
+      grouped[doc.category] = [];
+    }
+    grouped[doc.category].push(doc);
+  });
+  
+  // Render
+  const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor'];
+  categoriesOrder.forEach(cat => {
+    if (!grouped[cat]) return;
+    
+    const catDiv = document.createElement('div');
+    catDiv.className = 'docs-category';
+    
+    const catTitle = document.createElement('div');
+    catTitle.className = 'docs-category-title';
+    catTitle.textContent = CATEGORY_LABELS[cat] || cat;
+    catDiv.appendChild(catTitle);
+    
+    const list = document.createElement('ul');
+    list.className = 'docs-category-list';
+    
+    grouped[cat].forEach(doc => {
+      const li = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = `#docs/${doc.path}`;
+      link.className = `docs-item-link ${currentDocPath === doc.path ? 'active' : ''}`;
+      link.dataset.path = doc.path;
+      link.innerHTML = `
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        <span>${doc.title}</span>
+      `;
+      
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateToDoc(doc.path);
+      });
+      
+      li.appendChild(link);
+      list.appendChild(li);
+    });
+    
+    catDiv.appendChild(list);
+    sidebarNav.appendChild(catDiv);
+  });
+}
+
+// Basic markdown to HTML converter with block-level safety
+function parseMarkdown(md) {
+  // Strip frontmatter if present
+  let cleanMd = md.replace(/^---[\s\S]*?---\r?\n/, '');
+  
+  // 1. Temporarily extract code blocks to protect them from word-wrapping/paragraph tags
+  const codeBlocks = [];
+  cleanMd = cleanMd.replace(/```([\s\S]*?)```/g, (match, code) => {
+    const placeholder = `<!--__CODE_BLOCK_${codeBlocks.length}__-->`;
+    
+    const lines = code.split('\n');
+    let lang = '';
+    if (lines[0] && !lines[0].includes(' ') && lines[0].length < 15) {
+      lang = lines.shift().trim();
+    }
+    const cleanCode = lines.join('\n').trim();
+    
+    // Convert HTML entities inside code block
+    const safeCode = cleanCode
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+      
+    codeBlocks.push(`<pre><code class="language-${lang}">${safeCode}</code></pre>`);
+    return placeholder;
+  });
+
+  // 2. Inline formatting helper
+  function parseInlineMarkdown(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/`(.*?)`/g, '<code>$1</code>')
+      .replace(/\[(.*?)\]\((.*?)\)/g, (match, label, href) => {
+        if (href.endsWith('.md')) {
+          let targetPath = '';
+          if (href.startsWith('./') || !href.startsWith('../')) {
+            const currentDir = currentDocPath.includes('/') ? currentDocPath.substring(0, currentDocPath.lastIndexOf('/')) : '';
+            const normalizedHref = href.replace(/^\.\//, '');
+            targetPath = currentDir ? `${currentDir}/${normalizedHref}` : normalizedHref;
+          } else if (href.startsWith('../')) {
+            targetPath = href.replace(/^\.\.\//, '');
+          }
+          return `<a href="#" class="docs-internal-link" data-doc-path="${targetPath}">${label}</a>`;
+        }
+        return `<a href="${href}" target="_blank">${label}</a>`;
+      });
+  }
+
+  // 3. Process line by line, grouping lists, tables, and paragraphs
+  const lines = cleanMd.split(/\r?\n/);
+  const processedBlocks = [];
+  
+  let inList = false;
+  let listHTML = '';
+  let inTable = false;
+  let tableHTML = '';
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+    
+    // Handle Table
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      if (inList) {
+        processedBlocks.push(`<ul>${listHTML}</ul>`);
+        inList = false;
+        listHTML = '';
+      }
+      
+      if (!inTable) {
+        inTable = true;
+        tableHTML = '<table>';
+      }
+      
+      const cells = trimmed.split('|').slice(1, -1).map(c => c.trim());
+      const isSeparator = cells.every(c => /^:?-+:?$/.test(c));
+      if (isSeparator) {
+        continue;
+      }
+      
+      const isHeader = (tableHTML === '<table>');
+      tableHTML += '<tr>';
+      cells.forEach(cell => {
+        const parsedCell = parseInlineMarkdown(cell);
+        tableHTML += isHeader ? `<th>${parsedCell}</th>` : `<td>${parsedCell}</td>`;
+      });
+      tableHTML += '</tr>';
+      continue;
+    } else {
+      if (inTable) {
+        tableHTML += '</table>';
+        processedBlocks.push(tableHTML);
+        inTable = false;
+        tableHTML = '';
+      }
+    }
+    
+    // Handle Bullet List
+    const isBulletList = trimmed.startsWith('- ') || trimmed.startsWith('* ');
+    if (isBulletList) {
+      if (!inList) {
+        inList = true;
+        listHTML = '';
+      }
+      const itemText = trimmed.replace(/^[-*]\s+/, '');
+      listHTML += `<li>${parseInlineMarkdown(itemText)}</li>`;
+      continue;
+    } else {
+      if (inList) {
+        processedBlocks.push(`<ul>${listHTML}</ul>`);
+        inList = false;
+        listHTML = '';
+      }
+    }
+    
+    if (trimmed === '') {
+      continue;
+    }
+    
+    // Handle Code Block Placeholder (restored later)
+    if (trimmed.startsWith('<!--__CODE_BLOCK_') && trimmed.endsWith('__-->')) {
+      processedBlocks.push(trimmed);
+      continue;
+    }
+    
+    // Handle Headers
+    if (trimmed.startsWith('#### ')) {
+      processedBlocks.push(`<h4>${parseInlineMarkdown(trimmed.substring(5))}</h4>`);
+    } else if (trimmed.startsWith('### ')) {
+      processedBlocks.push(`<h3>${parseInlineMarkdown(trimmed.substring(4))}</h3>`);
+    } else if (trimmed.startsWith('## ')) {
+      processedBlocks.push(`<h2>${parseInlineMarkdown(trimmed.substring(3))}</h2>`);
+    } else if (trimmed.startsWith('# ')) {
+      // Skip the first title header since it's already shown in the viewer container header
+      if (processedBlocks.length === 0) {
+        continue;
+      }
+      processedBlocks.push(`<h1>${parseInlineMarkdown(trimmed.substring(2))}</h1>`);
+    } else if (trimmed === '---') {
+      processedBlocks.push('<hr>');
+    } else {
+      // Normal Paragraph - append to previous paragraph if consecutive
+      const lastIdx = processedBlocks.length - 1;
+      if (lastIdx >= 0 && processedBlocks[lastIdx].startsWith('<p>') && processedBlocks[lastIdx].endsWith('</p>')) {
+        const prevContent = processedBlocks[lastIdx].slice(3, -4);
+        processedBlocks[lastIdx] = `<p>${prevContent} ${parseInlineMarkdown(trimmed)}</p>`;
+      } else {
+        processedBlocks.push(`<p>${parseInlineMarkdown(trimmed)}</p>`);
+      }
+    }
+  }
+  
+  // Close any unclosed list/table blocks
+  if (inList) processedBlocks.push(`<ul>${listHTML}</ul>`);
+  if (inTable) processedBlocks.push(`${tableHTML}</table>`);
+  
+  let finalHTML = processedBlocks.join('\n');
+  
+  // 4. Restore the code blocks
+  codeBlocks.forEach((codeBlockHTML, idx) => {
+    finalHTML = finalHTML.replace(`<!--__CODE_BLOCK_${idx}__-->`, codeBlockHTML);
+  });
+  
+  return finalHTML;
+}
+
+// Navigate to a specific document path
+function navigateToDoc(path) {
+  const doc = parsedDocs.find(d => d.path === path);
+  if (!doc) return;
+  
+  currentDocPath = path;
+  window.location.hash = `#docs/${path}`;
+  
+  // Render content
+  docTitleDisplay.textContent = doc.title;
+  docsBody.innerHTML = parseMarkdown(doc.content);
+  
+  // Highlight active item in sidebar
+  document.querySelectorAll('.docs-item-link').forEach(link => {
+    if (link.dataset.path === path) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+  
+  // Bind events to new internal links in markdown content
+  docsBody.querySelectorAll('.docs-internal-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetPath = link.dataset.docPath;
+      navigateToDoc(targetPath);
+    });
+  });
+  
+  // Scroll reader to top
+  const viewerPanel = document.querySelector('.docs-viewer');
+  if (viewerPanel) viewerPanel.scrollTop = 0;
+  
+  // Update pagination UI
+  const currentIndex = parsedDocs.findIndex(d => d.path === path);
+  docProgressText.textContent = `Bài ${currentIndex + 1} / ${parsedDocs.length}`;
+  
+  // Prev button
+  if (currentIndex > 0) {
+    btnDocPrev.disabled = false;
+    btnDocPrev.style.opacity = 1;
+    btnDocPrev.onclick = () => navigateToDoc(parsedDocs[currentIndex - 1].path);
+  } else {
+    btnDocPrev.disabled = true;
+    btnDocPrev.style.opacity = 0.4;
+  }
+  
+  // Next button
+  if (currentIndex < parsedDocs.length - 1) {
+    btnDocNext.disabled = false;
+    btnDocNext.style.opacity = 1;
+    btnDocNext.onclick = () => navigateToDoc(parsedDocs[currentIndex + 1].path);
+  } else {
+    btnDocNext.disabled = true;
+    btnDocNext.style.opacity = 0.4;
+  }
+}
+
+// Toggle Docs view
+function setDocsViewActive(active) {
+  isInDocsView = active;
+  const enterpriseUI = document.getElementById('enterprise-ui');
+  const docsContainer = document.getElementById('docs-container');
+  
+  if (active) {
+    if (fireworkSystem) {
+      // Turn off autolaunch in docs view
+      fireworkSystem.autoLaunchEnabled = false;
+      
+      // Force detonate all currently flying fireworks instantly when entering docs view
+      if (typeof fireworkSystem.burstAll === 'function') {
+        fireworkSystem.burstAll();
+      }
+    }
+    if (enterpriseUI) enterpriseUI.classList.add('docs-active');
+    if (docsContainer) docsContainer.style.display = 'grid';
+    // Select first doc if none selected
+    if (!currentDocPath && parsedDocs.length > 0) {
+      currentDocPath = parsedDocs[0].path;
+    }
+    navigateToDoc(currentDocPath);
+    renderSidebar();
+  } else {
+    // Main page always has autolaunch enabled
+    if (fireworkSystem) {
+      fireworkSystem.autoLaunchEnabled = true;
+    }
+    if (enterpriseUI) enterpriseUI.classList.remove('docs-active');
+    if (docsContainer) docsContainer.style.display = 'none';
+    window.location.hash = '';
+  }
+}
+
+// Nav clicks
+if (navDocsBtn) {
+  navDocsBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    setDocsViewActive(true);
+  });
+}
+
+if (btnDocsClose) {
+  btnDocsClose.addEventListener('click', (e) => {
+    e.preventDefault();
+    setDocsViewActive(false);
+  });
+}
+
+// Check initial hash on load
+function handleHashChange() {
+  const hash = window.location.hash;
+  if (hash.startsWith('#docs/')) {
+    const path = hash.replace('#docs/', '');
+    setDocsViewActive(true);
+    navigateToDoc(path);
+  } else if (hash === '#docs') {
+    setDocsViewActive(true);
+  } else {
+    if (isInDocsView) {
+      setDocsViewActive(false);
+    }
+  }
+}
+
+window.addEventListener('hashchange', handleHashChange);
+// Run on load
+setTimeout(handleHashChange, 100);
 
 // --- Smoothly Dismiss Premium Page Preloader ---
 function hidePreloader() {

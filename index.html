@@ -156,42 +156,95 @@
     }
 
     @keyframes loaderSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes loaderPulse {
-      0% { transform: scale(0.95); opacity: 0.8; }
-      100% { transform: scale(1.05); opacity: 1; }
+      0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
     }
 
     @keyframes glowPulse {
-      0% { transform: scale(0.85); opacity: 0.4; }
-      100% { transform: scale(1.15); opacity: 0.8; }
+      0% {
+        transform: scale(0.85);
+        opacity: 0.4;
+      }
+
+      100% {
+        transform: scale(1.15);
+        opacity: 0.8;
+      }
     }
 
     @keyframes progressFill {
-      0% { width: 0%; }
-      15% { width: 25%; }
-      30% { width: 35%; }
-      55% { width: 60%; }
-      75% { width: 85%; }
-      100% { width: 100%; }
+      0% {
+        width: 0%;
+      }
+
+      15% {
+        width: 25%;
+      }
+
+      30% {
+        width: 35%;
+      }
+
+      55% {
+        width: 60%;
+      }
+
+      75% {
+        width: 85%;
+      }
+
+      100% {
+        width: 100%;
+      }
     }
 
     @keyframes statusBreathe {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
+
+      0%,
+      100% {
+        opacity: 0.6;
+      }
+
+      50% {
+        opacity: 1;
+      }
     }
 
     @keyframes orbFloat1 {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(60px, 40px) scale(1.1); }
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      100% {
+        transform: translate(60px, 40px) scale(1.1);
+      }
     }
 
     @keyframes orbFloat2 {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-50px, -60px) scale(1.2); }
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      100% {
+        transform: translate(-50px, -60px) scale(1.2);
+      }
     }
   </style>
 </head>
@@ -203,7 +256,8 @@
     <div class="loader-bg-orb loader-orb-2"></div>
     <div class="loader-content">
       <div class="loader-logo-container">
-        <svg class="loader-logo" viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="#00f5ff" stroke-width="1.5">
+        <svg class="loader-logo" viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="#00f5ff"
+          stroke-width="1.5">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
         </svg>
         <div class="loader-glow"></div>
@@ -226,13 +280,18 @@
           stroke-width="2">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
         </svg>
-        <span class="logo-text">DRONE SHELL</span>
+        <span class="logo-text">
+          <a href="#features">DRONE SHELL</a>
+        </span>
         <span class="badge">STUDIO EDITOR</span>
       </div>
       <nav class="nav-links">
         <a href="#features">Tính năng chính</a>
+        <a href="#docs" id="nav-docs">Tài liệu</a>
       </nav>
-      <a class="btn btn-consulting" id="btn-consulting" href="https://github.com/ThAolInh20/Shell-Drone-Editor/releases/download/v1.0.1/DroneShellEditor.zip" target="_blank">Download</a>
+      <a class="btn btn-consulting" id="btn-consulting"
+        href="https://github.com/ThAolInh20/Shell-Drone-Editor/releases/download/v1.0.1/DroneShellEditor.zip"
+        target="_blank">Download</a>
     </header>
 
     <!-- Main Layout -->
@@ -245,7 +304,9 @@
           chương trình biểu diễn ánh sáng drone show kết hợp nghệ thuật pháo hoa đồng bộ âm nhạc.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" id="btn-primary-cta" href="https://github.com/ThAolInh20/Shell-Drone-Editor/releases/download/v1.0.1/DroneShellEditor.zip" target="_blank">Download</a>
+          <a class="btn btn-primary" id="btn-primary-cta"
+            href="https://github.com/ThAolInh20/Shell-Drone-Editor/releases/download/v1.0.1/DroneShellEditor.zip"
+            target="_blank">Download</a>
           <button class="btn btn-secondary" id="btn-zen-mode">✨ Xem Biểu Diễn (Zen Mode)</button>
         </div>
       </section>
@@ -303,6 +364,32 @@
       </section>
     </main>
 
+    <!-- Dynamic Documentation Section -->
+    <div id="docs-container" style="display: none;">
+      <aside class="docs-sidebar glass-panel">
+        <div class="docs-sidebar-header">
+          <h3>Tài liệu hướng dẫn</h3>
+        </div>
+        <nav class="docs-sidebar-nav" id="docs-sidebar-nav">
+          <!-- Populated dynamically -->
+        </nav>
+      </aside>
+      <article class="docs-viewer glass-panel">
+        <header class="docs-viewer-header">
+          <h2 id="doc-title-display">Tải tài liệu...</h2>
+          <button class="btn btn-consulting btn-docs-close" id="btn-docs-close">✕</button>
+        </header>
+        <div class="docs-body" id="docs-body">
+          <!-- Populated dynamically -->
+        </div>
+        <footer class="docs-pagination">
+          <button class="btn btn-secondary" id="btn-doc-prev">&larr; Bài trước</button>
+          <span id="doc-progress-text">Bài 0 / 0</span>
+          <button class="btn btn-secondary" id="btn-doc-next">Bài sau &rarr;</button>
+        </footer>
+      </article>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
       <p>&copy; 2026 Drone Shell Editor Enterprise. Bản quyền phần mềm thiết kế bởi ThaoLinn.</p>
@@ -316,4 +403,5 @@
 
   <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>
