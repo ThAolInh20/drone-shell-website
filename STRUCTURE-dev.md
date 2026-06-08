@@ -3,12 +3,12 @@
 ## 1. Logical Modules
 
 ### Core Engine
-- **`src/core/SceneManager.js`**: Sets up the Three.js scene environment, starry background, moon reference, atmospheric lighting, and ground grids.
+- **`src/core/SceneManager.js`**: Sets up the Three.js scene environment, starry background, moon reference, atmospheric lighting, and custom noise-textured floor.
   - `SceneManager.addLaunchPad()`: Configures a red ring-based visual aid overlay for firework launch limits.
-  - `SceneManager.addBurstHeightGuides()`: Draws horizontal boundary rings to represent maximum and minimum explosion heights.
-  - `SceneManager.addCheckerboardFloor()`: Constructs a custom noise-textured checkerboard floor reflecting ambient atmospheric light.
+  - `SceneManager.addBurstHeightGuides()`: Draws horizontal boundary rings representing explosion height limits.
+  - `SceneManager.addCheckerboardFloor()`: Constructs a custom noise-textured floor reflecting atmospheric lights.
 - **`src/core/CameraManager.js`**: Configures the perspective camera parameters, initial viewer positions, and window resize listeners.
-  - `CameraManager.onResize()`: Adjusts the camera aspect ratio and updates the projection matrix dynamically on window resize.
+  - `CameraManager.onResize()`: Adjusts the camera aspect ratio and updates projection matrix on window resize.
 - **`src/core/Renderer.js`**: Initializes the WebGLRenderer with high-fidelity tone mapping, shadow support, and viewport dimension sync.
   - `Renderer.addResizeListener(callback)`: Registers callback functions to execute on window resize.
   - `Renderer.render(scene, camera)`: Flushes the scene tree rendering onto the screen canvas.
@@ -23,7 +23,11 @@
 ### Entity Models
 - **`src/entities/ShellEntity.js`**: Defines the physical properties of a launched firework shell (coordinates, velocity, color, burst height, preset key, age).
 - **`src/entities/CometEntity.js`**: Encapsulates data for low-altitude trail comets.
-- **`src/entities/DroneEntity.js`**: Standard OOP model for singular drone objects; largely bypassed in high-performance rendering.
+- **`src/entities/DroneEntity.js`**: Standard OOP model representing a singular drone object.
+  - `DroneEntity.setFormat(formatConfig, delay)`: Configures color, delay, and animation parameters for the drone during formation transitions.
+  - `DroneEntity.setMotionProfile(profileName)`: Assigns a motion profile (max speed, forces, etc.) to the drone.
+  - `DroneEntity.setTarget(targetVector)`: Sets the drone's destination coordinate.
+  - `DroneEntity.update(deltaTime)`: Triggers the Steering "Arrival" behavior, and updates transitions, animations, and color pulses.
 - **`src/entities/DroneMotionProfile.js`**: Physics parameters configuration (max velocity, steering forces) for autonomous drone behaviors.
 - **`src/entities/DroneAnimationLayer.js`**: Dynamic animation layer attached to a drone entity for scaling, spinning, and shimmering effects.
   - `DroneAnimationLayer.applyAnimation(type, params, duration)`: Adds a new active procedural animation (spin, pulse, shimmer).
@@ -78,6 +82,7 @@
   - `DroneSystem.triggerAnimation(animationType, params, duration)`: Applies an animation multiplier to all managed drones.
   - `DroneSystem.update(deltaTime)`: Interpolates drones towards their targets and updates instance matrix buffers.
   - `DroneSystem.isFormationComplete()`: Checks if all drones have successfully arrived at their targets.
+- **`src/systems/PhysicSystem.js`**: Currently an empty system placeholder reserved for future physical integration.
 
 ### Effects & Animations
 - **`src/effects/arrival/ArrivalColorSystem.js`**: Handles gradual illumination when drones arrive at target positions.
@@ -85,22 +90,6 @@
   - `ArrivalColorSystem.apply(drone, config, timeSinceArrival)`: Evaluates time delay and fades the drone color in from black to target color.
 - **`src/effects/transition/TransitionColorSystem.js`**: Orchestrates colors and blinking effects when drones transition between shapes.
   - `TransitionColorSystem.apply(drone, config, time)`: Applies static solid color or procedural strobe flickering to a transitioning drone.
-
-### Static Formation Module
-- **`src/formation/FormationState.js`**: Core state engine managing 3D static formations, undo/redo history, selections, groups, and clipboards.
-  - `FormationState.subscribe(listener)`: Subscribes listeners to change notifications.
-  - `FormationState.saveStateToHistory()`, `undo()`, `redo()`: Traverses the operation history stack.
-  - `FormationState.select(index, multi)`, `deselect(index)`, `clearSelection()`, `selectGroup(groupName, multi)`: Standard selection updates.
-  - `FormationState.duplicateSelected()`, `deleteSelected()`, `copyToClipboard()`, `pasteFromClipboard()`: Object manipulation commands.
-- **`src/formation/FormationDirector.js`**: Master scene loop and InstancedMesh compiler for static formations. Reuses the GizmoSystem.
-  - `FormationDirector.initInstancedMesh()`: Pre-allocates instanced spheres for rendering static formations.
-  - `FormationDirector.onPointerDown(event)`: Casts 3D raycast to detect drone selection click events.
-  - `FormationDirector.onKeyDown(event)`: Listens for keyboard shortcuts (Ctrl+Z, Ctrl+Y, Delete, Shift+C, etc.).
-  - `FormationDirector.updateMeshFromState()`: Flushes positions and colors from state into Three.js matrix updates.
-- **`src/formation/ui/FormationUI.js`**: Assembles the Left (Shape, Group) and Right (Gizmo, Properties) panels for static editing.
-  - `setupFormationUI(state, director)`: Renders full HTML panel structures and binds callbacks.
-- **`src/formation/ui/FormationShapePanel.js`**: Renders controls for mathematical shape generators (Circle, Grid, Wave, Star, Cube, etc.).
-- **`src/formation/ui/FormationPropertiesPanel.js`**: Manages colors, scales, and group assignments for selected particles.
 
 ### Orchestration & Controllers
 - **`src/controllers/InputSystem.js`**: Binds standard desktop mouse/keyboard events, pointer locking, and play/pause timeline shortcuts.
@@ -115,32 +104,32 @@
   - `ShowDirector.loadScript(scriptConfig)`: Parses high-level show events.
   - `ShowDirector.update(deltaTime)`: Tracks clock time, fires events sequentially, and updates sequencers.
 
-### UI & Animated Timeline Editor
+### UI & Timeline Editor
 - **`src/ui/TimelineEditor.js`**: Standard editor overlay containing track timelines, zoom options, event blocks, and playback controls.
+  - `TimelineEditor.initDOM()`: Configures the timeline UI layout, buttons (Play, Follow, Add, Save, Import), and timeline event handlers.
+  - `TimelineEditor.renderTracks()`: Draws all sequences and audio files as visual tracks with drag-and-resize support.
+  - `TimelineEditor.seek(time)`: Adjusts the playback head and synchronizes the active show time.
+  - `TimelineEditor.addSequence(time)`: Inserts a new pyrotechnic sequence at the target time.
+  - `TimelineEditor.addAudioSequence(time, file)`: Loads a local audio file and schedules it on the timeline.
+  - `TimelineEditor.addDroneSequence(time, file)`: Parses external drone formation JSON data and registers a drone show track.
+  - `TimelineEditor.saveSequence()`: Serializes timeline sequences and triggers local storage/electron file saving.
 - **`src/ui/PropertyInspector.js`**: Connects form inputs to event timing modifications and coordinates.
-- **`src/editor/main.js`**: Entry point for the timeline-based animated formation editor.
-- **`src/editor/FormationEditorState.js`**: State engine for the animated timeline-based drone editor.
-  - `FormationEditorState.saveCurrentStep()`, `loadStep(index)`, `addStep()`, `removeStep(index)`: Timeline step sequence manipulation.
-  - `FormationEditorState.exportFormat()`, `loadFormat(data)`: JSON import/export adapters for drone sequences.
-- **`src/editor/EditorDirector.js`**: Manages animated rendering loop, input raycasting, and Three.js buffers for the animated editor.
-- **`src/editor/ui/EditorUI.js`**: Assembles animated editor panels.
-- **`src/editor/ui/panels/`**: Layout panels (FilePanel, ShapePanel, GizmoPanel, SelectionPanel, GroupPanel, StepPanel, TimelinePanel).
-- **`src/editor/systems/GizmoSystem.js`**: 3D selection handles allowing translation, rotation, and scaling of selected particles.
-  - `GizmoSystem.isHovering()`: Checks if the user's cursor is hover-interacting with any transform handle.
-  - `GizmoSystem.setMode(mode)`: Switches gizmo mode between 'translate', 'rotate', and 'scale'.
-  - `GizmoSystem.onStateChange()`: Synces proxy control objects with selected drone entities.
+  - `PropertyInspector.show(event)`: Opens the inspector panel to edit properties of a selected sequence block.
+  - `PropertyInspector.render()`: Dynamically renders input elements based on active sequence type (pyros vs audio).
 
 ### Config
 - **`src/config/launchZone.js`**: Configures angles, sectors, heights, and center positions for firework launching.
 - **`src/config/droneZone.js`**: Configures bounds and physical spacing rules for drone displays.
 - **`src/config/droneFormats.js`**: Declares named preset configurations containing shape types, transition styles, arrival colors, and animations.
 - **`src/config/rendering.js`**: Graphic option toggles, including Bloom threshold controls.
-- **`src/config/sequences/`**: Python-like script configuration storage (`demoShow.json`, `droneDemo.json`).
+- **`src/config/sequences/`**: Python-like script configuration storage (`demoShow.json`, `grandFinale.js`, `pricen_of_caribe.json`, `index.js`).
+
+---
 
 ## 2. Entry Points
-- **`src/main.js`**: Firework Show application entry point. Initializes engine core, systems, directors, and UI.
-- **`src/editor/main.js`**: Animated Drone Editor application entry point.
-- **`src/formation/main.js`**: Static 3D Formation Editor application entry point.
+- **`src/main.js`**: Firework Show application entry point. Initializes engine core, systems, directors, timeline editor, and page preloader logic.
+
+---
 
 ## 3. Relationship Graph
 ```mermaid
@@ -162,33 +151,23 @@ graph TD
     DroneSeq --> DroneSys[systems/DroneSystem]
     DroneSys --> InstancedMesh[render/InstancedDroneMesh]
     DroneSys --> DroneAnim[entities/DroneAnimationLayer]
-
-    %% Static Formation Editor Entry
-    FormationMain[src/formation/main.js] --> FormDir[formation/FormationDirector]
-    FormationMain --> FormUI[formation/ui/FormationUI]
-    FormDir --> FormState[formation/FormationState]
-    FormState --> DroneFactory[factories/DroneFormationFactory]
-    FormUI --> Gizmo[editor/systems/GizmoSystem]
-
-    %% Animated Timeline Editor Entry
-    EditorMain[src/editor/main.js] --> EditorDir[editor/EditorDirector]
-    EditorMain --> EditorUI[editor/ui/EditorUI]
-    EditorDir --> EdState[editor/FormationEditorState]
-    EdState --> DroneFactory
-    EditorUI --> Gizmo
 ```
+
+---
 
 ## 4. Execution Flows
 - **Firework Show Initialization**: `src/main.js` -> Setup Core managers (`SceneManager`, `CameraManager`, `Renderer`) -> Spawn Pyros/Comets/Audio/Drone Systems -> Setup `ShowDirector` and Sequencers -> Load Sequence Script -> Start render loop.
 - **Dynamic Drone Animation & Transition**: `DroneShowSequencer` calculates the current display elapsed time -> interpolates coordinates between adjacent keyframes -> triggers custom transition shapes -> applies `ArrivalColorSystem` or `TransitionColorSystem` effects -> applies `DroneAnimationLayer` (spinning/pulsing) offsets -> copies matrices directly to `InstancedDroneMesh`.
-- **Static Formation Editing**: `src/formation/main.js` -> Load UI panels -> Add shapes via `DroneFormationFactory` -> UI modifications update `FormationState` -> Operations saved to history -> `FormationDirector` flushes matrices to Three.js `InstancedMesh`.
+
+---
 
 ## 5. Cross-Module Dependencies
-- **GizmoSystem**: Shared between the animated `src/editor` timeline application and the static `src/formation` application.
-- **DroneFormationFactory**: Shared utility calculating all coordinate offsets for both editing suites and runtime procedural shows.
 - **TrailSystem & SmokeSystem**: Tightly bound systems called by both `FireworkSystem` and `CometSystem` to generate realistic particle simulations.
+- **AudioSystem**: Shared context used by `TimelineEditor` and `ShowDirector` to trigger synchronized background soundtracks and pyro audio blasts.
+
+---
 
 ## 6. Problems & Anti-patterns
-- **State Engine Duplication**: `FormationState` (static) and `FormationEditorState` (animated timeline) share almost identical code patterns for copying, pasting, deleting, and selecting drones. This should be abstracted into a unified base state class.
-- **Tight UI Coupling**: UI panels in `src/editor/ui/panels/` and `src/formation/ui/` write HTML strings directly inside files and reference global DOM elements. They should be modularized or built via a lightweight template system.
-- **Direct Event Listeners**: Multiple systems listen for global events (like `timeline:toggle`) dispatched directly to the window, leading to potential leak points. A centralized event bus is highly recommended.
+- **Tight UI Coupling**: UI panels in `src/ui/TimelineEditor.js` and `src/ui/PropertyInspector.js` write HTML strings directly inside files and reference global DOM elements. They should be modularized or built via a lightweight template system.
+- **Direct Event Listeners**: Multiple systems listen for global events (like `timeline:toggle` or `timeline:hover`) dispatched directly to the window, leading to potential leak points. A centralized event bus is highly recommended.
+- **Dead Code / Unused Modules**: Legacy components like `src/factories/DroneFormationFactory.js`, `src/factories/DronePropertyFactory.js`, and `src/systems/PhysicSystem.js` are still present in the repository but never imported or utilized by the active firework simulation loop in the `dev` branch.
