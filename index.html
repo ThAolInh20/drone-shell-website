@@ -370,6 +370,14 @@
         <div class="docs-sidebar-header">
           <h3>Tài liệu hướng dẫn</h3>
         </div>
+        <div class="docs-search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="docs-search-input" placeholder="Tìm kiếm (nhấn Enter)..." autocomplete="off" />
+          <button id="docs-search-clear" style="display: none;">✕</button>
+        </div>
         <nav class="docs-sidebar-nav" id="docs-sidebar-nav">
           <!-- Populated dynamically -->
         </nav>
@@ -383,9 +391,9 @@
           <!-- Populated dynamically -->
         </div>
         <footer class="docs-pagination">
-          <button class="btn btn-secondary" id="btn-doc-prev">&larr; Bài trước</button>
-          <span id="doc-progress-text">Bài 0 / 0</span>
-          <button class="btn btn-secondary" id="btn-doc-next">Bài sau &rarr;</button>
+          <button class="btn btn-secondary" id="btn-doc-prev">&larr;</button>
+          <span id="doc-progress-text">0 / 0</span>
+          <button class="btn btn-secondary" id="btn-doc-next">&rarr;</button>
         </footer>
       </article>
     </div>

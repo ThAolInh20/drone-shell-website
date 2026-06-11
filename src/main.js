@@ -69,6 +69,7 @@ document.addEventListener('click', () => {
 }, { once: true });
 
 let isInDocsView = false;
+let docRenderFramesRemaining = 0;
 
 // Canvas click triggers fireworks (bubbles up from pointer-events: none empty spaces on overlay)
 renderer.instance.domElement.addEventListener('click', () => {
@@ -123,41 +124,60 @@ function animate() {
   requestAnimationFrame(animate);
 
   clock.update();
-  
+
   // Systems update
   if (isInDocsView) {
-    // Stop automated director/sequencer, but keep updating active particles
-    // so in-flight fireworks detonate and fade away cleanly.
-    fireworkSystem.update(clock.deltaTime);
-    if (cometSystem) cometSystem.update(clock.deltaTime);
-    if (trailSystem) trailSystem.update(clock.deltaTime);
-    smokeSystem.update(clock.deltaTime);
-    skyLightReactionSystem.update(clock.deltaTime);
-  } else if (!inputSystem.isPaused()) {
-    movementSystem.update(clock.deltaTime);
-    showDirector.update(clock.deltaTime);
-    fireworkSequencer.update(clock.deltaTime);
-    droneSequencer.update(clock.deltaTime);
-    droneSystem.update(clock.deltaTime);
-    fireworkSystem.update(clock.deltaTime);
-    cometSystem.update(clock.deltaTime);
-    trailSystem.update(clock.deltaTime);
-    skyLightReactionSystem.update(clock.deltaTime);
-    smokeSystem.update(clock.deltaTime);
-  } else {
-    droneSequencer.update(clock.deltaTime);
-    droneSystem.update(clock.deltaTime);
-    skyLightReactionSystem.update(clock.deltaTime);
-    smokeSystem.update(clock.deltaTime);
-  }
+    if (docRenderFramesRemaining > 0) {
+      docRenderFramesRemaining--;
+      // Stop automated director/sequencer, but keep updating active particles
+      // so in-flight fireworks detonate and fade away cleanly.
+      fireworkSystem.update(clock.deltaTime);
+      if (cometSystem) cometSystem.update(clock.deltaTime);
+      if (trailSystem) trailSystem.update(clock.deltaTime);
+      smokeSystem.update(clock.deltaTime);
+      skyLightReactionSystem.update(clock.deltaTime);
 
-  // Render loop
-  if (postProcessing) {
-    postProcessing.render();
+      // Render loop
+      if (postProcessing) {
+        postProcessing.render();
+      } else {
+        renderer.render(sceneManager.instance, cameraManager.instance);
+      }
+    }
   } else {
-    renderer.render(sceneManager.instance, cameraManager.instance);
+    if (!inputSystem.isPaused()) {
+      movementSystem.update(clock.deltaTime);
+      showDirector.update(clock.deltaTime);
+      fireworkSequencer.update(clock.deltaTime);
+      droneSequencer.update(clock.deltaTime);
+      droneSystem.update(clock.deltaTime);
+      fireworkSystem.update(clock.deltaTime);
+      cometSystem.update(clock.deltaTime);
+      trailSystem.update(clock.deltaTime);
+      skyLightReactionSystem.update(clock.deltaTime);
+      smokeSystem.update(clock.deltaTime);
+    } else {
+      droneSequencer.update(clock.deltaTime);
+      droneSystem.update(clock.deltaTime);
+      skyLightReactionSystem.update(clock.deltaTime);
+      smokeSystem.update(clock.deltaTime);
+    }
+
+    // Render loop
+    if (postProcessing) {
+      postProcessing.render();
+    } else {
+      renderer.render(sceneManager.instance, cameraManager.instance);
+    }
   }
 }
+
+// Redraw if resized during documentation view to prevent distortion
+window.addEventListener('resize', () => {
+  if (isInDocsView) {
+    docRenderFramesRemaining = 5;
+  }
+});
 
 // Start simulation
 animate();
@@ -181,6 +201,7 @@ const rawDocs = import.meta.glob('./content/**/*.md', {
 
 // State variables
 let currentDocPath = '';
+let searchQuery = '';
 const parsedDocs = []; // List of all parsed docs (flat array for pagination)
 
 // Elements
@@ -215,16 +236,16 @@ function extractDocTitle(content, filename) {
 Object.entries(rawDocs).forEach(([key, rawContent]) => {
   // key example: "./content/animated-editor/README.md"
   const cleanPath = key.replace('./content/', ''); // "animated-editor/README.md"
-  
+
   // Extract category
   let category = 'root';
   if (cleanPath.includes('/')) {
     category = cleanPath.split('/')[0];
   }
-  
+
   const filename = cleanPath.substring(cleanPath.lastIndexOf('/') + 1);
   const title = extractDocTitle(rawContent, filename);
-  
+
   parsedDocs.push({
     path: cleanPath,
     category,
@@ -240,10 +261,10 @@ parsedDocs.sort((a, b) => {
     const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor'];
     return categoriesOrder.indexOf(a.category) - categoriesOrder.indexOf(b.category);
   }
-  
+
   if (a.filename === 'README.md') return -1;
   if (b.filename === 'README.md') return 1;
-  
+
   return a.filename.localeCompare(b.filename);
 });
 
@@ -251,32 +272,48 @@ parsedDocs.sort((a, b) => {
 function renderSidebar() {
   if (!sidebarNav) return;
   sidebarNav.innerHTML = '';
-  
+
+  // Filter docs by search query (checks both title and raw markdown content)
+  const filteredDocs = searchQuery.trim()
+    ? parsedDocs.filter(doc => 
+        doc.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        doc.content.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : parsedDocs;
+
+  if (filteredDocs.length === 0) {
+    const emptyMsg = document.createElement('div');
+    emptyMsg.className = 'docs-search-empty';
+    emptyMsg.textContent = 'Không tìm thấy kết quả phù hợp';
+    sidebarNav.appendChild(emptyMsg);
+    return;
+  }
+
   // Group by category
   const grouped = {};
-  parsedDocs.forEach(doc => {
+  filteredDocs.forEach(doc => {
     if (!grouped[doc.category]) {
       grouped[doc.category] = [];
     }
     grouped[doc.category].push(doc);
   });
-  
+
   // Render
   const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor'];
   categoriesOrder.forEach(cat => {
     if (!grouped[cat]) return;
-    
+
     const catDiv = document.createElement('div');
     catDiv.className = 'docs-category';
-    
+
     const catTitle = document.createElement('div');
     catTitle.className = 'docs-category-title';
     catTitle.textContent = CATEGORY_LABELS[cat] || cat;
     catDiv.appendChild(catTitle);
-    
+
     const list = document.createElement('ul');
     list.className = 'docs-category-list';
-    
+
     grouped[cat].forEach(doc => {
       const li = document.createElement('li');
       const link = document.createElement('a');
@@ -290,16 +327,16 @@ function renderSidebar() {
         </svg>
         <span>${doc.title}</span>
       `;
-      
+
       link.addEventListener('click', (e) => {
         e.preventDefault();
         navigateToDoc(doc.path);
       });
-      
+
       li.appendChild(link);
       list.appendChild(li);
     });
-    
+
     catDiv.appendChild(list);
     sidebarNav.appendChild(catDiv);
   });
@@ -309,25 +346,25 @@ function renderSidebar() {
 function parseMarkdown(md) {
   // Strip frontmatter if present
   let cleanMd = md.replace(/^---[\s\S]*?---\r?\n/, '');
-  
+
   // 1. Temporarily extract code blocks to protect them from word-wrapping/paragraph tags
   const codeBlocks = [];
   cleanMd = cleanMd.replace(/```([\s\S]*?)```/g, (match, code) => {
     const placeholder = `<!--__CODE_BLOCK_${codeBlocks.length}__-->`;
-    
+
     const lines = code.split('\n');
     let lang = '';
     if (lines[0] && !lines[0].includes(' ') && lines[0].length < 15) {
       lang = lines.shift().trim();
     }
     const cleanCode = lines.join('\n').trim();
-    
+
     // Convert HTML entities inside code block
     const safeCode = cleanCode
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
-      
+
     codeBlocks.push(`<pre><code class="language-${lang}">${safeCode}</code></pre>`);
     return placeholder;
   });
@@ -357,16 +394,16 @@ function parseMarkdown(md) {
   // 3. Process line by line, grouping lists, tables, and paragraphs
   const lines = cleanMd.split(/\r?\n/);
   const processedBlocks = [];
-  
+
   let inList = false;
   let listHTML = '';
   let inTable = false;
   let tableHTML = '';
-  
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmed = line.trim();
-    
+
     // Handle Table
     if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
       if (inList) {
@@ -374,18 +411,18 @@ function parseMarkdown(md) {
         inList = false;
         listHTML = '';
       }
-      
+
       if (!inTable) {
         inTable = true;
         tableHTML = '<table>';
       }
-      
+
       const cells = trimmed.split('|').slice(1, -1).map(c => c.trim());
       const isSeparator = cells.every(c => /^:?-+:?$/.test(c));
       if (isSeparator) {
         continue;
       }
-      
+
       const isHeader = (tableHTML === '<table>');
       tableHTML += '<tr>';
       cells.forEach(cell => {
@@ -402,7 +439,7 @@ function parseMarkdown(md) {
         tableHTML = '';
       }
     }
-    
+
     // Handle Bullet List
     const isBulletList = trimmed.startsWith('- ') || trimmed.startsWith('* ');
     if (isBulletList) {
@@ -420,17 +457,17 @@ function parseMarkdown(md) {
         listHTML = '';
       }
     }
-    
+
     if (trimmed === '') {
       continue;
     }
-    
+
     // Handle Code Block Placeholder (restored later)
     if (trimmed.startsWith('<!--__CODE_BLOCK_') && trimmed.endsWith('__-->')) {
       processedBlocks.push(trimmed);
       continue;
     }
-    
+
     // Handle Headers
     if (trimmed.startsWith('#### ')) {
       processedBlocks.push(`<h4>${parseInlineMarkdown(trimmed.substring(5))}</h4>`);
@@ -457,18 +494,18 @@ function parseMarkdown(md) {
       }
     }
   }
-  
+
   // Close any unclosed list/table blocks
   if (inList) processedBlocks.push(`<ul>${listHTML}</ul>`);
   if (inTable) processedBlocks.push(`${tableHTML}</table>`);
-  
+
   let finalHTML = processedBlocks.join('\n');
-  
+
   // 4. Restore the code blocks
   codeBlocks.forEach((codeBlockHTML, idx) => {
     finalHTML = finalHTML.replace(`<!--__CODE_BLOCK_${idx}__-->`, codeBlockHTML);
   });
-  
+
   return finalHTML;
 }
 
@@ -476,14 +513,14 @@ function parseMarkdown(md) {
 function navigateToDoc(path) {
   const doc = parsedDocs.find(d => d.path === path);
   if (!doc) return;
-  
+
   currentDocPath = path;
   window.location.hash = `#docs/${path}`;
-  
+
   // Render content
   docTitleDisplay.textContent = doc.title;
   docsBody.innerHTML = parseMarkdown(doc.content);
-  
+
   // Highlight active item in sidebar
   document.querySelectorAll('.docs-item-link').forEach(link => {
     if (link.dataset.path === path) {
@@ -492,7 +529,7 @@ function navigateToDoc(path) {
       link.classList.remove('active');
     }
   });
-  
+
   // Bind events to new internal links in markdown content
   docsBody.querySelectorAll('.docs-internal-link').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -501,15 +538,14 @@ function navigateToDoc(path) {
       navigateToDoc(targetPath);
     });
   });
-  
-  // Scroll reader to top
-  const viewerPanel = document.querySelector('.docs-viewer');
-  if (viewerPanel) viewerPanel.scrollTop = 0;
-  
+
+  // Scroll window to top instantly to prevent layout & rendering stutter
+  window.scrollTo(0, 0);
+
   // Update pagination UI
   const currentIndex = parsedDocs.findIndex(d => d.path === path);
-  docProgressText.textContent = `Bài ${currentIndex + 1} / ${parsedDocs.length}`;
-  
+  docProgressText.textContent = `${currentIndex + 1} / ${parsedDocs.length}`;
+
   // Prev button
   if (currentIndex > 0) {
     btnDocPrev.disabled = false;
@@ -519,7 +555,7 @@ function navigateToDoc(path) {
     btnDocPrev.disabled = true;
     btnDocPrev.style.opacity = 0.4;
   }
-  
+
   // Next button
   if (currentIndex < parsedDocs.length - 1) {
     btnDocNext.disabled = false;
@@ -536,12 +572,15 @@ function setDocsViewActive(active) {
   isInDocsView = active;
   const enterpriseUI = document.getElementById('enterprise-ui');
   const docsContainer = document.getElementById('docs-container');
-  
+
   if (active) {
+    // Render for 45 frames (~750ms) to allow burst animations to settle down and fade out
+    docRenderFramesRemaining = 45;
+
     if (fireworkSystem) {
       // Turn off autolaunch in docs view
       fireworkSystem.autoLaunchEnabled = false;
-      
+
       // Force detonate all currently flying fireworks instantly when entering docs view
       if (typeof fireworkSystem.burstAll === 'function') {
         fireworkSystem.burstAll();
@@ -581,6 +620,47 @@ if (btnDocsClose) {
   });
 }
 
+// Search functionality event binding
+const searchInput = document.getElementById('docs-search-input');
+const searchClearBtn = document.getElementById('docs-search-clear');
+
+function performSearch() {
+  if (!searchInput) return;
+  searchQuery = searchInput.value;
+  
+  if (searchClearBtn) {
+    searchClearBtn.style.display = searchQuery ? 'block' : 'none';
+  }
+  
+  renderSidebar();
+}
+
+if (searchInput) {
+  // Trigger search on keyboard Enter
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      performSearch();
+    }
+  });
+
+  // Restore list instantly if input is cleared out (Ctrl+A -> Backspace, etc.)
+  searchInput.addEventListener('input', () => {
+    if (searchInput.value === '') {
+      performSearch();
+    }
+  });
+}
+
+if (searchClearBtn && searchInput) {
+  searchClearBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    searchInput.value = '';
+    performSearch();
+    searchInput.focus();
+  });
+}
+
 // Check initial hash on load
 function handleHashChange() {
   const hash = window.location.hash;
@@ -611,7 +691,7 @@ function hidePreloader() {
       progressFill.style.animation = 'none';
       progressFill.style.width = '100%';
     }
-    
+
     const statusText = loader.querySelector('.loader-status');
     if (statusText) {
       statusText.textContent = 'Systems Online!';
@@ -622,7 +702,7 @@ function hidePreloader() {
     // Trigger fading transitions
     setTimeout(() => {
       loader.classList.add('fade-out');
-      
+
       // Cleanup DOM node to release memory after fade transition completes
       setTimeout(() => {
         loader.remove();

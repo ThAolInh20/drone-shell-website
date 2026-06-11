@@ -950,9 +950,9 @@ code {
 /* --- Documentation Section Styles --- */
 #docs-container {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 30px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 40px auto;
   padding: 0 40px;
   min-height: calc(100vh - 260px);
@@ -962,8 +962,8 @@ code {
 
 /* Toggle visibility of landing page vs docs page */
 #enterprise-ui.docs-active {
-  height: 100vh !important;
-  overflow: hidden !important;
+  height: auto !important;
+  overflow: visible !important;
 }
 
 #enterprise-ui.docs-active .main-content {
@@ -971,14 +971,15 @@ code {
 }
 
 #enterprise-ui.docs-active .footer {
-  display: none !important;
+  display: block !important;
+  margin-top: 80px;
 }
 
 #enterprise-ui.docs-active #docs-container {
   display: grid !important;
-  height: calc(100vh - 140px) !important;
-  margin: 20px auto 0 !important;
-  min-height: auto !important;
+  height: auto !important;
+  margin: 40px auto 0 !important;
+  min-height: calc(100vh - 200px) !important;
   animation: fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
@@ -988,9 +989,11 @@ code {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 100%;
+  height: calc(100vh - 160px);
   box-sizing: border-box;
   overflow: hidden;
+  position: sticky;
+  top: 110px;
 }
 
 .docs-sidebar-header h3 {
@@ -1003,6 +1006,80 @@ code {
   margin: 0;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Search Box Styling */
+.docs-search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin-top: 4px;
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+}
+
+.docs-search-box:focus-within {
+  border-color: #00f5ff;
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.docs-search-box .search-icon {
+  color: rgba(243, 244, 246, 0.4);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.docs-search-box:focus-within .search-icon {
+  color: #00f5ff;
+}
+
+.docs-search-box input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13.5px;
+  width: 100%;
+  outline: none;
+  padding: 0;
+}
+
+.docs-search-box input::placeholder {
+  color: rgba(243, 244, 246, 0.4);
+}
+
+.docs-search-box button {
+  background: transparent;
+  border: none;
+  color: rgba(243, 244, 246, 0.5);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: 18px;
+  height: 18px;
+}
+
+.docs-search-box button:hover {
+  color: #ff5555;
+  transform: scale(1.1);
+}
+
+.docs-search-empty {
+  padding: 24px 12px;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(243, 244, 246, 0.4);
+  font-style: italic;
+  line-height: 1.5;
 }
 
 .docs-sidebar-nav {
@@ -1095,10 +1172,13 @@ code {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  height: 100%;
+  height: auto;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
   position: relative; /* Lock layout positions inside viewer */
+  background: rgba(10, 15, 30, 0.92) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 .docs-viewer-header {
@@ -1155,11 +1235,9 @@ code {
   line-height: 1.7;
   color: rgba(243, 244, 246, 0.8);
   overflow-wrap: break-word;
-  overflow-y: auto;
-  flex-grow: 1;
-  padding-right: 16px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  overflow-y: visible;
+  height: auto;
+  padding-right: 0;
 }
 
 .docs-body::-webkit-scrollbar {
@@ -1306,7 +1384,7 @@ code {
   align-items: center;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 24px;
-  margin-top: auto;
+  margin-top: 40px;
 }
 
 #doc-progress-text {
@@ -1318,7 +1396,7 @@ code {
 /* Responsive adjustment for Docs */
 @media (max-width: 1024px) {
   #docs-container {
-    grid-template-columns: 2fr !important;
+    grid-template-columns: 1fr !important;
     gap: 20px !important;
     padding: 0 16px !important;
     margin: 20px auto !important;
@@ -1327,9 +1405,11 @@ code {
   .docs-sidebar {
     position: relative !important;
     top: 0 !important;
+    height: auto !important;
     max-height: 250px !important;
     width: 100% !important;
     box-sizing: border-box;
+    overflow-y: auto !important;
   }
 
   .docs-viewer {
