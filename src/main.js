@@ -192,12 +192,7 @@ const CATEGORY_LABELS = {
   'static-formation': 'Thiết kế Đội hình Tĩnh'
 };
 
-// 2. Scan markdown files using Vite's glob import
-const rawDocs = import.meta.glob('./content/**/*.md', {
-  query: '?raw',
-  import: 'default',
-  eager: true
-});
+// 2. Scan markdown files dynamically at runtime (moved from Vite build-time glob import)
 
 // State variables
 let currentDocPath = '';
@@ -232,41 +227,72 @@ function extractDocTitle(content, filename) {
   return cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
 }
 
-// Build internal docs database
-Object.entries(rawDocs).forEach(([key, rawContent]) => {
-  // key example: "./content/animated-editor/README.md"
-  const cleanPath = key.replace('./content/', ''); // "animated-editor/README.md"
+// Fetch and build internal docs database dynamically
+async function loadDocs() {
+  try {
+    const response = await fetch('/content/manifest.json');
+    if (!response.ok) {
+      throw new Error(`Failed to load manifest.json: ${response.statusText}`);
+    }
+    const paths = await response.json();
 
-  // Extract category
-  let category = 'root';
-  if (cleanPath.includes('/')) {
-    category = cleanPath.split('/')[0];
+    const promises = paths.map(async (path) => {
+      try {
+        const docRes = await fetch(`/content/${path}`);
+        if (!docRes.ok) {
+          throw new Error(`Failed to load ${path}: ${docRes.statusText}`);
+        }
+        const rawContent = await docRes.text();
+
+        let category = 'root';
+        if (path.includes('/')) {
+          category = path.split('/')[0];
+        }
+
+        const filename = path.substring(path.lastIndexOf('/') + 1);
+        const title = extractDocTitle(rawContent, filename);
+
+        return {
+          path,
+          category,
+          filename,
+          title,
+          content: rawContent
+        };
+      } catch (err) {
+        console.error(`Error loading document ${path}:`, err);
+        return null;
+      }
+    });
+
+    const loadedDocs = await Promise.all(promises);
+    const validDocs = loadedDocs.filter(doc => doc !== null);
+
+    parsedDocs.length = 0;
+    parsedDocs.push(...validDocs);
+
+    // Sort documents: README.md first in category, then alphabetical
+    parsedDocs.sort((a, b) => {
+      if (a.category !== b.category) {
+        const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor'];
+        return categoriesOrder.indexOf(a.category) - categoriesOrder.indexOf(b.category);
+      }
+
+      if (a.filename === 'README.md') return -1;
+      if (b.filename === 'README.md') return 1;
+
+      return a.filename.localeCompare(b.filename);
+    });
+
+    // Render sidebar
+    renderSidebar();
+
+    // Trigger hash routing now that the data is loaded
+    handleHashChange();
+  } catch (error) {
+    console.error("Error loading docs manifest:", error);
   }
-
-  const filename = cleanPath.substring(cleanPath.lastIndexOf('/') + 1);
-  const title = extractDocTitle(rawContent, filename);
-
-  parsedDocs.push({
-    path: cleanPath,
-    category,
-    filename,
-    title,
-    content: rawContent
-  });
-});
-
-// Sort documents: README.md first in category, then alphabetical
-parsedDocs.sort((a, b) => {
-  if (a.category !== b.category) {
-    const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor'];
-    return categoriesOrder.indexOf(a.category) - categoriesOrder.indexOf(b.category);
-  }
-
-  if (a.filename === 'README.md') return -1;
-  if (b.filename === 'README.md') return 1;
-
-  return a.filename.localeCompare(b.filename);
-});
+}
 
 // Render sidebar navigation HTML
 function renderSidebar() {
@@ -679,7 +705,7 @@ function handleHashChange() {
 
 window.addEventListener('hashchange', handleHashChange);
 // Run on load
-setTimeout(handleHashChange, 100);
+loadDocs();
 
 // --- Smoothly Dismiss Premium Page Preloader ---
 function hidePreloader() {

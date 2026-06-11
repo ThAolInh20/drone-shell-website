@@ -1,0 +1,40 @@
+[
+  {
+    "timestamp": "2026-06-11T15:32:48.000+07:00",
+    "added": [],
+    "removed": [
+      "test-dir/test-doc.md"
+    ],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-06-11T15:32:30.000+07:00",
+    "added": [
+      "test-dir/test-doc.md"
+    ],
+    "removed": [],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-06-11T15:32:15.000+07:00",
+    "added": [
+      "README.md",
+      "animated-editor/README.md",
+      "animated-editor/grizmo.md",
+      "animated-editor/hold-effect.md",
+      "animated-editor/step.md",
+      "animated-editor/transition-effect.md",
+      "show-viewer/README.md",
+      "show-viewer/sequences.md",
+      "show-viewer/show-view.md",
+      "show-viewer/timeline-editor.md",
+      "static-formation/README.md",
+      "static-formation/add-3d-2d.md",
+      "static-formation/grizmo.md",
+      "static-formation/group-and-grizmo.md",
+      "static-formation/shape.md"
+    ],
+    "removed": [],
+    "status": "success"
+  }
+]
