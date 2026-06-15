@@ -187,9 +187,9 @@ animate();
 // 1. Definition of categories for Vietnamese styling
 const CATEGORY_LABELS = {
   'root': 'Tổng quan',
-  'animated-editor': 'Biên tập Hoạt ảnh',
-  'show-viewer': 'Trình xem & Trình diễn',
-  'static-formation': 'Thiết kế Đội hình Tĩnh'
+  'animated-editor': 'Animation formation editor (Ctr + 2)',
+  'show-viewer': 'Show viewer (Ctr + 1)',
+  'static-formation': 'Static formation editor (Ctr + 3)'
 };
 
 // 2. Scan markdown files dynamically at runtime (moved from Vite build-time glob import)
@@ -301,10 +301,10 @@ function renderSidebar() {
 
   // Filter docs by search query (checks both title and raw markdown content)
   const filteredDocs = searchQuery.trim()
-    ? parsedDocs.filter(doc => 
-        doc.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        doc.content.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    ? parsedDocs.filter(doc =>
+      doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.content.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : parsedDocs;
 
   if (filteredDocs.length === 0) {
@@ -580,11 +580,11 @@ function generateTOC() {
         const yOffset = -120;
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
-        
+
         // Update URL hash without scroll jumping
         const cleanHash = window.location.hash.split('#')[0] + '#' + id;
         history.pushState(null, null, cleanHash);
-        
+
         // Update active class
         document.querySelectorAll('.toc-item-link').forEach(l => l.classList.remove('active'));
         link.classList.add('active');
@@ -593,7 +593,7 @@ function generateTOC() {
 
     tocNav.appendChild(link);
   });
-  
+
   // Set initial active state
   updateActiveTOCItem();
 }
@@ -756,11 +756,11 @@ const searchClearBtn = document.getElementById('docs-search-clear');
 function performSearch() {
   if (!searchInput) return;
   searchQuery = searchInput.value;
-  
+
   if (searchClearBtn) {
     searchClearBtn.style.display = searchQuery ? 'block' : 'none';
   }
-  
+
   renderSidebar();
 }
 
@@ -798,10 +798,10 @@ function handleHashChange() {
     const parts = fullPath.split('#');
     const path = parts[0];
     const headingId = parts[1] || '';
-    
+
     setDocsViewActive(true);
     navigateToDoc(path);
-    
+
     if (headingId) {
       setTimeout(() => {
         const element = document.getElementById(headingId);

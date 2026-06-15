@@ -950,9 +950,10 @@ code {
 /* --- Documentation Section Styles --- */
 #docs-container {
   display: grid;
-  grid-template-columns: 280px 1fr 240px;
+  grid-template-columns: 280px minmax(0, 800px) 240px;
+  justify-content: center;
   gap: 30px;
-  max-width: 1600px;
+  max-width: 100%;
   margin: 40px auto;
   padding: 0 40px;
   min-height: calc(100vh - 260px);
@@ -1366,6 +1367,13 @@ code {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+.docs-body th:first-child,
+.docs-body td:first-child {
+  width: 220px;
+  min-width: 180px;
+  white-space: nowrap;
+}
+
 .docs-body th {
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
@@ -1487,7 +1495,8 @@ code {
 /* Responsive adjustment for Docs */
 @media (max-width: 1200px) {
   #docs-container {
-    grid-template-columns: 280px 1fr !important;
+    grid-template-columns: 280px minmax(0, 800px) !important;
+    justify-content: center;
   }
   .docs-toc {
     display: none !important;

@@ -1,27 +1,25 @@
 # Các phím tắt trong Viewer show
 
-Tài liệu này cung cấp danh sách đầy đủ các phím tắt hệ thống tại trang viewer show `ctr+1`
+Tài liệu này cung cấp danh sách phím tắt hệ thống trong phân hệ Viewer.
 
 ---
 
-## Phím tắt toàn cục (áp dụng cho cả 3 màn hình)
+## Phím tắt toàn cục
 
-*   **`Space` (Dấu cách):** Phát hoặc Tạm dừng (Play/Pause) dòng thời gian kịch bản.
-*   **`Ctrl + S`:** lưu kịch bản hiện tại hoặc tạo kịch bản mới nếu chưa lưu.
-*   **`Ctrl + Z`:** quay lại bước trước đó
-*   **`Ctrl + Y`:** quay lại bước sau đó
-
-## Phím tắt Điều khiển Camera màn hình show (Ctrl + 1)
-
-Hỗ trợ di chuyển tự do trong không gian mô phỏng 3D:
-
-*   **`W` / `A` / `S` / `D`:** Di chuyển camera tiến, lùi, sang trái, sang phải.
-*   **`Shift + Y`:** Bật hoặc tắt bảng theo dõi hiệu năng & chẩn đoán hệ thống.
-*   **`Esc`:** Bật menu hệ thống.
-*   **`Space` (Dấu cách):** Phát hoặc Tạm dừng (Play/Pause) dòng thời gian kịch bản.
+| Phím tắt | Chức năng hoạt động |
+| :--- | :--- |
+| **`Space`** | Phát hoặc Tạm dừng kịch bản |
+| **`Ctrl + S`** | Lưu kịch bản hiện tại |
+| **`Ctrl + Z`** | Hoàn tác thao tác (Undo) |
+| **`Ctrl + Y`** | Làm lại thao tác (Redo) |
 
 ---
-## Phím tắt màn Formation animation (Ctrl + 2)
 
-## Phím tắt màn Formation editor (Ctrl + 3)
+## Phím tắt Điều khiển Camera
 
+| Phím tắt | Chức năng di chuyển |
+| :--- | :--- |
+| **`W` / `A` / `S` / `D`** | Di chuyển camera (Tiến, Trái, Lùi, Phải) |
+| **`Shift + Y`** | Bật hoặc tắt bảng HUD chẩn đoán hiệu năng |
+| **`Esc`** | Mở Menu tạm dừng / Giải phóng con trỏ chuột |
+| **`Space`** | Phát hoặc Tạm dừng kịch bản |
