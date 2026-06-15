@@ -535,17 +535,120 @@ function parseMarkdown(md) {
   return finalHTML;
 }
 
+// Generate Table of Contents (TOC) dynamically
+function generateTOC() {
+  const tocNav = document.getElementById('docs-toc-nav');
+  if (!tocNav) return;
+  tocNav.innerHTML = '';
+
+  const headings = docsBody.querySelectorAll('h2, h3');
+  if (headings.length === 0) {
+    const emptyMsg = document.createElement('div');
+    emptyMsg.className = 'docs-search-empty';
+    emptyMsg.style.padding = '12px 0';
+    emptyMsg.style.textAlign = 'left';
+    emptyMsg.textContent = 'Không có mục lục';
+    tocNav.appendChild(emptyMsg);
+    return;
+  }
+
+  headings.forEach((heading, index) => {
+    // Generate safe and unique ID based on heading content
+    let id = heading.id;
+    if (!id) {
+      const cleanText = heading.textContent
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'd')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-');
+      id = `${cleanText || 'section'}-${index}`;
+      heading.id = id;
+    }
+
+    const link = document.createElement('a');
+    link.href = `#${id}`;
+    link.className = `toc-item-link ${heading.tagName.toLowerCase()}`;
+    link.textContent = heading.textContent;
+    link.dataset.targetId = id;
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const element = document.getElementById(id);
+      if (element) {
+        const yOffset = -120;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        
+        // Update URL hash without scroll jumping
+        const cleanHash = window.location.hash.split('#')[0] + '#' + id;
+        history.pushState(null, null, cleanHash);
+        
+        // Update active class
+        document.querySelectorAll('.toc-item-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+
+    tocNav.appendChild(link);
+  });
+  
+  // Set initial active state
+  updateActiveTOCItem();
+}
+
+// Update active TOC item based on scroll position (ScrollSpy)
+function updateActiveTOCItem() {
+  const headings = docsBody.querySelectorAll('h2, h3');
+  const tocLinks = document.querySelectorAll('.toc-item-link');
+  if (headings.length === 0 || tocLinks.length === 0) return;
+
+  let activeId = '';
+  const scrollPosition = window.scrollY + 140;
+
+  for (let i = 0; i < headings.length; i++) {
+    const heading = headings[i];
+    const headingTop = heading.getBoundingClientRect().top + window.pageYOffset;
+    if (headingTop <= scrollPosition) {
+      activeId = heading.id;
+    } else {
+      break;
+    }
+  }
+
+  if (!activeId && headings.length > 0) {
+    activeId = headings[0].id;
+  }
+
+  tocLinks.forEach(link => {
+    if (link.dataset.targetId === activeId) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
+// Bind scroll listener for TOC ScrollSpy
+window.addEventListener('scroll', updateActiveTOCItem);
+
 // Navigate to a specific document path
 function navigateToDoc(path) {
   const doc = parsedDocs.find(d => d.path === path);
   if (!doc) return;
 
   currentDocPath = path;
-  window.location.hash = `#docs/${path}`;
+  if (!window.location.hash.startsWith(`#docs/${path}`)) {
+    window.location.hash = `#docs/${path}`;
+  }
 
   // Render content
   docTitleDisplay.textContent = doc.title;
   docsBody.innerHTML = parseMarkdown(doc.content);
+
+  // Generate Table of Contents
+  generateTOC();
 
   // Highlight active item in sidebar
   document.querySelectorAll('.docs-item-link').forEach(link => {
@@ -691,9 +794,24 @@ if (searchClearBtn && searchInput) {
 function handleHashChange() {
   const hash = window.location.hash;
   if (hash.startsWith('#docs/')) {
-    const path = hash.replace('#docs/', '');
+    const fullPath = hash.replace('#docs/', '');
+    const parts = fullPath.split('#');
+    const path = parts[0];
+    const headingId = parts[1] || '';
+    
     setDocsViewActive(true);
     navigateToDoc(path);
+    
+    if (headingId) {
+      setTimeout(() => {
+        const element = document.getElementById(headingId);
+        if (element) {
+          const yOffset = -120;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 150); // Small delay to let rendering complete
+    }
   } else if (hash === '#docs') {
     setDocsViewActive(true);
   } else {

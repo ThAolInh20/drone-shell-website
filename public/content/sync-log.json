@@ -1,5 +1,21 @@
 [
   {
+    "timestamp": "2026-06-11T15:53:55.000+07:00",
+    "added": [
+      "show-viewer/import-json.md"
+    ],
+    "removed": [],
+    "status": "success"
+  },
+  {
+    "timestamp": "2026-06-11T15:40:25.000+07:00",
+    "added": [
+      "show-viewer/keyboard-shortcuts.md"
+    ],
+    "removed": [],
+    "status": "success"
+  },
+  {
     "timestamp": "2026-06-11T15:32:48.000+07:00",
     "added": [],
     "removed": [

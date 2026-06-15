@@ -1,36 +1,32 @@
 # Bắn Pháo hoa Thủ công & Preset
 
-Phân hệ Viewer hỗ trợ chế độ bắn pháo hoa thủ công (Interactive Mode), cho phép bạn chủ động phóng quả pháo hoa mong muốn lên bầu trời ảo để kiểm tra hiệu ứng nổ nổ của từng Preset cụ thể.
+Phân hệ Viewer hỗ trợ chế độ bắn pháo hoa thủ công (Interactive Mode) để kiểm tra hiệu ứng nổ của từng Preset cụ thể.
 
 ---
 
 ## Cách chọn Preset Pháo hoa
 
-Mặc định khi khởi động ứng dụng, pháo hoa sẽ được bắn ra ở chế độ ngẫu nhiên (`Random`). Để chỉ định một loại pháo hoa cụ thể:
+Mặc định hệ thống bắn pháo hoa ở chế độ ngẫu nhiên (`Random`). Để chỉ định một loại pháo hoa cụ thể:
 
-1. Nhấn phím **`ESC`** để mở bảng Menu tạm dừng (**Firework Selector**).
-2. Tại trường **Type**, nhấp vào danh sách thả xuống.
-3. Chọn một trong các preset pháo hoa có sẵn trong hệ thống:
-   *   **`Random`:** Hệ thống tự chọn ngẫu nhiên các preset khi bắn.
-   *   **`strobe`:** Pháo hoa chớp tắt nhấp nháy liên tục sau khi nổ.
-   *   **`crackle`:** Phát tiếng nổ lách tách giòn giã kèm theo tia lửa nhỏ vàng kim.
-   *   **`willow`:** Pháo nổ dạng liễu rủ, hạt rơi từ từ tạo dải dài lấp lánh kéo dài.
-   *   **`ring` / `double_ring`:** Pháo nổ tạo thành một hoặc hai vòng tròn đồng tâm sắc nét.
-   *   **`heart`:** Pháo nổ xếp thành hình trái tim 3D.
-   *   **`sphere`:** Pháo nổ bung đều hình cầu đối xứng hoàn hảo.
-   *   *Và các preset đặc thù khác phụ thuộc vào file cấu hình `src/factories/ShellPresetFactory.js`.*
-4. Sau khi chọn, vùng hiển thị **Selected** ở phía trên menu sẽ thay đổi để hiển thị loại preset đang chọn cùng một màu sắc nhận diện.
+*   Nhấn phím **`ESC`** để mở bảng **Firework Selector**.
+*   Tại trường **Type**, nhấp vào danh sách thả xuống.
+*   Chọn một trong các preset pháo hoa có sẵn:
+    *   **`Random`:** Hệ thống tự chọn ngẫu nhiên các preset khi bắn.
+    *   **`strobe`:** Pháo hoa chớp tắt nhấp nháy liên tục sau khi nổ.
+    *   **`crackle`:** Phát tiếng nổ kèm theo các tia lửa nhỏ màu vàng kim.
+    *   **`willow`:** Pháo nổ dạng liễu rủ, hạt rơi tạo dải kéo dài.
+    *   **`ring` / `double_ring`:** Pháo nổ tạo thành một hoặc hai vòng tròn đồng tâm.
+    *   **`heart`:** Pháo nổ xếp thành hình trái tim 3D.
+    *   **`sphere`:** Pháo nổ bung đều hình cầu.
+*   Vùng hiển thị **Selected** ở phía trên menu sẽ cập nhật loại preset cùng màu sắc nhận diện đang chọn.
 
 ---
 
-## Thao tác bắn pháo hoa lên bầu trời
+## Thao tác bắn pháo hoa
 
-Sau khi đã chọn xong Preset:
+Sau khi chọn xong Preset:
 
-1. Click chuột trái vào giữa màn hình 3D (hoặc nhấn phím `ESC` lần nữa) để khóa chuột và ẩn con trỏ.
-2. Di chuyển chuột để đưa tâm ngắm (dấu chấm nhỏ màu trắng ở giữa màn hình) hướng về vị trí bạn muốn bắn pháo hoa tới trên bầu trời.
-3. **Nhấp chuột trái:** Quả pháo hoa tương ứng sẽ được phóng lên từ bệ phóng dưới mặt đất hướng thẳng về phía điểm ngắm của bạn.
-4. **Quy luật vật lý & kích nổ:**
-   *   Hệ thống sẽ tính toán vận tốc đầu nòng và góc bắn dựa vào khoảng cách ngắm.
-   *   Tạo ra âm thanh rít phóng đi, vệt khói phát sáng bám đuôi (Trail).
-   *   Khi đạt độ cao cực đại hoặc hết thời gian kích nổ, quả pháo sẽ phát nổ, giải phóng các ngôi sao pháo hoa bay theo hình học của Preset và áp dụng các hiệu ứng rơi, cản gió, trọng lực cực kỳ chân thực.
+*   Click chuột trái vào giữa màn hình 3D để khóa con trỏ.
+*   Di chuyển chuột đưa tâm ngắm (dấu chấm nhỏ màu trắng ở giữa màn hình) hướng về vị trí muốn bắn trên bầu trời.
+*   **Nhấp chuột trái:** Phóng pháo hoa từ mặt đất lên điểm ngắm.
+*   **Kích nổ:** Quả pháo sẽ di chuyển theo quỹ đạo vật lý, phát ra âm thanh và để lại vệt sáng bám đuôi (Trail). Khi đạt độ cao chỉ định, quả pháo sẽ nổ giải phóng các ngôi sao pháo hoa theo hình học của Preset.

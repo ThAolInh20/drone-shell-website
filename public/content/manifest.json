@@ -1,6 +1,8 @@
 [
   "README.md",
   "show-viewer/README.md",
+  "show-viewer/import-json.md",
+  "show-viewer/keyboard-shortcuts.md",
   "show-viewer/sequences.md",
   "show-viewer/show-view.md",
   "show-viewer/timeline-editor.md",

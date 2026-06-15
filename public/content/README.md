@@ -1,66 +1,44 @@
-# Hướng dẫn sử dụng Bộ ứng dụng Shell Drone Animation
+# Hướng dẫn Cài đặt & Khởi chạy Hệ thống
 
-Chào mừng bạn đến với tài liệu hướng dẫn sử dụng của **Shell Drone Animation** — bộ ứng dụng mô phỏng và biên tập trình diễn pháo hoa & drone 3D lập trình tương tác chuyên nghiệp.
+Chào mừng bạn đến với tài liệu hướng dẫn kỹ thuật của **Drone Shell Editor** — Hệ thống hỗ trợ biên tập trình diễn drone và pháo hoa 3D.
 
-Dưới đây là sơ đồ cấu trúc của bộ tài liệu hướng dẫn sử dụng mới, được chia theo từng thư mục tương ứng với từng ứng dụng độc lập:
-
----
-
-## Sơ đồ Cấu trúc Tài liệu
-
-```
-guides/
-├── README.md (Trang cổng vào chính - Bạn đang ở đây)
-│
-├── show-viewer/ (Phân hệ Trình diễn & Viewer chính)
-│   ├── README.md (Tổng quan & Mục lục Viewer)
-│   ├── 1-dieu-khien-camera.md (Cách bay tự do, khóa chuột & bảng HUD chẩn đoán)
-│   ├── 2-ban-phao-thu-cong.md (Cách bắn pháo thủ công & các Preset pháo hoa)
-│   └── 3-timeline-sequencer.md (Bộ biên tập timeline, ghép nhạc nền & drone show)
-│
-├── static-formation/ (Phân hệ Thiết kế Đội hình Tĩnh)
-│   ├── README.md (Tổng quan & Mục lục Thiết kế tĩnh)
-│   ├── 1-tao-hinh-co-ban.md (10 loại hình dạng toán học: Grid, Star, Text,...)
-│   ├── 2-duong-cong-bezier.md (Vẽ & bẻ cong Bezier bằng 3 điểm cầu Neon)
-│   ├── 3-he-thong-dan-huong.md (Import mô hình Hologram 3D & ảnh tham chiếu 2D)
-│   └── 4-quan-ly-nhom-va-gizmo.md (Gộp nhóm lồng nhau, Gizmo 3D & đổi tâm xoay)
-│
-└── animated-editor/ (Phân hệ Biên tập Hoạt cảnh Động)
-    ├── README.md (Tổng quan & Mục lục Biên tập động)
-    ├── 1-timeline-buoc-bay.md (Quản lý Step cards, Kéo thả đổi vị trí step)
-    ├── 2-hieu-ung-chuyen-va-bay.md (Timing, 6 chế độ bay: Vortex, Helix, Disperse,...)
-    ├── 3-hold-light-landing-styles.md (Hiệu ứng LED Rainbow, Strobe, Blackout & Landing)
-    └── 4-uon-nhom-deformer.md (Công cụ biến dạng nhóm Deformer: Bend & Straighten)
-```
+Tài liệu này sẽ hướng dẫn chi tiết cách thiết lập môi trường phát triển và khởi chạy ứng dụng trên máy tính cá nhân của bạn.
 
 ---
 
-## Hướng dẫn nhanh theo từng App
+## Yêu cầu thiết bị
 
-Nhấp vào các liên kết bên dưới để truy cập nhanh hướng dẫn chi tiết cho từng ứng dụng:
+Dưới đây là cấu hình thiết bị tối thiểu và khuyến nghị để vận hành mượt mà hệ thống mô phỏng 3D:
 
-### 1. [Hướng dẫn Phân hệ Trình diễn Viewer (show-viewer)](./show-viewer/README.md)
-*   *Tập tin chính:* `index.html` chạy qua `src/main.js`
-*   *Mục đích:* Trình diễn toàn cảnh pháo hoa nổ theo nhịp điệu nhạc nền và di chuyển drone đồng bộ.
-*   *Nội dung nổi bật:* [Cách di chuyển camera tự do](./show-viewer/1-dieu-khien-camera.md), [Bắn thử pháo hoa thủ công](./show-viewer/2-ban-phao-thu-cong.md), [Ghép nhạc và chạy Sequencer](./show-viewer/3-timeline-sequencer.md).
-
-### 2. [Hướng dẫn Phân hệ Thiết kế Đội hình Tĩnh (static-formation)](./static-formation/README.md)
-*   *Tập tin chính:* `formation.html` chạy qua `src/formation/main.js`
-*   *Mục đích:* Thiết kế hình dáng tĩnh (blueprint) cho hàng trăm drone trước khi đưa vào chuyển cảnh.
-*   *Nội dung nổi bật:* [Chi tiết các chế độ tạo hình](./static-formation/1-tao-hinh-co-ban.md), [Vẽ uốn đường cong Bezier 3D](./static-formation/2-duong-cong-bezier.md), [Đồ hình theo ảnh 2D và mô hình 3D gltf](./static-formation/3-he-thong-dan-huong.md), [Tổ chức nhóm lồng nhau](./static-formation/4-quan-ly-nhom-va-gizmo.md).
-
-### 3. [Hướng dẫn Phân hệ Biên tập Hoạt cảnh Động (animated-editor)](./animated-editor/README.md)
-*   *Tập tin chính:* `editor.html` chạy qua `src/editor/main.js`
-*   *Mục đích:* Biên soạn chuyển chuyển động mượt mà của drone giữa các hình khối theo thời gian.
-*   *Nội dung nổi bật:* [HTML5 kéo thả Step cards](./animated-editor/1-timeline-buoc-bay.md), [6 kiểu bay nghệ thuật và hiệu ứng bay](./animated-editor/2-hieu-ung-chuyen-va-bay.md), [Chế độ nhấp nháy LED & tắt đèn ẩn đường bay](./animated-editor/3-hold-light-landing-styles.md), [Bộ uốn nắn nhóm drone Deformer](./animated-editor/4-uon-nhom-deformer.md).
-
+| Thành phần | Cấu hình Tối thiểu | Cấu hình Khuyến nghị (500+ Drone) |
+| :--- | :--- | :--- |
+| **Hệ điều hành** | Windows 10 (64-bit) | Windows 11 (64-bit) |
+| **Bộ vi xử lý (CPU)** | Intel Core i5 / AMD Ryzen 5 | Intel Core i7 / AMD Ryzen 7 hoặc mới hơn |
+| **Bộ nhớ (RAM)** | 8 GB RAM | 16 GB RAM hoặc cao hơn |
+| **Card đồ họa (GPU)** | NVIDIA GTX 1050 / AMD RX 560 (Hỗ trợ WebGL 2.0) | NVIDIA RTX 2060 / AMD RX 6600 hoặc tốt hơn |
+| **Lưu trữ** | 500 MB dung lượng trống | 1 GB dung lượng trống (SSD) |
+| **Trình duyệt** | Chrome, Edge hỗ trợ Hardware Acceleration | Google Chrome / Edge phiên bản mới nhất |
 ---
 
-## Phím tắt Hệ thống Chung (Dùng trên Desktop App Electron)
+## Quy trình cài đặt
 
-| Phím tắt | Chức năng hoạt động |
-| :--- | :--- |
-| **`Ctrl + 1`** | Mở/Chuyển nhanh sang màn hình **Trình diễn Viewer** |
-| **`Ctrl + 2`** | Mở/Chuyển nhanh sang màn hình **Thiết kế Đội hình Tĩnh** |
-| **`Ctrl + 3`** | Mở/Chuyển nhanh sang màn hình **Biên tập Hoạt cảnh Động** |
-| **`Shift + S`** | Lưu trực tiếp thay đổi xuống tệp tin nguồn (không qua hộp thoại Tải xuống) |
+Hãy thực hiện theo các bước sau để cài đặt Drone Shell Editor trên máy tính chạy hệ điều hành Windows:
+
+*   **Bước 1: Truy cập trang tải bộ cài đặt**
+    *   Nhấp vào liên kết **[GitHub Releases](https://github.com/ThAolInh20/Shell-Drone_3d/releases)** để đi tới trang lưu trữ các phiên bản phần mềm.
+*   **Bước 2: Tải xuống phiên bản phù hợp**
+    *   Chọn thẻ (tag) phiên bản mới nhất hoặc phiên bản bạn mong muốn sử dụng.
+    *   Chọn file `.exe` hoặc `.zip` để tải về.
+*   **Bước 3: Thực hiện cài đặt**
+    *   Chạy trực tiếp tệp tin `ShellDroneEditor.Setup.X.X.X.exe` (hoặc tương tự) đã tải về.
+    *   Làm theo các bước hướng dẫn trên trình cài đặt để hoàn tất.
+
+*Lưu ý:* Việc chọn ngôn ngữ trong quá trình cài đặt có thể bỏ qua và chọn Tiếng Việt sau khi cài đặt hoàn tất trong phần mềm.
+
+## Các phân hệ chính trong Tài liệu hướng dẫn
+
+Sau khi cài đặt xong, bạn có thể tham khảo chi tiết hướng dẫn của từng phân hệ qua menu bên trái:
+
+*   **[Show editor](./show-viewer/README.md):** Cách bay tự do, bắn thử pháo hoa thủ công, chẩn đoán HUD và nạp kịch bản show từ file âm thanh / file JSON.
+*   **[Static formation editor](./static-formation/README.md):** Các công cụ để thiết kế đội hình tĩnh của drone.
+*   **[Animation formation editor](./animated-editor/README.md):** Các công cụ để thiết kế đội hình động của drone theo từng step.

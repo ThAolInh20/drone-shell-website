@@ -950,9 +950,9 @@ code {
 /* --- Documentation Section Styles --- */
 #docs-container {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 280px 1fr 240px;
   gap: 30px;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 40px auto;
   padding: 0 40px;
   min-height: calc(100vh - 260px);
@@ -1393,7 +1393,107 @@ code {
   color: rgba(243, 244, 246, 0.5);
 }
 
+/* Table of Contents (TOC) Column Styling */
+.docs-toc {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100vh - 160px);
+  box-sizing: border-box;
+  overflow: hidden;
+  position: sticky;
+  top: 110px;
+}
+
+.docs-toc-header h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.docs-toc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.docs-toc-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.docs-toc-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+}
+
+.docs-toc-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 245, 255, 0.25);
+}
+
+.toc-item-link {
+  display: block;
+  padding: 6px 10px;
+  color: rgba(243, 244, 246, 0.55);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  border-left: 2px solid transparent;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toc-item-link:hover {
+  color: #00f5ff;
+  padding-left: 12px;
+}
+
+.toc-item-link.active {
+  color: #00f5ff;
+  border-left-color: #00f5ff;
+  background: rgba(0, 245, 255, 0.04);
+  font-weight: 600;
+  padding-left: 12px;
+}
+
+.toc-item-link.h3 {
+  padding-left: 20px;
+  font-size: 12px;
+  color: rgba(243, 244, 246, 0.4);
+}
+
+.toc-item-link.h3:hover {
+  padding-left: 22px;
+}
+
+.toc-item-link.h3.active {
+  padding-left: 22px;
+}
+
 /* Responsive adjustment for Docs */
+@media (max-width: 1200px) {
+  #docs-container {
+    grid-template-columns: 280px 1fr !important;
+  }
+  .docs-toc {
+    display: none !important;
+  }
+}
+
 @media (max-width: 1024px) {
   #docs-container {
     grid-template-columns: 1fr !important;
