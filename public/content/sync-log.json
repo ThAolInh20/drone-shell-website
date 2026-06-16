@@ -1,5 +1,13 @@
 [
   {
+    "timestamp": "2026-06-16T09:19:40.000+07:00",
+    "added": [
+      "show-viewer/property-inspector.md"
+    ],
+    "removed": [],
+    "status": "success"
+  },
+  {
     "timestamp": "2026-06-11T15:53:55.000+07:00",
     "added": [
       "show-viewer/import-json.md"

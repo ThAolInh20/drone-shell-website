@@ -1,26 +1,14 @@
 # Bắt đầu từ tệp cấu hình JSON có sẵn
 
-Hướng dẫn chi tiết cách tải, kiểm tra và chạy kịch bản trình diễn drone show và pháo hoa từ một tệp cấu hình JSON đã được biên soạn sẵn trước đó trên hệ thống.
+Để sử dụng dòng thời gian (Timeline) đã được thiết kế sẵn, bạn có thể nhập dữ liệu thông qua các phương thức sau:
+
+*   **Nhập đè bằng nút `Import Sequence`**: 
+    Thao tác này tải tệp tin `.json` cấu hình và áp dụng trực tiếp lên dòng thời gian. **Lưu ý:** Tất cả dữ liệu hiện tại trong phiên làm việc sẽ bị ghi đè.
+*   **Ghép nối bằng nút `Add Drone/shell/audio`**: 
+    Thao tác này sẽ đọc dữ liệu từ tệp cấu hình và nối tiếp vào các sự kiện đang có trên Timeline hiện tại.
+*   **Kéo thả trực tiếp tệp `.json`**: 
+    Bạn có thể kéo và thả trực tiếp tệp cấu hình `.json` từ máy tính vào khu vực hiển thị Timeline. Hành động này hoạt động tương tự như việc sử dụng nút `Add Drone/shell/audio` (ghép nối tiếp dữ liệu).
 
 ---
 
-## Chuẩn bị tệp dữ liệu JSON cấu trúc chuẩn
-
-Tệp kịch bản trình diễn (Show script) thường được đóng gói dạng `.json` và được export ra từ chính phần mềm này.
-
----
-
-## Các cách nhập tệp JSON vào Timeline
-
-Bạn có thể đưa tệp JSON vào Timeline của phân hệ Viewer bằng hai cách vô cùng đơn giản:
-
-1.  **Cách 1: Kéo thả trực tiếp (Drag & Drop)**
-    *   Mở thư mục chứa tệp tin `.json` trên máy tính của bạn.
-    *   Nhấn giữ chuột trái vào tệp tin và kéo thả trực tiếp vào giao diện thanh Timeline ở cạnh dưới của màn hình.
-2.  **Cách 2: Sử dụng hộp thoại chọn tệp (File Dialog)**
-    *   Nhấn tổ hợp phím **`Ctrl + T`** để mở bảng Timeline Sequencer lên.
-    *   Nhấp chuột vào nút **`Import sequence`** ở góc trái phía trên của bảng Timeline.
-    *   Chọn tệp `.json` từ cửa sổ hệ thống và nhấn Open.
-
----
-
+*Lưu ý:* Tệp dữ liệu cấu hình cấu trúc `.json` phải được xuất (export) trực tiếp từ chính phần mềm này để đảm bảo khả năng tương thích và hoạt động chính xác.

@@ -1,6 +1,6 @@
 # Điều khiển Camera & Theo dõi Hiệu năng
 
-Phân hệ Viewer hỗ trợ camera 3D bay tự do để điều khiển góc quay toàn cảnh show diễn.
+Show viewer hỗ trợ camera 3D bay tự do để điều khiển góc quay toàn cảnh show diễn.
 
 ---
 

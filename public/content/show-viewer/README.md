@@ -1,6 +1,6 @@
-# Phân hệ Trình diễn Viewer
+# Show viewer (ctrl + 1)
 
-Phân hệ **Trình diễn Viewer** là giao diện xem trước 3D thời gian thực, cho phép bạn thưởng thức buổi biểu diễn nghệ thuật kết hợp pháo hoa, drone show và nhạc nền đồng bộ. Phân hệ này hỗ trợ cả chế độ chạy tự động theo kịch bản và chế độ tương tác thủ công.
+**Show viewer** là giao diện màn hình 3D, nơi bạn thực hiện biên kịch và xem trực tiếp các kịch bản được thiết kế bằng `timeline editor` (ctrl + T).
 
 ---
 
@@ -18,6 +18,8 @@ Vui lòng chọn hướng dẫn bạn muốn xem chi tiết dưới đây:
     Cách nhập tệp JSON đường bay có sẵn vào Timeline bằng kéo thả hoặc nút bấm để xem trước trình diễn.
 *   [**5. Các phím tắt trong Phân hệ Viewer**](./keyboard-shortcuts.md)  
     Danh sách đầy đủ các phím tắt điều khiển camera, pháo hoa và timeline.
+*   [**6. Bảng tùy chỉnh thông số Property Inspector**](./property-inspector.md)  
+    Chi tiết các thuộc tính hiệu ứng pháo hoa và âm thanh có thể tùy chỉnh trên dòng thời gian.
 
 ---
 

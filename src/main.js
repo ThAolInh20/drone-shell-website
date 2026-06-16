@@ -421,10 +421,16 @@ function parseMarkdown(md) {
   const lines = cleanMd.split(/\r?\n/);
   const processedBlocks = [];
 
-  let inList = false;
-  let listHTML = '';
   let inTable = false;
   let tableHTML = '';
+  const listStack = []; // Stack of { indent }
+
+  function closeAllLists() {
+    while (listStack.length > 0) {
+      listStack.pop();
+      processedBlocks.push('</ul>');
+    }
+  }
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -432,11 +438,7 @@ function parseMarkdown(md) {
 
     // Handle Table
     if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
-      if (inList) {
-        processedBlocks.push(`<ul>${listHTML}</ul>`);
-        inList = false;
-        listHTML = '';
-      }
+      closeAllLists();
 
       if (!inTable) {
         inTable = true;
@@ -466,64 +468,113 @@ function parseMarkdown(md) {
       }
     }
 
-    // Handle Bullet List
-    const isBulletList = trimmed.startsWith('- ') || trimmed.startsWith('* ');
-    if (isBulletList) {
-      if (!inList) {
-        inList = true;
-        listHTML = '';
-      }
-      const itemText = trimmed.replace(/^[-*]\s+/, '');
-      listHTML += `<li>${parseInlineMarkdown(itemText)}</li>`;
-      continue;
-    } else {
-      if (inList) {
-        processedBlocks.push(`<ul>${listHTML}</ul>`);
-        inList = false;
-        listHTML = '';
-      }
-    }
-
     if (trimmed === '') {
+      closeAllLists();
       continue;
     }
 
-    // Handle Code Block Placeholder (restored later)
+    // Handle Code Block Placeholder
     if (trimmed.startsWith('<!--__CODE_BLOCK_') && trimmed.endsWith('__-->')) {
+      closeAllLists();
       processedBlocks.push(trimmed);
       continue;
     }
 
     // Handle Headers
-    if (trimmed.startsWith('#### ')) {
-      processedBlocks.push(`<h4>${parseInlineMarkdown(trimmed.substring(5))}</h4>`);
-    } else if (trimmed.startsWith('### ')) {
-      processedBlocks.push(`<h3>${parseInlineMarkdown(trimmed.substring(4))}</h3>`);
-    } else if (trimmed.startsWith('## ')) {
-      processedBlocks.push(`<h2>${parseInlineMarkdown(trimmed.substring(3))}</h2>`);
-    } else if (trimmed.startsWith('# ')) {
-      // Skip the first title header since it's already shown in the viewer container header
-      if (processedBlocks.length === 0) {
-        continue;
+    if (trimmed.startsWith('#') && (trimmed.startsWith('#### ') || trimmed.startsWith('### ') || trimmed.startsWith('## ') || trimmed.startsWith('# '))) {
+      closeAllLists();
+      if (trimmed.startsWith('#### ')) {
+        processedBlocks.push(`<h4>${parseInlineMarkdown(trimmed.substring(5))}</h4>`);
+      } else if (trimmed.startsWith('### ')) {
+        processedBlocks.push(`<h3>${parseInlineMarkdown(trimmed.substring(4))}</h3>`);
+      } else if (trimmed.startsWith('## ')) {
+        processedBlocks.push(`<h2>${parseInlineMarkdown(trimmed.substring(3))}</h2>`);
+      } else if (trimmed.startsWith('# ')) {
+        if (processedBlocks.length > 0) {
+          processedBlocks.push(`<h1>${parseInlineMarkdown(trimmed.substring(2))}</h1>`);
+        }
       }
-      processedBlocks.push(`<h1>${parseInlineMarkdown(trimmed.substring(2))}</h1>`);
-    } else if (trimmed === '---') {
+      continue;
+    }
+
+    if (trimmed === '---') {
+      closeAllLists();
       processedBlocks.push('<hr>');
+      continue;
+    }
+
+    // Calculate line indentation
+    const leadingSpaces = line.match(/^\s*/)[0].length;
+    const isBulletList = trimmed.startsWith('- ') || trimmed.startsWith('* ') || trimmed.startsWith('+ ');
+
+    if (isBulletList) {
+      const itemText = trimmed.replace(/^[-*+]\s+/, '');
+      const parsedText = parseInlineMarkdown(itemText);
+
+      if (listStack.length === 0) {
+        listStack.push({ indent: leadingSpaces });
+        processedBlocks.push('<ul>');
+      } else {
+        let currentTop = listStack[listStack.length - 1];
+        if (leadingSpaces > currentTop.indent) {
+          listStack.push({ indent: leadingSpaces });
+          processedBlocks.push('<ul>');
+        } else {
+          while (listStack.length > 0 && listStack[listStack.length - 1].indent > leadingSpaces) {
+            listStack.pop();
+            processedBlocks.push('</ul>');
+          }
+          if (listStack.length === 0) {
+            listStack.push({ indent: leadingSpaces });
+            processedBlocks.push('<ul>');
+          }
+        }
+      }
+
+      processedBlocks.push(`<li>${parsedText}`);
+      continue;
+    }
+
+    // Handle text inside lists or normal paragraphs
+    if (listStack.length > 0 && leadingSpaces > listStack[listStack.length - 1].indent) {
+      const cleanText = trimmed.replace(/<br\/?>$/i, '').trim();
+      const parsedText = parseInlineMarkdown(cleanText);
+      const nbspIndent = '&nbsp;'.repeat(leadingSpaces);
+
+      let targetIdx = -1;
+      for (let j = processedBlocks.length - 1; j >= 0; j--) {
+        if (processedBlocks[j].includes('<li>')) {
+          targetIdx = j;
+          break;
+        }
+      }
+
+      if (targetIdx !== -1) {
+        processedBlocks[targetIdx] += `<br>${nbspIndent}${parsedText}`;
+      } else {
+        processedBlocks.push(`${nbspIndent}${parsedText}`);
+      }
     } else {
-      // Normal Paragraph - append to previous paragraph if consecutive
+      closeAllLists();
+      
+      const cleanText = trimmed.replace(/<br\/?>$/i, '').trim();
+      const parsedText = parseInlineMarkdown(cleanText);
+
       const lastIdx = processedBlocks.length - 1;
+      const prevLine = lines[i - 1];
+      const prevHasLineBreak = prevLine && (prevLine.endsWith('  ') || prevLine.endsWith('\\') || prevLine.toLowerCase().endsWith('<br>') || prevLine.toLowerCase().endsWith('<br/>'));
+
       if (lastIdx >= 0 && processedBlocks[lastIdx].startsWith('<p>') && processedBlocks[lastIdx].endsWith('</p>')) {
         const prevContent = processedBlocks[lastIdx].slice(3, -4);
-        processedBlocks[lastIdx] = `<p>${prevContent} ${parseInlineMarkdown(trimmed)}</p>`;
+        const separator = prevHasLineBreak ? '<br>' : ' ';
+        processedBlocks[lastIdx] = `<p>${prevContent}${separator}${parsedText}</p>`;
       } else {
-        processedBlocks.push(`<p>${parseInlineMarkdown(trimmed)}</p>`);
+        processedBlocks.push(`<p>${parsedText}</p>`);
       }
     }
   }
 
-  // Close any unclosed list/table blocks
-  if (inList) processedBlocks.push(`<ul>${listHTML}</ul>`);
-  if (inTable) processedBlocks.push(`${tableHTML}</table>`);
+  closeAllLists();
 
   let finalHTML = processedBlocks.join('\n');
 

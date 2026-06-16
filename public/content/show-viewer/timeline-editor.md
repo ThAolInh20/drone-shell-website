@@ -6,7 +6,7 @@ Bộ Biên tập Timeline (`Ctrl + T`) hỗ trợ đồng bộ nhạc nền, thi
 
 ## Cách mở bộ Timeline
 
-*   **Phím tắt:** Nhấn tổ hợp phím **`Ctrl + T`** khi đang ở màn hình Viewer.
+*   **Phím tắt:** Nhấn tổ hợp phím **`Ctrl + T`** khi đang ở màn hình show viewer (ctrl + 1).
 
 ---
 
@@ -15,7 +15,7 @@ Bộ Biên tập Timeline (`Ctrl + T`) hỗ trợ đồng bộ nhạc nền, thi
 Mỗi chuỗi sự kiện (sequence) được hiển thị dưới dạng một block trên timeline:
 
 *   **Kéo thả:** Nhấn giữ chuột trái vào giữa block và kéo sang trái/phải để dời mốc thời gian kích hoạt.
-*   **Thay đổi độ dài:** Kéo cạnh phải của block để thay đổi thời lượng hoạt động.
+*   **Thay đổi độ dài:** Kéo cạnh phải của block để thay đổi độ dài của block (thao tác này không ảnh hưởng tới duration của block).
 *   **Tùy chỉnh thông số (Inspector):** Click chọn block trên Timeline để chỉnh sửa chi tiết trong bảng **Property Inspector** ở góc dưới bên phải (tên, số lượng pháo hoa, màu sắc, âm lượng,...).
 
 ---
