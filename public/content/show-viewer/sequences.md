@@ -1,4 +1,4 @@
-# Bắn Pháo hoa Thủ công & Preset
+# Bắn thủ công & Preset
 
 Show viewer hỗ trợ chế độ bắn pháo hoa thủ công (Interactive Mode) để kiểm tra hiệu ứng nổ của từng Preset cụ thể.
 Nhấn nút `Esc` trên bàn phím để bật bảng chọn Preset.

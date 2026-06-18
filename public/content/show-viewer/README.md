@@ -10,7 +10,7 @@ Vui lòng chọn hướng dẫn bạn muốn xem chi tiết dưới đây:
 
 *   [**1. Điều khiển Camera & Theo dõi hiệu năng**](./show-view.md)  
     Hướng dẫn cách di chuyển góc nhìn trong không gian 3D, khóa chuột và bật tắt bảng chẩn đoán hiệu suất kỹ thuật (FPS).
-*   [**2. Bắn pháo hoa Thủ công & Preset**](./sequences.md)  
+*   [**2. Bắn Thủ công & Preset**](./sequences.md)  
     Cách chọn preset pháo hoa qua Menu tạm dừng (`ESC`) và nhấp chuột trái để phóng pháo hoa thủ công lên bầu trời.
 *   [**3. Bộ biên tập dòng thời gian Timeline Sequencer**](./timeline-editor.md)  
     Hướng dẫn chi tiết cách dùng phím tắt `Ctrl + T` để mở bộ timeline, kéo thả các sự kiện pháo hoa, chèn nhạc nền `.mp3` và ghép file kịch bản bay drone `.json`.

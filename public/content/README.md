@@ -28,9 +28,11 @@ Hãy thực hiện theo các bước sau để cài đặt Drone Shell Editor tr
     *   Nhấp vào liên kết **[GitHub Releases](https://github.com/ThAolInh20/Shell-Drone_3d/releases)** để đi tới trang lưu trữ các phiên bản phần mềm.
 *   **Bước 2: Tải xuống phiên bản phù hợp**
     *   Chọn thẻ (tag) phiên bản mới nhất hoặc phiên bản bạn mong muốn sử dụng.
-    *   Chọn file `.exe` hoặc `.zip` để tải về.
+    *   Chọn file `.exe` hoặc `.zip` để tải về - nên tải bằng file `.zip` để tốc độ khởi động lại app nhanh nhất.
 *   **Bước 3: Thực hiện cài đặt**
-    *   Chạy trực tiếp tệp tin `ShellDroneEditor.Setup.X.X.X.exe` (hoặc tương tự) đã tải về.
+    *   Chạy trực tiếp tệp tin `ShellDroneEditor.Setup.X.X.X.exe`(hoặc tương tự) đã tải về.
+    *   Nếu giải nén từ file `.zip` thì chọn file `ShellDroneEditor.exe` và chạy.
+    *   Trong trường hợp hiển thị thông tin cảnh báo từ windows defender, chọn `run anyway` để tiếp tục.(Mã nguồn hoàn toàn open souce tại [đây](https://github.com/ThAolInh20/Shell-Drone-Editor))
     *   Làm theo các bước hướng dẫn trên trình cài đặt để hoàn tất.
 
 *Lưu ý:* Việc chọn ngôn ngữ trong quá trình cài đặt có thể bỏ qua và chọn Tiếng Việt sau khi cài đặt hoàn tất trong phần mềm.
