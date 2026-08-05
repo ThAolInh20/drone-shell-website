@@ -16,10 +16,13 @@ Vui lòng chọn hướng dẫn bạn muốn xem chi tiết dưới đây:
     Hướng dẫn chi tiết cách dùng phím tắt `Ctrl + T` để mở bộ timeline, kéo thả các sự kiện pháo hoa, chèn nhạc nền `.mp3` và ghép file kịch bản bay drone `.json`.
 *   [**4. Bắt đầu từ tệp cấu hình JSON có sẵn**](./import-json.md)  
     Cách nhập tệp JSON đường bay có sẵn vào Timeline bằng kéo thả hoặc nút bấm để xem trước trình diễn.
-*   [**5. Các phím tắt trong Phân hệ Viewer**](./keyboard-shortcuts.md)  
+*   [**5. Các phím tắt trong Viewer**](./keyboard-shortcuts.md)  
     Danh sách đầy đủ các phím tắt điều khiển camera, pháo hoa và timeline.
 *   [**6. Bảng tùy chỉnh thông số Property Inspector**](./property-inspector.md)  
     Chi tiết các thuộc tính hiệu ứng pháo hoa và âm thanh có thể tùy chỉnh trên dòng thời gian.
+*   [**7. Chỉnh sửa âm thanh**](./audio-block.md)  
+    Hướng dẫn chi tiết cách thêm, cấu hình và đồng bộ hóa Block Âm thanh (Audio Block) trên dòng thời gian (Timeline Sequencer) của Show Viewer.
+    
 
 ---
 
