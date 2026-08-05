@@ -1,6 +1,7 @@
 [
   "README.md",
   "show-viewer/README.md",
+  "show-viewer/audio-block.md",
   "show-viewer/import-json.md",
   "show-viewer/keyboard-shortcuts.md",
   "show-viewer/property-inspector.md",

@@ -88,15 +88,24 @@ renderer.instance.domElement.addEventListener('click', () => {
 // --- Enterprise UI & Zen Mode Interactive Controllers ---
 const enterpriseUI = document.getElementById('enterprise-ui');
 const btnZenMode = document.getElementById('btn-zen-mode');
+const btnZenModeCard = document.getElementById('btn-zen-mode-card');
 const btnZenClose = document.getElementById('btn-zen-close');
 
-if (btnZenMode && btnZenClose && enterpriseUI) {
-  // Activate Zen Mode (Hide corporate overlay to see full fireworks screen)
-  btnZenMode.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent launching a firework on the click point
-    enterpriseUI.classList.add('zen-active');
-    btnZenClose.style.display = 'block';
-  });
+const activateZenMode = (e) => {
+  e.preventDefault();
+  e.stopPropagation(); // Prevent launching a firework on the click point
+  enterpriseUI.classList.add('zen-active');
+  btnZenClose.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+if (btnZenClose && enterpriseUI) {
+  if (btnZenMode) {
+    btnZenMode.addEventListener('click', activateZenMode);
+  }
+  if (btnZenModeCard) {
+    btnZenModeCard.addEventListener('click', activateZenMode);
+  }
 
   // Deactivate Zen Mode (Restore corporate landing page overlay)
   btnZenClose.addEventListener('click', (e) => {
@@ -556,7 +565,7 @@ function parseMarkdown(md) {
       }
     } else {
       closeAllLists();
-      
+
       const cleanText = trimmed.replace(/<br\/?>$/i, '').trim();
       const parsedText = parseInlineMarkdown(cleanText);
 
