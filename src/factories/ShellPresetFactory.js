@@ -31,20 +31,13 @@ export class ShellPresetFactory {
       { key: 'glitterStrobe', label: 'Glitter Strobe' },
       { key: 'weepingWillowComets', label: 'Weeping Willow Comets' },
       { key: 'weepingWillowCometsV2', label: 'Weeping Willow Comets V2' },
-      { key: 'weepingWillowCometsV3', label: 'Weeping Willow Comets V3 (Glitter)' },
       { key: 'fallingLeaves', label: 'Falling Leaves' },
       { key: 'floral', label: 'Floral' },
       { key: 'bouquet', label: 'Bouquet (Cluster)' },
       { key: 'rumble', label: 'Rumble' },
       { key: 'flower', label: 'Flower' },
-      { key: 'cat', label: 'Cat' },
       { key: 'ring', label: 'Ring' },
-      { key: 'ringV2', label: 'RingV2' },
-      { key: 'oval', label: 'Oval' },
-      { key: 'snow', label: 'Snow' },
       { key: 'fish', label: 'Fish' },
-      { key: 'smiley', label: 'Smiley' },
-      { key: 'wave', label: 'Wave' },
       { key: 'heart', label: 'Heart' },
       { key: 'star', label: 'Star' },
       { key: 'ghost', label: 'Ghost' },
@@ -54,28 +47,21 @@ export class ShellPresetFactory {
 
   randomPreset() {
     const roll = Math.random();
-
-    if (roll < 0.10) return this.crysanthemumShell();
-    if (roll < 0.14) return this.crysanthemumV2Shell();
-    if (roll < 0.22) return this.crackleShell();
-    if (roll < 0.27) return this.strobeShell();
-    if (roll < 0.32) return this.whiteStrobeShell();
-    if (roll < 0.37) return this.glitterStrobeShell();
-    if (roll < 0.42) return this.weepingWillowCometsShell();
-    if (roll < 0.47) return this.fallingLeavesShell();
-    if (roll < 0.52) return this.floralShell();
-    if (roll < 0.57) return this.rumbleShell();
-    if (roll < 0.61) return this.flowerShell();
-    if (roll < 0.67) return this.catShell();
-    if (roll < 0.74) return this.ringShell();
-    if (roll < 0.8) return this.ringShellV2();
-    if (roll < 0.87) return this.ovalShell();
-    if (roll < 0.92) return this.snowShell();
-    if (roll < 0.96) return this.fishShell();
-    if (roll < 0.975) return this.smileyShell();
-    if (roll < 0.985) return this.waveShell();
-    if (roll < 0.99) return this.fallingCometsShell();
-    if (roll < 0.995) return this.starShell();
+    if (roll < 0.60) return this.crysanthemumShell();
+    if (roll < 0.625) return this.crysanthemumV2Shell();
+    if (roll < 0.65) return this.crackleShell();
+    if (roll < 0.675) return this.strobeShell();
+    if (roll < 0.70) return this.whiteStrobeShell();
+    if (roll < 0.725) return this.glitterStrobeShell();
+    if (roll < 0.75) return this.weepingWillowCometsShell();
+    if (roll < 0.775) return this.fallingLeavesShell();
+    if (roll < 0.80) return this.floralShell();
+    if (roll < 0.825) return this.rumbleShell();
+    if (roll < 0.85) return this.flowerShell();
+    if (roll < 0.90) return this.ringShell();
+    if (roll < 0.925) return this.fishShell();
+    if (roll < 0.95) return this.fallingCometsShell();
+    if (roll < 0.975) return this.starShell();
     return this.hearthShell();
   }
 
@@ -101,8 +87,6 @@ export class ShellPresetFactory {
         return this.validatePreset(this.weepingWillowCometsShell());
       case 'weepingWillowCometsV2':
         return this.validatePreset(this.weepingWillowCometsV2Shell());
-      case 'weepingWillowCometsV3':
-        return this.validatePreset(this.weepingWillowCometsV3Shell());
       case 'fallingLeaves':
         return this.validatePreset(this.fallingLeavesShell());
       case 'floral':
@@ -113,22 +97,10 @@ export class ShellPresetFactory {
         return this.validatePreset(this.rumbleShell());
       case 'flower':
         return this.validatePreset(this.flowerShell());
-      case 'cat':
-        return this.validatePreset(this.catShell());
       case 'ring':
         return this.validatePreset(this.ringShell());
-      case 'ringV2':
-        return this.validatePreset(this.ringShellV2());
-      case 'oval':
-        return this.validatePreset(this.ovalShell());
-      case 'snow':
-        return this.validatePreset(this.snowShell());
       case 'fish':
         return this.validatePreset(this.fishShell());
-      case 'smiley':
-        return this.validatePreset(this.smileyShell());
-      case 'wave':
-        return this.validatePreset(this.waveShell());
       case 'heart':
         return this.validatePreset(this.hearthShell());
       case 'star':
@@ -249,33 +221,7 @@ export class ShellPresetFactory {
     };
   }
 
-  catShell(size = 1) {
-    return {
-      ...this.basePreset(size),
-      pistil: false,
-      shellType: 'cat',
-      shapeType: 'cat',
-      effectType: 'standard',
-      cat: true
-    };
-  }
 
-  ringShellV2(size = 1) {
-    return {
-      ...this.basePreset(size),
-      shellType: 'ringV2',
-      shapeType: 'ring',
-      effectType: 'strobe',
-      shapeRenderMode: 'outline',
-      particleCountMultiplier: 1.2,
-      outlineThickness: 0.04,
-      ringColorMode: 'sequential',
-      ringPalette: this.palette,
-      ringColorSpeed: 1,
-      ringLoop: false,
-      doubleRing: true
-    };
-  }
 
   ringShell(size = 1) {
     return {
@@ -377,26 +323,6 @@ export class ShellPresetFactory {
     };
   }
 
-  ovalShell(size = 1) {
-    return {
-      ...this.basePreset(size),
-      pistil: false,
-      shellType: 'oval',
-      shapeType: 'oval',
-      effectType: 'oval',
-      oval: true
-    };
-  }
-
-  snowShell(size = 1) {
-    return {
-      ...this.basePreset(size),
-      shellType: 'snow',
-      shapeType: 'sphere',
-      effectType: 'snow',
-      snow: true
-    };
-  }
 
   fishShell(size = 1) {
     return {
@@ -408,26 +334,6 @@ export class ShellPresetFactory {
     };
   }
 
-  smileyShell(size = 1) {
-    return {
-      ...this.basePreset(size),
-      shellType: 'smiley',
-      shapeType: 'smiley',
-      effectType: 'strobe',
-      smiley: true
-    };
-  }
-
-  waveShell(size = 1) {
-    return {
-      ...this.basePreset(size),
-      shellType: 'wave',
-      shapeType: 'sphere',
-      effectType: 'wave',
-      strobe: true,
-      wave: true
-    };
-  }
 
   hearthShell(size = 1) {
     return {
@@ -572,19 +478,6 @@ export class ShellPresetFactory {
     };
   }
 
-  weepingWillowCometsV3Shell(size = 1) {
-    return {
-      ...this.basePreset(size),
-      shellType: 'weepingWillowV3',
-      shapeType: 'willow-up', // Dùng lại hình hất vọt lên cao
-      effectType: 'falling-comets-glitter', // Kết hợp kim tuyến
-      instantBurst: true,
-      color: this.whiteOrGold(),
-      particleCountMultiplier: 0.8,
-      starLife: 2500 + size * 500,
-      pistil: false
-    };
-  }
 
   randomColor(options = {}) {
     const colorValue = PRESET_COLORS[Math.floor(Math.random() * PRESET_COLORS.length)];
