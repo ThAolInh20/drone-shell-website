@@ -77,13 +77,9 @@ export class SceneManager {
 
     // Add launch pad for fireworks
     this.launchPadGroup = new THREE.Group();
-    this.launchPadGroup.visible = false; // Hidden by default, synced with TimelineEditor
+    this.launchPadGroup.visible = false;
     this.instance.add(this.launchPadGroup);
     // this.addLaunchPad();
-
-    window.addEventListener('timeline:toggle', (e) => {
-      this.launchPadGroup.visible = e.detail;
-    });
 
     // // Add burst height guide lines
     // this.addBurstHeightGuides();

@@ -15,7 +15,6 @@ import { FireworkSequencer } from './directors/FireworkSequencer.js';
 import { ShowDirector } from './directors/ShowDirector.js';
 import { DroneSystem } from './systems/DroneSystem.js';
 import { DroneShowSequencer } from './directors/DroneShowSequencer.js';
-import { TimelineEditor } from './ui/TimelineEditor.js';
 import { renderingConfig } from './config/rendering.js';
 import './style.css';
 
@@ -55,13 +54,11 @@ const droneSequencer = new DroneShowSequencer(droneSystem);
 const fireworkSequencer = new FireworkSequencer(fireworkSystem, cometSystem);
 const showDirector = new ShowDirector(fireworkSequencer, fireworkSystem);
 showDirector.droneSequencer = droneSequencer;
-const timelineEditor = new TimelineEditor(showDirector);
 
 // The show script loading is now handled in InputSystem
 
 // Expose to input system or global for triggering
 inputSystem.showDirector = showDirector;
-inputSystem.timelineEditor = timelineEditor;
 
 // Document-wide first-click audio resume
 document.addEventListener('click', () => {
