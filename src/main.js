@@ -4,13 +4,11 @@ import { SceneManager } from './core/SceneManager.js';
 import { Renderer } from './core/Renderer.js';
 import { PostProcessingPipeline } from './core/PostProcessingPipeline.js';
 import { InputSystem } from './controllers/InputSystem.js';
-import { MovementSystem } from './systems/MovementSystem.js';
 import { FireworkSystem } from './systems/FireworkSystem.js';
 import { TrailSystem } from './systems/TrailSystem.js';
 import { CometSystem } from './systems/CometSystem.js';
 import { SkyLightReactionSystem } from './systems/SkyLightReactionSystem.js';
 import { SmokeSystem } from './systems/SmokeSystem.js';
-import { AudioSystem } from './systems/AudioSystem.js';
 import { FireworkSequencer } from './directors/FireworkSequencer.js';
 import { ShowDirector } from './directors/ShowDirector.js';
 import { renderingConfig } from './config/rendering.js';
@@ -26,9 +24,6 @@ const fireworkSystem = new FireworkSystem(sceneManager.instance, trailSystem);
 const smokeSystem = new SmokeSystem(sceneManager);
 const skyLightReactionSystem = new SkyLightReactionSystem(sceneManager);
 const cometSystem = new CometSystem(sceneManager.instance, trailSystem, smokeSystem);
-// const audioSystem = new AudioSystem(cameraManager);
-// audioSystem.preload();
-const audioSystem = null;
 const postProcessing = renderingConfig.post.enabled
   ? new PostProcessingPipeline(renderer.instance, sceneManager.instance, cameraManager.instance, renderingConfig)
   : null;
@@ -42,7 +37,6 @@ if (postProcessing) {
 
 // Initialize Systems
 const inputSystem = new InputSystem(cameraManager.instance, renderer.instance.domElement, fireworkSystem);
-const movementSystem = new MovementSystem(inputSystem, cameraManager.instance);
 
 // Note: We no longer auto-play demo sequence because ShowDirector manages it
 
@@ -54,11 +48,6 @@ const showDirector = new ShowDirector(fireworkSequencer, fireworkSystem);
 
 // Expose to input system or global for triggering
 inputSystem.showDirector = showDirector;
-
-// Document-wide first-click audio resume
-document.addEventListener('click', () => {
-  if (audioSystem) audioSystem.resume();
-}, { once: true });
 
 let isInDocsView = false;
 let docRenderFramesRemaining = 0;
@@ -147,7 +136,6 @@ function animate() {
     }
   } else {
     if (!inputSystem.isPaused()) {
-      movementSystem.update(clock.deltaTime);
       showDirector.update(clock.deltaTime);
       fireworkSequencer.update(clock.deltaTime);
       fireworkSystem.update(clock.deltaTime);
