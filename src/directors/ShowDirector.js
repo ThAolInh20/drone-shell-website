@@ -13,9 +13,6 @@ export class ShowDirector {
     this.events = [...this.scriptConfig];
     this.elapsedTime = 0;
     this.sequencer.clear();
-    if (this.droneSequencer) {
-       this.droneSequencer.stop();
-    }
 
     // Cleanup old audio elements
     this.audioPlayers.forEach(audio => {
@@ -35,10 +32,6 @@ export class ShowDirector {
         } catch (e) {
             console.warn("Could not load audio", e);
         }
-      } else if (seq.type === 'droneshow') {
-        if (this.droneSequencer) {
-            this.droneSequencer.loadSequence(seq, seq.time);
-        }
       }
     });
   }
@@ -56,10 +49,6 @@ export class ShowDirector {
       this.sequencer.cometSystem.clear();
     }
     
-    if (this.droneSequencer) {
-       this.droneSequencer.seek(time);
-    }
-    
     // Sync audio times
     this.audioPlayers.forEach((audio, seq) => {
       const isTime = this.elapsedTime >= seq.time && this.elapsedTime < seq.time + (seq.duration || 0);
@@ -74,13 +63,11 @@ export class ShowDirector {
 
   play() {
     this.isPlaying = true;
-    if (this.droneSequencer) this.droneSequencer.play();
   }
 
   pause() {
     this.isPlaying = false;
     this.audioPlayers.forEach(audio => audio.pause());
-    if (this.droneSequencer) this.droneSequencer.pause();
   }
 
   stop() {
@@ -91,7 +78,6 @@ export class ShowDirector {
       audio.pause();
       audio.currentTime = 0;
     });
-    if (this.droneSequencer) this.droneSequencer.stop();
   }
 
   update(deltaTime) {
@@ -146,9 +132,6 @@ export class ShowDirector {
         break;
       case 'audio':
         // Audio is handled continuously in update() loop
-        break;
-      case 'droneshow':
-        // Handled completely by DroneShowSequencer which syncs to global playbackTime
         break;
       default:
         console.warn(`[ShowDirector] Unknown event type: ${evt.type}`);
