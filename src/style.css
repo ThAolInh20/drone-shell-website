@@ -944,7 +944,11 @@ code {
   }
 
   .nav-links {
-    display: none;
+    gap: 20px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
   }
 
   .main-content {
@@ -974,6 +978,80 @@ code {
     top: 20px;
     padding: 10px 20px;
     font-size: 12px;
+  }
+}
+
+/* Extra Mobile & Tablet Tweaks */
+@media (max-width: 768px) {
+  .navbar {
+    margin: 10px 10px 0 !important;
+    padding: 8px 16px !important;
+    gap: 12px !important;
+  }
+
+  .logo-text {
+    font-size: 16px !important;
+  }
+
+  .logo .badge {
+    display: none !important;
+  }
+
+  .nav-links {
+    gap: 12px !important;
+  }
+
+  .nav-links a {
+    font-size: 12px !important;
+  }
+
+  .btn-consulting {
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+  }
+
+  .product-card {
+    padding: 24px 20px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero {
+    padding: 40px 0 20px !important;
+  }
+
+  .hero-title {
+    font-size: 28px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .hero-desc {
+    font-size: 14px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .hero-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .hero-actions .btn {
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .docs-viewer {
+    padding: 20px 16px !important;
+  }
+
+  #doc-title-display {
+    font-size: 20px !important;
+  }
+
+  .docs-body {
+    font-size: 14.5px !important;
   }
 }
 
@@ -1387,7 +1465,10 @@ code {
 }
 
 .docs-body table {
+  display: block;
   width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-collapse: collapse;
   margin: 24px 0;
   font-size: 14px;
