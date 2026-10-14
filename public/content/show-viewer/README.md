@@ -1,32 +1,33 @@
-﻿# Show Viewer (Ctrl + 1)
+# Phân hệ Diễn tập & Trình diễn (Show Viewer)
 
-**Show Viewer** là không gian diễn tập 3D thời gian thực, nơi bạn phối hợp tổng thể giữa âm nhạc, các bước bay tạo hình của drone và các chùm pháo hoa nghệ thuật rực rỡ qua bộ biên tập dòng thời gian Timeline Sequencer (`Ctrl + T`).
-
----
-
-## Mục lục Hướng dẫn chi tiết
-
-Vui lòng chọn hướng dẫn bạn muốn xem chi tiết dưới đây theo trình tự biên đạo:
-
-*   [**1. Bộ biên tập Dòng thời gian (Timeline Sequencer)**](./timeline-editor.md)  
-    Hướng dẫn chi tiết cách mở Timeline (`Ctrl + T`), quản lý các làn multi-track, kim Playhead/Anchor Head và chế độ bắt dính nhịp.
-*   [**2. Block Âm thanh & Dạng sóng Waveform**](./audio-block.md)  
-    Cách tải bài hát, quan sát biểu đồ sóng âm Waveform, dò nhịp beat tự động và cơ chế nạp bài hát đồng hành.
-*   [**3. Bảng tùy chỉnh thông số (Property Inspector)**](./property-inspector.md)  
-    Chi tiết các thuộc tính hiệu ứng drone, pháo hoa và âm lượng có thể tùy biến trực tiếp trên dòng thời gian.
-*   [**4. Xuất và Nhập kịch bản JSON (Export & Import)**](./import-json.md)  
-    Cách xuất lưu kịch bản, nạp tệp JSON có sẵn và kinh nghiệm đồng bộ âm thanh tránh mất tiếng.
-*   [**5. Điều khiển Camera & Không gian 3D**](./show-view.md)  
-    Cách di chuyển góc nhìn tự do, khóa chuột và bật tắt bảng chẩn đoán hiệu suất kỹ thuật (FPS/GPU).
-*   [**6. Bắn thử Thủ công & Thư viện Preset**](./sequences.md)  
-    Cách chọn nhanh các mẫu pháo hoa và bắn thử trực tiếp lên bầu trời qua menu tạm dừng (`Esc`).
-*   [**7. Bảng tổng hợp Phím tắt toàn hệ thống**](./keyboard-shortcuts.md)  
-    Danh mục toàn bộ phím tắt điều khiển camera, pháo hoa, timeline và thao tác biên tập nhanh.
+**Show Viewer** (`Ctrl + 1`) là môi trường mô phỏng và diễn tập 3D thời gian thực, phục vụ việc điều phối đồng bộ giữa bản nhạc nền, hoạt cảnh đội hình drone và hiệu ứng pháo hoa thông qua bộ biên tập dòng thời gian đa làn (**Timeline Sequencer** - `Ctrl + T`).
 
 ---
 
-## Các phân hệ liên quan
+## 1. Danh mục Tài liệu Hướng dẫn
 
-*   [**Hệ thống Pháo hoa 3D (Fireworks)**](../fireworks/README.md): Hướng dẫn chi tiết kỹ thuật đặt pháo, chọn preset và tạo giàn pháo quạt Bouquet.
-*   [**Thiết kế đội hình tĩnh (Static Formation)**](../static-formation/README.md): Chuẩn bị bản vẽ tọa độ 3D cho drone.
-*   [**Quay lại tài liệu tổng quan chính (README.md)**](../README.md)
+Tài liệu phân hệ Show Viewer được tổ chức theo trình tự quy trình biên đạo:
+
+1.  [**Bộ biên tập Dòng thời gian (Timeline Sequencer)**](./timeline-editor.md)  
+    Thao tác mở giao diện dòng thời gian (`Ctrl + T`), quản lý các phân làn chuyên dụng (Audio, Drone, Fireworks), sử dụng hệ thống kim thời gian đôi (Playhead / Anchor Head) và chế độ bắt dính (Snap).
+2.  [**Khối Âm thanh & Dạng sóng Âm thanh (Audio Waveform)**](./audio-block.md)  
+    Quy trình nhập tệp âm thanh, phân tích đồ thị dạng sóng, gắn nhịp phách (Beat Markers) và xử lý liên kết tệp âm thanh cục bộ.
+3.  [**Bảng Thuộc tính Đối tượng (Property Inspector)**](./property-inspector.md)  
+    Chi tiết các trường thuộc tính cấu hình cho khối âm thanh, hiệu ứng pháo hoa, chuỗi bắn tuần tự và phạm vi tọa độ phân bổ.
+4.  [**Xuất và Nhập Kịch bản JSON (Import / Export)**](./import-json.md)  
+    Quy trình lưu trữ dự án, cấu trúc tệp dữ liệu JSON kịch bản và cách khôi phục liên kết tài nguyên khi chuyển đổi thiết bị làm việc.
+5.  [**Điều hướng Không gian 3D & Chẩn đoán Hiệu năng (Viewport & Diagnostics)**](./show-view.md)  
+    Các thao tác điều khiển góc nhìn camera tự do, chế độ khóa con trỏ chuột và theo dõi chỉ số hiệu năng đồ họa (FPS, GPU).
+6.  [**Chuỗi Pháo hoa Tuần tự & Thư viện Mẫu (Sequences & Presets)**](./sequences.md)  
+    Định cấu hình chuỗi bắn tự động, phân loại kiểu bắn (Comet, Finale) và kiểm tra kích nổ trực tiếp.
+7.  [**Bảng Tổng hợp Phím tắt Toàn hệ thống**](./keyboard-shortcuts.md)  
+    Danh mục toàn bộ phím tắt thao tác nhanh trên giao diện dòng thời gian, điều khiển camera 3D và quản lý dự án.
+
+---
+
+## 2. Liên kết Điều hướng Phân hệ Liên quan
+
+*   [**Thiết kế Đội hình Tĩnh (Static Formation Editor - Ctrl + 3)**](../static-formation/README.md)
+*   [**Biên tập Hoạt cảnh Chuyển động (Animation Formation Editor - Ctrl + 2)**](../animated-editor/README.md)
+*   [**Hệ thống Hiệu ứng Pháo hoa 3D (Fireworks)**](../fireworks/README.md)
+*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)

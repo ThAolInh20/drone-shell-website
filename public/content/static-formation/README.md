@@ -1,25 +1,26 @@
-﻿# Static Formation Editor (Ctrl + 3)
+# Phân hệ Thiết kế Đội hình Tĩnh (Static Formation Editor)
 
-**Static Formation Editor** là phân hệ chính giúp bạn xây dựng bản vẽ thiết kế 3D cho phi đội drone. Tại đây, bạn có thể tạo mới các hình học phức tạp, sắp đặt tọa độ drone, tổ chức nhóm và chuẩn bị hình khối trước khi đưa vào hoạt cảnh động bằng `Animation Formation Editor`.
-
----
-
-## Mục lục Hướng dẫn chi tiết
-
-Vui lòng chọn hướng dẫn bạn muốn xem chi tiết dưới đây:
-
-*   [**1. Công cụ Tạo hình Cơ bản**](./shape.md)  
-    Chi tiết 10 chế độ tạo hình tự động (Lưới, Tròn, Hộp, Sao, Chữ viết...) và cách áp dụng thông số số lượng, cự ly an toàn.
-*   [**2. Hệ thống Dẫn hướng: Mô hình 3D & Ảnh mẫu 2D**](./add-3d-2d.md)  
-    Cách sử dụng mô hình Hologram 3D (GLTF/GLB) và ảnh nền tham chiếu 2D (XZ/XY) để đồ theo hình dạng mẫu thực tế.
-*   [**3. Quản lý Nhóm drone & Gizmo điều khiển**](./group-and-grizmo.md)  
-    Cách gộp nhóm lồng nhau hoặc nhóm phẳng, di chuyển bằng Gizmo 3D và căn chỉnh lại tâm xoay (Pivot) của nhóm drone.
-*   [**4. Công cụ Vẽ & Kéo cong Bezier**](./grizmo.md)  
-    Cách bẻ cong hàng drone bằng 3 khối cầu kiểm soát (P0, P1, P2) trực quan trong khung nhìn 3D.
+**Static Formation Editor** (`Ctrl + 3`) là môi trường thiết kế hình học và tọa độ 3D tĩnh cho phi đội drone. Phân hệ này cung cấp các công cụ tạo khối hình học tự động, dựng đội hình theo mô hình 3D/ảnh mẫu 2D tham chiếu, uốn cong đường dẫn Bezier và tổ chức nhóm drone phục vụ cho các bước diễn hoạt cảnh.
 
 ---
 
-## Các phân hệ liên quan
+## 1. Danh mục Tài liệu Hướng dẫn
 
-*   [**Biên tập hoạt cảnh động (Animation Formation Editor)**](../animated-editor/README.md): Lắp ghép các đội hình tĩnh thành chuỗi bước chuyển động bay.
-*   [**Quay lại tài liệu tổng quan chính (README.md)**](../README.md)
+Các tài liệu hướng dẫn được sắp xếp theo quy trình thiết lập đội hình:
+
+1.  [**Công cụ Tạo hình Cơ bản (Shape Generator)**](./shape.md)  
+    Hướng dẫn chi tiết 10 chế độ tạo hình tự động (Lưới phẳng, Hình cầu, Khối hộp, Hình sao, Xoắn ốc, Chữ viết 3D...) cùng các thiết lập số lượng drone và cự ly an toàn.
+2.  [**Hệ thống Dẫn hướng: Mô hình 3D & Ảnh mẫu 2D (Guides)**](./add-3d-2d.md)  
+    Kỹ thuật nạp mô hình 3D tham chiếu (định dạng `.gltf` / `.glb`) và ảnh nền 2D (mặt phẳng XZ, XY) để căn chỉnh bố cục drone chuẩn xác.
+3.  [**Quản lý Nhóm Drone & Bộ Biến đổi Gizmo 3D**](./group-and-grizmo.md)  
+    Phương pháp phân cấp nhóm drone (Nested Group, Flat Group), điều khiển tịnh tiến/xoay/thu phóng bằng Gizmo và hiệu chuẩn tâm xoay (Pivot).
+4.  [**Công cụ Vẽ & Kéo cong Đường dẫn Bezier**](./grizmo.md)  
+    Thao tác bẻ cong dải drone dựa trên 3 điểm kiểm soát không gian (`P0`, `P1`, `P2`) và áp dụng phân bố drone theo đường cong.
+
+---
+
+## 2. Liên kết Điều hướng Phân hệ Liên quan
+
+*   [**Biên tập Hoạt cảnh Động (Animation Formation Editor - Ctrl + 2)**](../animated-editor/README.md)
+*   [**Phân hệ Diễn tập & Trình diễn (Show Viewer - Ctrl + 1)**](../show-viewer/README.md)
+*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)

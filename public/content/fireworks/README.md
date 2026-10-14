@@ -1,45 +1,48 @@
-﻿# Tổng quan Hệ thống Pháo hoa 3D (Fireworks System)
+# Phân hệ Hiệu ứng Pháo hoa 3D (Fireworks System)
 
-Hệ thống Pháo hoa 3D trong phần mềm mang đến khả năng biên đạo và kết hợp hoàn hảo giữa các màn xếp hình drone ánh sáng với các chùm pháo hoa nghệ thuật rực rỡ trên bầu trời đêm.
-
----
-
-## 1. Cơ chế mô phỏng 3 Giai đoạn Chân thực
-
-Mỗi quả pháo hoa được mô phỏng vật lý chính xác theo 3 giai đoạn:
-
-*   **Giai đoạn 1: Phóng lên (Launch):**
-    *   Quả pháo rời bệ phóng (Launch Barge) trên mặt sông và bay vút lên bầu trời với tốc độ gia tốc thực tế.
-    *   Đường bay có vệt khói phóng rocket (flight smoke trail) và vệt sáng xoắn ốc bốc lên sống động.
-*   **Giai đoạn 2: Đạt đỉnh và Bùng nổ (Burst):**
-    *   Tại thời điểm hẹn giờ chính xác trên Timeline, quả pháo kích nổ tạo ra quầng chớp sáng (flash) rực sáng bầu trời và chiếu bóng xuống mặt nước phản chiếu (Planar Reflector).
-    *   Âm thanh tiếng nổ vang lên đồng bộ với hiệu ứng thị giác.
-*   **Giai đoạn 3: Bung nở, Tạo hình và Rơi tàn (Dynamics & Dissolve):**
-    *   Hàng ngàn hạt pháo bung ra theo các cấu trúc hình học định sẵn (hình cầu, hình trái tim, hình vòng hoa, xoắn ốc...).
-    *   Các hạt lượn sóng, rủ xuống mềm mại dưới lực cản không khí, đổi màu từ phát sáng cực đại sang vàng cam ấm áp rồi tắt dần thành tàn khói bay lượn.
+Hệ thống **Pháo hoa 3D** cung cấp bộ công cụ biên đạo pháo hoa quang học thời gian thực, cho phép phối hợp giữa các màn xếp hình drone và các hiệu ứng phát nổ pháo hoa trên dòng thời gian Timeline.
 
 ---
 
-## 2. Các phân nhóm Pháo hoa chính
+## 1. Cơ chế Mô phỏng Vật lý 3 Giai đoạn
 
-*   **Pháo hoa Nghệ thuật Đơn (Artistic Shells):** Các loại pháo hoa tạo hình cổ điển và hiện đại như Cúc đại đóa (Chrysanthemum), Liễu rủ (Willow / Kamuro), Vòng tròn sao (Ring V2), Trái tim, Ngôi sao...
-*   **Pháo hoa Động lực học Phức hợp (Dynamic Shells):** Các mẫu pháo có quỹ đạo chuyển động đặc biệt như Xoắn kép DNA (Double Helix), Vòng xoay thiên hà (Galaxy), Lá vàng rơi chao đảo (Falling Leaves)...
-*   **Pháo chùm & Pháo quạt (Bouquet & Comet Clusters):** Cụm pháo phóng đồng loạt bắn tỏa nhiều tia sao băng rực rỡ tạo màn kết show hoành tráng.
+Hệ thống mô phỏng từng quả pháo hoa (**Shell**) dựa trên mô hình vật lý hạt (Particle System) qua 3 giai đoạn:
 
----
-
-## 3. Mục lục Hướng dẫn chi tiết
-
-Vui lòng chọn hướng dẫn bạn muốn xem chi tiết dưới đây:
-
-*   [**1. Cách Thêm và Điều khiển Pháo hoa trên Timeline**](./add-firework.md): Đặt mốc thời gian, chỉnh góc phóng và độ cao nổ.
-*   [**2. Danh mục Mẫu Pháo hoa Preset**](./preset-guide.md): Cẩm nang các kiểu dáng, hiệu ứng và thời điểm ứng dụng phù hợp nhất.
-*   [**3. Tùy biến Pháo hoa trong Property Inspector**](./shell-customization.md): Chỉnh màu sắc, kích thước, nhụy hoa và hiệu ứng quang học.
-*   [**4. Hướng dẫn Bắn Pháo chùm Bouquet & Chùm sao băng**](./bouquet-and-comet.md): Kỹ thuật bắn chùm sao băng và tạo giàn pháo quạt xòe đối xứng.
+1.  **Giai đoạn 1: Kích hỏa và Bay lên (Launch Phase):**
+    *   Quả pháo xuất phát từ bệ phóng (Launch Barge) và bay lên không trung theo gia tốc và góc nghiêng định sẵn.
+    *   Hiển thị vệt khói phóng (Smoke Trail) và vệt sáng dẫn đường (Comet Tail).
+2.  **Giai đoạn 2: Đạt đỉnh và Kích nổ (Burst Phase):**
+    *   Khi kim thời gian chạm mốc nổ trên Timeline, quả pháo phát nổ tạo nguồn sáng điểm (Point Light) chiếu sáng không gian và mặt nước mô phỏng.
+    *   Tín hiệu âm thanh kích nổ phát đồng bộ theo thời gian thực.
+3.  **Giai đoạn 3: Phát tán hạt và Suy hao (Dispersion & Dissolve Phase):**
+    *   Hàng nghìn hạt pháo hoa phát tán theo cấu trúc hình học của mẫu pháo (Preset).
+    *   Hạt pháo chịu tác động của trọng lực, lực cản không khí và chuyển đổi sắc độ trước khi suy giảm độ sáng và tan biến.
 
 ---
 
-## Các phân hệ liên quan
+## 2. Phân loại Hiệu ứng Pháo hoa
 
-*   [**Bộ biên tập Dòng thời gian Timeline**](../show-viewer/timeline-editor.md): Điều phối các sự kiện pháo hoa ăn khớp với nhạc.
-*   [**Quay lại tài liệu tổng quan chính (README.md)**](../README.md)
+*   **Pháo hoa Tạo hình Cơ bản (Standard Shells):** Các mẫu pháo kinh điển như Cúc đại đóa (`chrysanthemum`), Liễu rủ (`willow`), Vòng tròn sao (`ring`), Hình trái tim (`heart`), Khối cầu (`sphere`).
+*   **Pháo hoa Động lực học Phức hợp (Dynamic Shells):** Mẫu pháo có quỹ đạo chuyển động xoắn như Xoắn kép DNA (`double_helix`), Vòng xoay thiên hà (`galaxy`), Lá rơi chao đảo (`falling_leaves`).
+*   **Chuỗi Pháo chùm & Pháo quạt (Bouquet & Fan Sequences):** Cụm pháo bắn đồng loạt tỏa nhiều hướng hoặc quét quạt đối xứng tạo điểm nhấn cao trào cho kịch bản.
+
+---
+
+## 3. Danh mục Tài liệu Hướng dẫn
+
+1.  [**Cách Thêm và Điều khiển Pháo hoa trên Timeline**](./add-firework.md)  
+    Thiết lập mốc thời gian phóng, căn chỉnh độ cao nổ và góc nghiêng bắn trên Timeline.
+2.  [**Danh mục Mẫu Pháo hoa Cài sẵn (Preset Guide)**](./preset-guide.md)  
+    Bảng tổng hợp đặc tính quang học, thời gian tồn tại của hạt và ứng dụng của từng mẫu preset.
+3.  [**Tùy biến Tham số Pháo hoa trong Property Inspector**](./shell-customization.md)  
+    Hiệu chỉnh màu sắc, đường kính nở bung, cấu hình nhụy phụ (Pistil) và hiệu ứng chớp sáng (Strobe/Crackle).
+4.  [**Kỹ thuật Bắn Pháo chùm Bouquet & Chùm Sao băng**](./bouquet-and-comet.md)  
+    Quy trình thiết lập chuỗi bắn tuần tự theo góc quạt đối xứng và phân bổ vị trí nòng bắn.
+
+---
+
+## 4. Liên kết Điều hướng Phân hệ Liên quan
+
+*   [**Bộ biên tập Dòng thời gian (Timeline Sequencer)**](../show-viewer/timeline-editor.md)
+*   [**Bảng Thuộc tính Đối tượng (Property Inspector)**](../show-viewer/property-inspector.md)
+*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)

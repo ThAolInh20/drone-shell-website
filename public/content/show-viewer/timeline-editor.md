@@ -1,73 +1,78 @@
-﻿# Hướng dẫn sử dụng Bộ Biên tập Dòng thời gian (Timeline Sequencer)
+# Hướng dẫn sử dụng Bộ Biên tập Dòng thời gian (Timeline Sequencer)
 
-Bộ Biên tập Timeline là trung tâm điều phối toàn bộ show diễn, cho phép sắp đặt nhạc nền, lên lịch trình phóng pháo hoa và đồng bộ hóa các chuyển động tạo hình của phi đội drone trên cùng một trục thời gian.
+Bộ Biên tập Dòng thời gian (**Timeline Sequencer**) là trung tâm điều phối tổng thể của phân hệ Show Viewer, cho phép thiết lập nhạc nền, lập lịch trình phóng pháo hoa và đồng bộ hóa các chuyển động tạo hình của phi đội drone trên cùng một trục thời gian chuẩn.
 
 ---
 
 ## 1. Mở và Điều hướng Dòng thời gian
 
-*   **Phím tắt mở / đóng:** Nhấn tổ hợp phím **`Ctrl + T`** bất kỳ lúc nào trong phân hệ Show Viewer.
+*   **Phím tắt mở hoặc đóng:** Nhấn tổ hợp phím `Ctrl + T` tại bất kỳ màn hình nào trong phân hệ Show Viewer.
 *   **Cấu trúc phân làn chuyên dụng (Multi-track):**
-    *   **Làn Âm thanh (Audio Track):** Chứa nhạc nền và đồ thị dạng sóng âm (Waveform).
-    *   **Làn Trình diễn Drone (Drone Show Track):** Chứa các block bước diễn, hiệu ứng chuyển đổi và giữ vị trí của drone.
-    *   **Làn Pháo hoa (Fireworks Track):** Chứa các quả pháo hoa đơn lẻ hoặc pháo chùm kèm mốc phóng và mốc nổ.
-*   **Thu phóng Dòng thời gian (Zoom Timeline):**
-    *   Nhấn phím **`Shift + 0`** (hoặc phím **`)`**) để chuyển đổi tuần hoàn giữa các mức tỉ lệ hiển thị: `25 px/giây`, `50 px/giây`, `100 px/giây` và `200 px/giây`.
-    *   Mức thu phóng lớn giúp bạn căn chỉnh chi tiết từng phần trăm giây, trong khi mức nhỏ giúp quan sát toàn cảnh kịch bản dài nhiều phút.
+    *   **Làn Âm thanh (Audio Track):** Hiển thị khối tệp âm thanh và đồ thị dạng sóng (Waveform).
+    *   **Làn Trình diễn Drone (Drone Show Track):** Chứa các khối bước diễn (Step Blocks), hiệu ứng chuyển trạng thái (Transition) và thời gian giữ hình (Hold).
+    *   **Làn Pháo hoa (Fireworks Track):** Chứa các khối pháo hoa đơn lẻ hoặc chuỗi bắn pháo chùm kèm mốc phóng và mốc nổ.
+*   **Điều chỉnh tỉ lệ thu phóng (Zoom Timeline):**
+    *   Nhấn tổ hợp phím `Shift + 0` (hoặc phím `)`) để chuyển đổi tuần hoàn giữa 4 mức tỉ lệ hiển thị: `25 px/giây`, `50 px/giây`, `100 px/giây` và `200 px/giây`.
+
+> [!TIP]
+> Sử dụng mức thu phóng lớn (`100 px/giây` hoặc `200 px/giây`) khi cần căn chỉnh chi tiết mili-giây, và sử dụng mức nhỏ (`25 px/giây`) để quan sát toàn bộ kịch bản dài.
 
 ---
 
-## 2. Hệ thống Kim chỉ thời gian: Playhead và Anchor Head
+## 2. Hệ thống Kim Thời gian Đôi: Playhead và Anchor Head
 
-Để thao tác chính xác, cần phân biệt rõ hai loại kim thời gian hiển thị trên Timeline:
+Giao diện Timeline vận hành dựa trên hai loại kim chỉ thời gian độc lập:
 
-*   **Playhead (Kim chạy thời gian - Màu Cam / Đỏ):**
-    *   Thể hiện mốc thời gian diễn ra thực tế của show.
-    *   Khi bạn nhấn phím **`Space`**, Playhead sẽ chuyển động mượt mà từ trái sang phải, đồng thời âm thanh vang lên và các drone/pháo hoa kích hoạt tương ứng.
-*   **Anchor Head (Kim neo định vị - Màu Xanh lam):**
-    *   Được thiết lập bằng cách nhấp chuột trái vào thanh thước đo thời gian (Ruler).
-    *   Đóng vai trò làm mốc chuẩn cho lệnh dán: Khi bạn sao chép một block (`Ctrl + C`) và nhấn dán (**`Ctrl + V`**), block mới sẽ được đặt chính xác ngay tại vị trí kim Anchor Head.
-    *   Làm mốc bắt đầu diễn tập: Giúp bạn liên tục phát thử một đoạn điệp khúc mà không cần phải tua lại thủ công sau mỗi lần dừng.
+### Kim thời gian thực (Playhead - Màu Cam / Đỏ)
+*   Chỉ định mốc thời gian phát thực tế của kịch bản trình diễn.
+*   Khi nhấn phím `Space`, Playhead di chuyển từ trái sang phải trên trục thời gian; âm thanh được phát và các sự kiện drone/pháo hoa kích hoạt tương ứng.
+*   Nhấp chuột trái trực tiếp lên thước đo thời gian hoặc làn sự kiện để dịch chuyển Playhead đến mốc thời gian mong muốn.
+
+### Kim neo mốc (Anchor Head - Màu Xanh lam)
+*   Được thiết lập bằng cách nhấp chuột trái vào dải thước đo thời gian (Ruler).
+*   **Điểm chuẩn cho thao tác dán:** Khi sao chép một khối (`Ctrl + C`) và nhấn dán (`Ctrl + V`), khối mới sẽ được đặt chính xác tại vị trí của kim Anchor Head.
+*   **Mốc bắt đầu diễn tập lặp lại:** Cho phép phát thử nhiều lần một phân đoạn nhất định mà không phải kéo tua lại thủ công sau mỗi lần tạm dừng.
 
 ---
 
-## 3. Các thao tác chọn và sắp xếp Block
+## 3. Thao tác Chọn và Sắp xếp Khối Sự kiện (Blocks)
 
-*   **Chọn đơn lẻ:** Nhấp chuột trái trực tiếp vào block mong muốn.
-*   **Quét chọn vùng (Box Selection):** Nhấn giữ chuột trái trên vùng trống của Timeline và kéo rê chuột để tạo một khung chữ nhật bao trọn tất cả các block cần thao tác.
-*   **Chọn bổ sung (Multi-select):** Nhấn giữ phím **`Ctrl`** hoặc **`Shift`** rồi lần lượt click vào từng block.
-*   **Di chuyển đồng bộ:** Sau khi đã chọn nhiều block, bạn chỉ cần kéo một block bất kỳ thì toàn bộ cụm block được chọn sẽ dịch chuyển cùng nhau, giữ nguyên khoảng cách tương đối giữa các sự kiện.
-*   **Kéo giãn thời lượng:** Đưa con trỏ chuột vào mép phải của block drone, khi con trỏ đổi sang hình mũi tên hai chiều, nhấn giữ và kéo để thay đổi thời lượng hiển thị của tạo hình.
+*   **Chọn một khối:** Nhấp chuột trái trực tiếp vào khối cần thao tác.
+*   **Quét chọn vùng (Box Selection):** Nhấn giữ chuột trái trên vùng trống của Timeline và kéo để tạo khung chữ nhật bao quanh các khối cần chọn.
+*   **Chọn bổ sung (Multi-select):** Nhấn giữ phím `Ctrl` hoặc `Shift` rồi lần lượt nhấp chuột trái vào từng khối.
+*   **Di chuyển đồng bộ:** Sau khi chọn nhiều khối, kéo một khối bất kỳ; toàn bộ các khối được chọn sẽ dịch chuyển đồng thời, giữ nguyên khoảng cách thời gian tương đối giữa các sự kiện.
+*   **Thay đổi thời lượng khối:** Di chuyển con trỏ chuột vào mép phải của khối drone. Khi con trỏ chuyển sang biểu tượng mũi tên hai chiều, nhấn giữ chuột trái và kéo sang trái/phải để rút ngắn hoặc kéo dài thời lượng của bước diễn.
 
 ---
 
 ## 4. Chế độ Bắt dính (Snap & Snap-to-beat)
 
-Biểu tượng Nam châm trên thanh công cụ của Timeline cho phép kích hoạt tính năng bắt dính thông minh:
+Nhấp vào biểu tượng **Nam châm** trên thanh công cụ Timeline để kích hoạt các chế độ bắt dính tự động:
 
-*   **Bắt dính cạnh block (Snap-to-edge):** Khi bạn kéo một block lại gần block phía trước hoặc phía sau, mép của hai block sẽ tự động hút dính vào nhau, ngăn ngừa các khoảng hở mili-giây gây gián đoạn đội hình.
-*   **Bắt dính nhịp nhạc (Snap-to-beat):** Khi block âm thanh có các mốc nhịp vàng (beat), các sự kiện pháo hoa và drone sẽ tự động bắt dính vào đúng đỉnh nhịp trống, đảm bảo pháo hoa phát nổ ăn khớp tuyệt đối với giai điệu bài hát.
+*   **Bắt dính cạnh khối (Snap-to-edge):** Khi kéo một khối lại gần khối liền trước hoặc liền sau, mép của hai khối sẽ tự động hút dính vào nhau, tránh tạo ra các khoảng trống thời gian không mong muốn giữa các bước diễn.
+*   **Bắt dính nhịp phách (Snap-to-beat):** Khi làn âm thanh đã được đánh dấu các mốc nhịp trống (Beat markers), các khối sự kiện pháo hoa và drone sẽ tự động bắt dính vào mốc nhịp gần nhất, đảm bảo tính đồng bộ chuẩn xác với tiết tấu âm nhạc.
 
 ---
 
-## 5. Bảng tổng hợp Phím tắt trên Timeline
+## 5. Bảng Phím tắt Thao tác trên Dòng thời gian
 
 | Phím tắt | Thao tác thực hiện |
 | :--- | :--- |
-| **`Space`** | Phát hoặc Tạm dừng kịch bản từ mốc thời gian hiện tại |
-| **`Ctrl + T`** | Mở hoặc Đóng bộ biên tập Timeline |
-| **`Shift + 0`** hoặc **`)`** | Chuyển đổi mức độ thu phóng (Zoom) dòng thời gian |
-| **`B`** | Đặt mốc nhịp beat tại vị trí kim chỉ thời gian trên làn âm thanh |
-| **`Ctrl + C`** | Sao chép block đang chọn |
-| **`Ctrl + V`** | Dán block đã sao chép vào vị trí kim neo Anchor Head (xanh lam) |
-| **`Delete`** / **`Backspace`** | Xóa toàn bộ các block đang được chọn |
-| **`Ctrl + Z`** | Hoàn tác (Undo) thao tác vừa thực hiện |
-| **`Ctrl + Y`** | Làm lại (Redo) thao tác vừa hoàn tác |
-| **`Ctrl + S`** | Lưu kịch bản làm việc vào dự án |
+| `Space` | Phát hoặc tạm dừng kịch bản từ vị trí hiện tại của kim Playhead |
+| `Ctrl + T` | Mở hoặc đóng giao diện Timeline Sequencer |
+| `Shift + 0` hoặc `)` | Chuyển đổi các mức thu phóng dòng thời gian (`25`, `50`, `100`, `200 px/s`) |
+| `B` | Đặt mốc nhịp phách (Beat Marker) tại vị trí Playhead trên làn âm thanh |
+| `Ctrl + C` | Sao chép khối hoặc nhóm khối đang được chọn |
+| `Ctrl + V` | Dán khối đã sao chép vào vị trí kim neo Anchor Head |
+| `Delete` hoặc `Backspace` | Xóa các khối đang được chọn |
+| `Ctrl + Z` | Hoàn tác (Undo) thao tác vừa thực hiện |
+| `Ctrl + Y` | Làm lại (Redo) thao tác vừa hoàn tác |
+| `Ctrl + S` | Lưu kịch bản dự án |
+
 ---
 
-## Liên kết điều hướng
+## Liên kết Điều hướng
 
-*   [**Bài tiếp theo: Block Âm thanh & Waveform**](./audio-block.md)
+*   [**Bài tiếp theo: Khối Âm thanh & Dạng sóng Waveform**](./audio-block.md)
 *   [**Trở về Mục lục Show Viewer**](./README.md)
-*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)
+*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)

@@ -1,54 +1,65 @@
-# Điều khiển Camera & Theo dõi Hiệu năng
+# Điều khiển Camera 3D & Chẩn đoán Hiệu năng (Viewport & Diagnostics)
 
-Show viewer hỗ trợ camera 3D bay tự do để điều khiển góc quay toàn cảnh show diễn.
-
----
-
-## Chế độ khóa chuột (Pointer Lock)
-
-Xoay camera bằng chuyển động chuột:
-
-*   Nhấp chuột trái vào bất kỳ vị trí nào trên vùng hiển thị 3D để khóa con trỏ.
-*   Di chuyển chuột để quay góc nhìn.
-*   Nhấn phím **`ESC`** để thoát chế độ khóa chuột (hiển thị lại con trỏ chuột và mở Menu tạm dừng).
+Không gian quan sát 3D (**Viewport**) của phân hệ Show Viewer cung cấp hệ thống camera bay tự do (Free-fly Camera) và bảng điều khiển chẩn đoán hiệu năng thời gian thực (HUD Diagnostics).
 
 ---
 
-## Các phím di chuyển tự do
+## 1. Chế độ Khóa Con trỏ Chuột (Pointer Lock)
 
-Khi đang ở chế độ khóa chuột, di chuyển camera bằng các phím sau:
+Để xoay góc nhìn camera tự do trong không gian mô phỏng 3D:
 
-| Phím bấm | Chức năng di chuyển |
+### Các bước thực hiện:
+1.  Nhấp chuột trái vào bất kỳ vị trí nào trên vùng không gian 3D của Viewport để kích hoạt chế độ khóa con trỏ.
+2.  Di chuyển chuột để quay góc nhìn theo các trục ngang (Yaw) và trục dọc (Pitch).
+3.  Nhấn phím `Esc` để thoát chế độ khóa con trỏ chuột và mở Menu tạm dừng hệ thống.
+
+---
+
+## 2. Hệ thống Phím Điều khiển Camera Bay
+
+Khi đang ở chế độ khóa con trỏ chuột, điều khiển vị trí của camera bằng các phím sau:
+
+| Phím bấm | Thao tác điều khiển |
 | :--- | :--- |
-| **`W`** hoặc **`Mũi tên lên`** | Di chuyển camera tiến về phía trước |
-| **`S`** hoặc **`Mũi tên xuống`** | Di chuyển camera lùi về phía sau |
-| **`A`** hoặc **`Mũi tên trái`** | Di chuyển camera dịch sang bên trái |
-| **`D`** hoặc **`Mũi tên phải`** | Di chuyển camera dịch sang bên phải |
+| `W` hoặc `Mũi tên lên` | Di chuyển camera tiến về phía trước theo hướng nhìn |
+| `S` hoặc `Mũi tên xuống` | Di chuyển camera lùi về phía sau |
+| `A` hoặc `Mũi tên trái` | Trượt camera sang bên trái (Strafe Left) |
+| `D` hoặc `Mũi tên phải` | Trượt camera sang bên phải (Strafe Right) |
+| `Q` | Hạ thấp độ cao camera theo phương thẳng đứng |
+| `E` | Nâng cao độ camera theo phương thẳng đứng |
+| `Cuộn chuột giữa` | Thu phóng (Zoom) khoảng cách quan sát tới điểm ngắm |
 
-*Lưu ý:* Hướng di chuyển phụ thuộc vào góc nhìn của camera. Ví dụ: hướng camera lên trời và nhấn `W` sẽ bay lên cao.
+> [!NOTE]
+> Hướng di chuyển tiến/lùi phụ thuộc vào góc nghiêng của camera. Ví dụ: Khi hướng camera thẳng lên bầu trời và nhấn phím `W`, camera sẽ bay thẳng lên trên.
 
 ---
 
-## Bảng theo dõi hiệu năng (HUD)
+## 3. Bảng Chẩn đoán Hiệu năng Kỹ thuật (HUD Diagnostics)
 
-Cách bật bảng HUD theo dõi thông số kỹ thuật (số hạt particle, FPS, cảnh báo lỗi):
+Để theo dõi tải trọng đồ họa, tốc độ khung hình và số lượng hạt pháo hoa phát tán trong quá trình diễn tập:
 
-*   **Phím tắt:** Nhấn tổ hợp phím **`Shift + Y`** khi đang chạy mô phỏng.
-*   **Các thông số hiển thị:**
-    *   **Mode:** Trạng thái hoạt động (`Live` hoặc `Paused`).
-    *   **Locked:** Có khóa chuột để xoay camera hay không (`Yes`/`No`).
-    *   **Moving:** Có di chuyển camera hay không (`forward`, `backward`, `idle`,...).
-    *   **Preset:** Tên Preset pháo hoa được chọn để bắn thủ công.
-    *   **Sequence:** Tên kịch bản trình diễn đang được tải.
-    *   **Shell & Effect:** Loại pháo hoa và hiệu ứng hạt phát ra gần nhất.
-    *   **Launch/Burst:** Tổng số quả pháo đã phóng / số quả đã phát nổ.
-    *   **Fallback S/E:** Số lượng hình dáng hoặc hiệu ứng bị lỗi phải dùng cấu hình dự phòng.
-    *   **Warnings / Last Warn:** Số lượng cảnh báo và chi tiết lỗi gần nhất.
-    *   **Stats Chart:** Biểu đồ hiển thị thời gian dựng khung hình (ms), FPS thực tế và dung lượng bộ nhớ RAM/GPU chiếm dụng sơ bộ.
+### Bật / Tắt bảng chẩn đoán:
+Nhấn tổ hợp phím `Shift + Y` tại bất kỳ thời điểm nào trong khi mô phỏng đang chạy.
+
+### Ý nghĩa các chỉ số giám sát:
+
+| Tham số | Ý nghĩa kỹ thuật |
+| :--- | :--- |
+| **Mode** | Trạng thái kịch bản hiện tại (`Live` - đang chạy, `Paused` - tạm dừng) |
+| **Locked** | Trạng thái khóa con trỏ chuột (`Yes` hoặc `No`) |
+| **Moving** | Trạng thái di chuyển camera (`forward`, `backward`, `idle`) |
+| **Preset** | Tên mẫu hiệu ứng pháo hoa đang chọn |
+| **Sequence** | Tên chuỗi kịch bản đang nạp trong phiên làm việc |
+| **Shell & Effect** | Định danh quả pháo và hiệu ứng hạt (Particles) vừa được kích nổ |
+| **Launch / Burst** | Số quả pháo đã kích hỏa / Số quả pháo đã nổ thực tế |
+| **Fallback S/E** | Số lượng hiệu ứng gặp lỗi và phải kích hoạt cấu hình dự phòng |
+| **Warnings / Last Warn** | Tổng số cảnh báo hệ thống và mã lỗi gần nhất |
+| **Stats Chart** | Biểu đồ thời gian render khung hình (Frame time - ms), chỉ số FPS và mức sử dụng bộ nhớ đồ họa |
+
 ---
 
-## Liên kết điều hướng
+## Liên kết Điều hướng
 
-*   [**Bài tiếp theo: Bắn thử Thủ công & Thư viện Preset**](./sequences.md)
+*   [**Bài tiếp theo: Chuỗi Pháo hoa Tuần tự & Thư viện Mẫu**](./sequences.md)
 *   [**Trở về Mục lục Show Viewer**](./README.md)
-*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)
+*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)

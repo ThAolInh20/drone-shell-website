@@ -1,59 +1,66 @@
-# Kiểu Giữ đèn, Kiểu LED và Kiểu Cập bến
+# Hiệu ứng Đứng yên & Kịch bản Đèn LED (Hold & LED Effects)
 
-Hiệu ứng ánh sáng LED kiểm soát cách hiển thị màu sắc và cách thức bật sáng khi drone đến vị trí đích.
-
----
-
-## Hiệu ứng động khi giữ vị trí (Hold Style)
-
-Khi drone bay tới đích và đứng yên trong thời gian **Hold Time**, bạn có thể áp dụng các chuyển động vi mô:
-
-*   **Bình thường (None):** Drone đứng im.
-*   **Sóng nhấp nhô (Wave):** Khối hình uốn lượn nhấp nhô theo chiều dọc.
-*   **Đung đưa (Swing):** Khối hình dao động nghiêng nhẹ sang trái/phải theo chiều ngang.
-*   **Phập phồng (Pulse):** Khối hình co giãn nở ra rồi thu nhỏ lại tuần hoàn.
-*   **Xoay quanh (Orbit):** Drone xoay quanh trục tâm của nhóm.
-*   **Xoáy ốc (Spiral):** Các hàng drone xoắn vặn quanh trục đứng.
-*   **Nở hoa (Expand):** Khối hình tỏa ra ngoài từ tâm.
+Trong phân hệ Animated Editor, việc kiểm soát chuyển động vi mô khi drone giữ hình và lập trình kịch bản ánh sáng LED đóng vai trò quyết định đến tính thẩm mỹ và độ tương phản của toàn bộ kịch bản trình diễn trên bầu trời đêm.
 
 ---
 
-## Hiệu ứng ánh sáng LED (Light Style)
+## 1. Hiệu ứng Vi động khi Giữ Vị trí (Hold Styles)
 
-Hệ thống hỗ trợ 7 chế độ chạy màu LED:
+Khi phi đội hoàn thành giai đoạn bay chuyển tiếp và bước vào khoảng thời gian giữ hình (**Hold Time**), người dùng có thể áp dụng các kiểu chuyển động nhẹ để duy trì cảm giác sống động:
 
-*   **Bình thường (Normal):** Màu sắc cố định được chọn trong bảng màu.
-*   **Sparkle (Lấp lánh):** Các drone thay nhau chớp tắt tạo hiệu ứng lấp lánh.
-*   **Sparkle Random (Lấp lánh ngẫu nhiên):** Chớp nháy và đổi sang một màu ngẫu nhiên khác nhau mỗi lần chớp.
-*   **Patch Sparkle (Lấp lánh theo mảng):** Chớp nháy sáng theo từng khu vực hoặc từng mảng nhóm drone cạnh nhau.
-*   **Blackout (Tối đen):** Tắt hoàn toàn đèn LED của drone.
-    *   *Ứng dụng:* Ẩn đường bay của drone khi chuyển tiếp giữa các hình dạng phức tạp để tránh lộ quỹ đạo bay hỗn loạn, sau đó bật sáng ở vị trí đích.
-*   **Rainbow (Cầu vồng):** LED biến đổi tuần hoàn qua dải màu cầu vồng.
-*   **Strobe (Chớp tắt đồng loạt):** Toàn bộ các drone chớp sáng rồi tắt đồng bộ với tần số nhanh.
-
----
-
-## Hiệu ứng cập bến bật sáng (Landing Style)
-
-Cách thức đèn LED bật sáng khi kết thúc hành trình bay chuyển tiếp và bước vào thời gian Hold:
-
-*   **Instant (Đồng bộ):** Tất cả các drone đồng loạt bật sáng ngay khi kết thúc bước bay.
-*   **Radial Ripple (Dần từ tâm):** Đèn LED bật sáng dần từ tâm khối hình lan ra ngoài.
-*   **Left-to-Right (Trái sang phải):** Đèn LED sáng dần từ trái qua phải.
-*   **Right-to-Left (Phải sang trái):** Đèn LED sáng dần từ phải qua trái.
+| Kiểu giữ vị trí | Tên tiếng Anh | Quy luật vi động |
+| :--- | :--- | :--- |
+| **Cố định** | `None` | Drone giữ yên hoàn toàn tại tọa độ đích. |
+| **Sóng lượn** | `Wave` | Khối hình uốn lượn nhấp nhô tuần hoàn theo phương thẳng đứng. |
+| **Dao động ngang** | `Swing` | Toàn bộ tạo hình đung đưa nghiêng nhẹ sang hai bên theo phương ngang. |
+| **Nhịp thở (Co giãn)** | `Pulse` | Đội hình nở rộng ra xung quanh rồi co lại tuần hoàn như nhịp thở sinh học. |
+| **Quỹ đạo tròn** | `Orbit` | Từng drone di chuyển quay quanh trục tâm hình học của nhóm. |
+| **Xoắn ốc** | `Spiral` | Các hàng drone chuyển động xoắn vặn dần đều theo trục thẳng đứng. |
+| **Nở rộng** | `Expand` | Từng cụm drone tản rộng dần từ tâm ra ngoài biên. |
 
 ---
 
-## Chiều xoay LED (Rotation Direction)
+## 2. Kịch bản Màu sắc Đèn LED (Light Styles)
 
-Thiết lập chiều xoay đối với các hiệu ứng xoay (như Vortex hay Orbit):
-*   **Theo chiều kim đồng hồ (CW):** Xoay theo hướng kim đồng hồ.
-*   **Ngược chiều kim đồng hồ (CCW):** Xoay ngược hướng kim đồng hồ.
-*   **Xen kẽ (Alternate):** Các hàng drone xen kẽ nhau sẽ xoay ngược chiều nhau.
+Hệ thống hỗ trợ 7 chế độ điều khiển dải màu đèn LED công suất cao:
+
+*   **Màu đơn sắc (Normal):** Đèn LED phát sáng màu cố định được thiết lập từ bảng mã màu RGB/Hex.
+*   **Lấp lánh đơn sắc (Sparkle):** Các drone chớp tắt luân phiên với chu kỳ ngẫu nhiên nhằm mô phỏng bầu trời sao.
+*   **Lấp lánh đa sắc (Sparkle Random):** Mỗi chu kỳ chớp sáng sẽ tự động đổi sang một màu sắc ngẫu nhiên khác nhau.
+*   **Lấp lánh phân mảng (Patch Sparkle):** Hiệu ứng chớp nháy kích hoạt đồng bộ theo từng phân vùng hoặc từng cụm drone liền kề.
+*   **Tắt sáng hoàn toàn (Blackout):** Tắt toàn bộ hệ thống đèn LED của phi đội.
+
+> [!TIP]
+> **Ứng dụng chế độ Blackout:** Áp dụng chế độ `Blackout` trong giai đoạn chuyển trạng thái (`Transition`) đối với các phân cảnh hoán đổi đội hình phức tạp. Việc ẩn đường bay trong bóng tối giúp tạo bất ngờ cho khán giả khi đội hình mới đồng loạt bật sáng tại vị trí đích.
+
+*   **Dải màu cầu vồng (Rainbow):** Màu sắc đèn LED chuyển đổi tuần hoàn và mượt mà qua quang phổ 7 màu.
+*   **Chớp xung đồng loạt (Strobe):** Toàn bộ phi đội chớp sáng và tắt đồng loạt với tần số cao.
+
 ---
 
-## Liên kết điều hướng
+## 3. Kịch bản Bật sáng khi Đến Vị trí (Landing Styles)
 
-*   [**Bài tiếp theo: Công cụ Gizmo 3D & Uốn nhóm Group Bending**](./grizmo.md)
+Xác định quy luật xuất hiện của ánh sáng ngay khi drone hoàn thành lộ trình bay và chuyển sang trạng thái Hold:
+
+*   **Đồng loạt tức thì (Instant):** Toàn bộ các bóng đèn LED bật sáng cùng một thời điểm.
+*   **Gợn sóng tỏa từ tâm (Radial Ripple):** Đèn LED kích hoạt bật sáng tuần tự từ các drone ở tâm khối hình lan dần ra các drone ở đường viền ngoài.
+*   **Quét từ trái sang phải (Left-to-Right):** Hiệu ứng ánh sáng kích hoạt quét dần theo phương ngang từ mép trái qua mép phải.
+*   **Quét từ phải sang trái (Right-to-Left):** Hiệu ứng ánh sáng kích hoạt quét ngược chiều từ mép phải qua mép trái.
+
+---
+
+## 4. Hướng và Chiều Xoay Đèn LED (Rotation Direction)
+
+Đối với các hiệu ứng chuyển động xoay (như `Orbit` hoặc `Spiral`), người dùng có thể chọn chiều quay:
+
+*   **Thuận chiều kim đồng hồ (CW):** Quay theo chiều kim đồng hồ.
+*   **Ngược chiều kim đồng hồ (CCW):** Quay ngược chiều kim đồng hồ.
+*   **Xen kẽ (Alternate):** Các tầng hoặc các vòng drone liền kề sẽ quay ngược chiều nhau tạo chiều sâu không gian.
+
+---
+
+## Liên kết Điều hướng
+
+*   [**Bài tiếp theo: Công cụ Gizmo 3D & Uốn Biến dạng Nhóm (Group Bending)**](./grizmo.md)
 *   [**Trở về Mục lục Animation Formation Editor**](./README.md)
-*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)
+*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)

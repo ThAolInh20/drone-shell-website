@@ -390,7 +390,7 @@ function parseMarkdown(md) {
     return text
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/`(.*?)`/g, '<code>$1</code>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
       .replace(/\[(.*?)\]\((.*?)\)/g, (match, label, href) => {
         const cleanHref = href.split('#')[0];
         const hash = href.includes('#') ? '#' + href.split('#')[1] : '';
@@ -409,18 +409,27 @@ function parseMarkdown(md) {
       });
   }
 
-  // 3. Process line by line, grouping lists, tables, and paragraphs
+  // 3. Process line by line, grouping lists, tables, callouts, and paragraphs
   const lines = cleanMd.split(/\r?\n/);
   const processedBlocks = [];
 
   let inTable = false;
   let tableHTML = '';
-  const listStack = []; // Stack of { indent }
+  let inBlockquote = false;
+  const listStack = []; // Stack of { indent, type }
+
+  function closeBlockquote() {
+    if (inBlockquote) {
+      processedBlocks.push('</blockquote>');
+      inBlockquote = false;
+    }
+  }
 
   function closeAllLists() {
+    closeBlockquote();
     while (listStack.length > 0) {
-      listStack.pop();
-      processedBlocks.push('</ul>');
+      const top = listStack.pop();
+      processedBlocks.push(top.type === 'ol' ? '</ol>' : '</ul>');
     }
   }
 
@@ -472,6 +481,44 @@ function parseMarkdown(md) {
       continue;
     }
 
+    // Handle Blockquote / Callouts
+    if (trimmed.startsWith('>')) {
+      while (listStack.length > 0) {
+        const top = listStack.pop();
+        processedBlocks.push(top.type === 'ol' ? '</ol>' : '</ul>');
+      }
+
+      const quoteText = trimmed.replace(/^>\s?/, '');
+      const alertMatch = quoteText.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/i);
+
+      if (!inBlockquote) {
+        inBlockquote = true;
+        if (alertMatch) {
+          const type = alertMatch[1].toUpperCase();
+          let icon = 'ℹ️';
+          if (type === 'TIP') icon = '💡';
+          else if (type === 'WARNING') icon = '⚠️';
+          else if (type === 'IMPORTANT') icon = '📌';
+          else if (type === 'CAUTION') icon = '🛑';
+          const rest = quoteText.replace(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i, '');
+          const restParsed = rest ? `<br>${parseInlineMarkdown(rest)}` : '';
+          processedBlocks.push(`<blockquote class="callout callout-${type.toLowerCase()}"><strong>${icon} ${type}</strong>${restParsed}`);
+        } else {
+          processedBlocks.push(`<blockquote>${parseInlineMarkdown(quoteText)}`);
+        }
+      } else {
+        if (alertMatch) {
+          const type = alertMatch[1].toUpperCase();
+          processedBlocks[processedBlocks.length - 1] += `<br><strong>[${type}]</strong>`;
+        } else {
+          processedBlocks[processedBlocks.length - 1] += `<br>${parseInlineMarkdown(quoteText)}`;
+        }
+      }
+      continue;
+    } else {
+      closeBlockquote();
+    }
+
     // Handle Headers
     if (trimmed.startsWith('#') && (trimmed.startsWith('#### ') || trimmed.startsWith('### ') || trimmed.startsWith('## ') || trimmed.startsWith('# '))) {
       closeAllLists();
@@ -498,32 +545,41 @@ function parseMarkdown(md) {
     // Calculate line indentation
     const leadingSpaces = line.match(/^\s*/)[0].length;
     const isBulletList = trimmed.startsWith('- ') || trimmed.startsWith('* ') || trimmed.startsWith('+ ');
+    const isOrderedList = /^\d+\.\s+/.test(trimmed);
 
-    if (isBulletList) {
-      const itemText = trimmed.replace(/^[-*+]\s+/, '');
+    if (isBulletList || isOrderedList) {
+      const listType = isOrderedList ? 'ol' : 'ul';
+      const itemText = isOrderedList
+        ? trimmed.replace(/^\d+\.\s+/, '')
+        : trimmed.replace(/^[-*+]\s+/, '');
       const parsedText = parseInlineMarkdown(itemText);
 
       if (listStack.length === 0) {
-        listStack.push({ indent: leadingSpaces });
-        processedBlocks.push('<ul>');
+        listStack.push({ indent: leadingSpaces, type: listType });
+        processedBlocks.push(`<${listType}>`);
       } else {
         let currentTop = listStack[listStack.length - 1];
         if (leadingSpaces > currentTop.indent) {
-          listStack.push({ indent: leadingSpaces });
-          processedBlocks.push('<ul>');
+          listStack.push({ indent: leadingSpaces, type: listType });
+          processedBlocks.push(`<${listType}>`);
         } else {
           while (listStack.length > 0 && listStack[listStack.length - 1].indent > leadingSpaces) {
-            listStack.pop();
-            processedBlocks.push('</ul>');
+            const popped = listStack.pop();
+            processedBlocks.push(popped.type === 'ol' ? '</ol>' : '</ul>');
           }
           if (listStack.length === 0) {
-            listStack.push({ indent: leadingSpaces });
-            processedBlocks.push('<ul>');
+            listStack.push({ indent: leadingSpaces, type: listType });
+            processedBlocks.push(`<${listType}>`);
+          } else if (listStack[listStack.length - 1].type !== listType) {
+            const popped = listStack.pop();
+            processedBlocks.push(popped.type === 'ol' ? '</ol>' : '</ul>');
+            listStack.push({ indent: leadingSpaces, type: listType });
+            processedBlocks.push(`<${listType}>`);
           }
         }
       }
 
-      processedBlocks.push(`<li>${parsedText}`);
+      processedBlocks.push(`<li>${parsedText}</li>`);
       continue;
     }
 

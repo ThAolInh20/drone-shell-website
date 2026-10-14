@@ -1445,6 +1445,46 @@ code {
   line-height: 1.6;
 }
 
+/* Blockquote and Callouts */
+.docs-body blockquote {
+  margin: 18px 0;
+  padding: 14px 18px;
+  background: rgba(15, 23, 42, 0.7);
+  border-left: 4px solid #00f5ff;
+  border-radius: 0 10px 10px 0;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.docs-body blockquote strong {
+  color: #ffffff;
+}
+
+.docs-body blockquote.callout-note {
+  border-left-color: #38bdf8;
+  background: rgba(14, 165, 233, 0.08);
+}
+
+.docs-body blockquote.callout-tip {
+  border-left-color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.docs-body blockquote.callout-warning {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.docs-body blockquote.callout-important {
+  border-left-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.docs-body blockquote.callout-caution {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
 .docs-body hr {
   border: 0;
   height: 1px;

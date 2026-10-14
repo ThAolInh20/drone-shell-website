@@ -1,49 +1,56 @@
-# Biên tập các Bước bay trên Timeline
+# Biên tập các Bước bay trên Timeline (Step Cards)
 
-Phần dưới của giao diện biên tập hoạt cảnh động chứa **Dòng thời gian bước bay (Timeline Step Panel)**. Trình diễn drone được xây dựng bằng cách nối tiếp nhiều bước bay (Steps), trong đó mỗi bước chứa một trạng thái phân bố tọa độ cố định của drone.
-
----
-
-## Thao tác với thẻ Bước bay (Step Cards)
-
-Mỗi Step trên Timeline được hiển thị dưới dạng một thẻ card chứa các thông tin:
-*   **Tên bước:** Ví dụ: `Bước 1`, `Bước 2`...
-*   **Mốc thời gian kích hoạt:** Mili-giây (`ms`). Ví dụ: `3000 ms` tương ứng với giây thứ 3.0 của show.
-*   **Màu sắc thẻ (UI Color):** Đổi màu sắc thẻ trên Step Panel ở cột bên phải.
-*   **Xem trước bước bay:** Click chuột trái vào một thẻ Step Card bất kỳ khi đang tạm dừng để chuyển vạch kim thời gian (`playbackTime`) về thời điểm của bước đó và hiển thị tọa độ drone tương ứng.
+Bảng điều khiển **Thẻ bước bay (Timeline Step Panel)** ở cạnh dưới của phân hệ Animated Editor quản lý chuỗi diễn hoạt của phi đội drone. Một kịch bản trình diễn hoàn chỉnh được tạo nên từ nhiều bước bay (**Steps**) nối tiếp nhau, trong đó mỗi bước xác định một trạng thái tọa độ tĩnh của phi đội cùng thời lượng giữ hình và chuyển trạng thái tương ứng.
 
 ---
 
-## Kéo thả thay đổi thứ tự bay (Drag & Drop)
+## 1. Cấu trúc Thông tin trên Thẻ Bước bay (Step Card)
 
-Thay đổi thứ tự xuất hiện của các hình khối trong kịch bản:
+Mỗi thẻ bước bay trên dòng thời gian hiển thị các thông tin cơ bản:
 
-*   Click giữ chuột trái vào thẻ Step muốn chuyển vị trí. Thẻ card sẽ mờ đi 50%.
-*   Kéo thẻ rê qua các thẻ khác. Đường biên của thẻ bên dưới sẽ hiển thị màu xanh lá cây khi vị trí đó có thể thả (drop).
-*   Thả chuột (Drop).
-*   **Tự động cập nhật:**
-    *   Hệ thống cập nhật thứ tự Step trong mảng dữ liệu.
-    *   Tính toán lại các mốc thời gian bắt đầu của tất cả các Step phía sau dựa trên thời lượng Transition và Hold.
-    *   Cập nhật hiển thị trong Viewport 3D.
+*   **Tên bước định danh:** Tên gọi nhận diện của bước diễn (ví dụ: `Bước 1`, `Bước 2`...).
+*   **Mốc thời gian kích hoạt:** Đơn vị tính bằng mili-giây (`ms`). Ví dụ: `3000 ms` tương ứng với giây thứ `3.0` của kịch bản.
+*   **Màu sắc phân loại (UI Color):** Tùy chỉnh màu sắc viền thẻ tại bảng thuộc tính bên phải để nhóm các phân đoạn trình diễn cùng chủ đề.
+*   **Xem trước bước diễn:** Nhấp chuột trái vào một thẻ Step Card bất kỳ khi kịch bản đang tạm dừng để dịch chuyển vạch kim thời gian về mốc bắt đầu của bước đó và hiển thị bố cục 3D tương ứng trong Viewport.
 
 ---
 
-## Thêm và Xóa các Bước bay
+## 2. Quy trình Kéo thả Thay đổi Thứ tự Bay (Drag & Drop)
 
-*   **Thêm bước mới:** Click nút **`Thêm bước +`** (Add Step) ở góc trái timeline. Hệ thống nhân bản bước hiện tại và nối tiếp vào cuối dòng thời gian.
-*   **Xóa bước bay:** Click nút **`×`** ở góc trên bên phải của thẻ Step Card để xóa bước này khỏi kịch bản.
+Để tái sắp xếp thứ tự xuất hiện của các tạo hình trong kịch bản:
+
+### Các bước thực hiện:
+1.  Nhấn giữ chuột trái vào thẻ bước bay cần di chuyển. Thẻ sẽ giảm độ mờ hiển thị (opacity) xuống `50%` để báo hiệu trạng thái sẵn sàng kéo.
+2.  Rê con trỏ chuột qua các thẻ khác trên dòng thời gian. Khi di chuyển qua khoảng trống giữa hai thẻ, đường viền của vị trí tiếp nhận sẽ phát sáng màu xanh lá cây.
+3.  Thả chuột trái tại vị trí có viền xanh lá để xác nhận hoán đổi thứ tự.
+4.  **Cơ chế tự động đồng bộ hóa:**
+    *   Hệ thống cập nhật lại chỉ mục (index) của bước diễn trong mảng dữ liệu.
+    *   Tự động tính toán lại mốc thời gian bắt đầu (`startTime`) của toàn bộ các bước diễn phía sau dựa trên tổng thời lượng chuyển đổi (Transition) và giữ hình (Hold) của các bước trước đó.
+    *   Tái hiện hoạt cảnh chuyển động liền mạch trong Viewport 3D.
 
 ---
 
-## Chọn nhóm điều phối (Active Group Dropdown)
+## 3. Khởi tạo và Xóa Bước bay
 
-Cạnh nút phát có một menu thả xuống: **`Nhóm đang chọn`** (Active Group).
-*   Mặc định áp dụng cho toàn bộ drone.
-*   Nếu chọn một nhóm cụ thể (ví dụ: `Group A`): Các thay đổi về tọa độ, hiệu ứng bay, hiệu ứng màu sắc ở Step hiện tại chỉ tác động lên các drone thuộc `Group A`. Các drone thuộc nhóm khác được giữ nguyên trạng thái cũ.
+*   **Khởi tạo bước mới:** Nhấp vào nút **Thêm bước (Add Step)** trên thanh công cụ Timeline. Hệ thống sẽ nhân bản cấu hình tọa độ của bước hiện tại và tự động nối tiếp vào cuối chuỗi kịch bản.
+*   **Xóa bước bay:** Nhấp vào biểu tượng dấu nhân **`×`** ở góc trên bên phải của thẻ Step Card cần xóa.
+
+> [!WARNING]
+> Thao tác xóa thẻ bước bay không thể hoàn tác nếu đã thực hiện lệnh lưu dự án. Hãy kiểm tra kỹ mốc thời gian trước khi xóa để không làm xáo trộn cấu trúc kịch bản tổng thể.
+
 ---
 
-## Liên kết điều hướng
+## 4. Phân bổ Tác vụ theo Nhóm (Active Group Dropdown)
+
+Tại thanh công cụ điều khiển phát (Playback Controls), nhấp vào menu thả xuống **Nhóm đang chọn (Active Group)** để phân vùng phạm vi áp dụng:
+
+*   **Tất cả nhóm (Mặc định):** Các chỉnh sửa về tọa độ, hiệu ứng bay và màu đèn LED ở bước hiện tại sẽ tác động lên toàn bộ phi đội drone.
+*   **Nhóm chỉ định (Ví dụ: `Group A`):** Mọi điều chỉnh chỉ tác động cục bộ lên các drone thuộc `Group A`. Các drone thuộc nhóm khác sẽ giữ nguyên trạng thái tọa độ và màu sắc của bước liền trước.
+
+---
+
+## Liên kết Điều hướng
 
 *   [**Bài tiếp theo: Cấu hình Hiệu ứng Chuyển trạng thái Transition**](./transition-effect.md)
 *   [**Trở về Mục lục Animation Formation Editor**](./README.md)
-*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)
+*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)

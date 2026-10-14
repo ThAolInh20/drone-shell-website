@@ -1,50 +1,56 @@
-# Cấu hình Hiệu ứng Chuyển trạng thái & Hiệu ứng Bay
+# Cấu hình Hiệu ứng Chuyển trạng thái (Transition Effects)
 
-Bảng điều khiển bên phải của Animated Editor hỗ trợ cấu hình lộ trình chuyển đổi và hiệu ứng di chuyển của drone giữa các Step.
-
----
-
-## Cấu hình Thời gian (Timing)
-
-Mỗi bước bay có hai thông số thời gian (tính bằng mili-giây `ms`):
-*   **Thời gian giữ (Hold Time):** Thời gian drone đứng yên ở vị trí đích.
-*   **Thời gian chuyển (Transition Time):** Thời gian drone dịch chuyển từ tọa độ cũ sang tọa độ mới.
+Bảng điều khiển thuộc tính của phân hệ Animated Editor cung cấp các tùy chọn thiết lập thời lượng bay, thuật toán quỹ đạo chuyển đổi và các hiệu ứng ánh sáng động học trong quá trình phi đội drone dịch chuyển giữa các bước diễn (Steps).
 
 ---
 
-## Chi tiết 6 Kiểu bay chuyển đổi (Transition Style)
+## 1. Thiết lập Thông số Thời gian (Timing Parameters)
 
-Chọn thuật toán chuyển đổi tại mục **Chế độ (Mode)**:
+Mỗi bước bay được cấu thành bởi hai mốc thời lượng cơ bản (tính bằng mili-giây `ms`):
 
-*   **Transform (Mặc định):** Drone di chuyển theo đường thẳng ngắn nhất từ vị trí cũ sang vị trí mới.
-*   **Move (Di chuyển nhóm):** Di chuyển tịnh tiến cả nhóm drone cùng lúc, không làm biến dạng cấu trúc hình học bên trong.
-*   **Disperse (Vỡ tung rồi tụ):** Drone bung ra xa theo hướng ngẫu nhiên, sau đó hội tụ vào tọa độ của hình khối mới.
-*   **Vortex (Cơn lốc xoáy):** Drone di chuyển theo quỹ đạo xoắn ốc xung quanh tâm dọc. Có thể điều chỉnh chiều xoay (CW - theo chiều kim đồng hồ, CCW - ngược chiều kim đồng hồ, hoặc Alternate - xen kẽ).
-*   **Cascade (Thác đổ):** Drone di chuyển dịch chuyển dạng sóng. Các drone ở trên cao di chuyển trước, kéo theo các drone phía dưới di chuyển sau.
-*   **Helix (Xoắn kép):** Drone chia làm các nhánh bay đan chéo qua nhau tạo thành các đường xoắn kép.
+*   **Thời gian chuyển trạng thái (Transition Time):** Tổng thời gian drone cất cánh hoặc dịch chuyển từ tọa độ của bước trước sang tọa độ của bước hiện tại.
+*   **Thời gian giữ vị trí (Hold Time):** Khoảng thời gian drone giữ cố định hình khối tĩnh sau khi đã hoàn thành quỹ đạo bay để khán giả quan sát tạo hình.
+
+> [!WARNING]
+> **Giới hạn tốc độ bay an toàn:** Đảm bảo `Transition Time` đủ lớn đối với các bước diễn có khoảng cách di chuyển xa. Vận tốc bay danh định khuyến nghị không vượt quá `8 - 10 m/s` trong mô phỏng để đảm bảo tính khả thi khi vận hành thực địa.
 
 ---
 
-## Hiệu ứng trong lúc bay (Flight Effect)
+## 2. Chi tiết 6 Kiểu Quỹ đạo Chuyển đổi (Transition Styles)
 
-Thiết lập hiệu ứng cho drone trong hành trình di chuyển:
+Tại mục **Chế độ bay (Mode)**, chọn một trong các thuật toán di chuyển:
 
-### 1. Hiệu ứng di chuyển (Flight Move Effect)
-Tạo dao động vị trí lệch nhỏ để quỹ đạo bay tự nhiên:
-*   **Tốc độ di chuyển (Move Speed):** Biên độ dao động lệch vị trí.
-*   **Tần số di chuyển (Move Freq):** Tốc độ dao động nhấp nhô.
+| Chế độ | Tên tiếng Anh | Quy luật chuyển động |
+| :--- | :--- | :--- |
+| **Tuyến tính** | `Transform` | Mặc định. Từng drone di chuyển theo đường thẳng ngắn nhất từ vị trí cũ đến vị trí mới. |
+| **Tịnh tiến nhóm** | `Move` | Dịch chuyển đồng bộ toàn bộ cụm drone mà không làm biến dạng khoảng cách tương đối giữa các thành viên. |
+| **Phân tán & Hội tụ** | `Disperse` | Drone tản rộng ra xung quanh theo hướng ngẫu nhiên, sau đó đồng loạt hội tụ vào vị trí tạo hình mới. |
+| **Lốc xoáy** | `Vortex` | Drone di chuyển xoắn ốc quanh trục trung tâm thẳng đứng. Hỗ trợ chọn hướng quay: Theo chiều kim đồng hồ (`CW`), Ngược chiều kim đồng hồ (`CCW`), hoặc Luân phiên (`Alternate`). |
+| **Dòng thác** | `Cascade` | Dịch chuyển dạng sóng tầng bậc: Các drone ở tầng trên cao bắt đầu bay trước, tiếp nối tuần tự đến các tầng bên dưới. |
+| **Xoắn kép** | `Helix` | Drone phân chia thành các nhánh bay đan chéo xoắn ốc tạo hiệu ứng cấu trúc sợi xoắn kép trong không gian. |
 
-### 2. Hiệu ứng ánh sáng bay (Flight Light Effect)
-*   **Tốc độ ánh sáng (Light Speed) & Tần số ánh sáng (Light Freq):** Chu kỳ chớp sáng của bóng đèn LED khi drone di chuyển.
-
-### 3. Hiệu ứng lấp lánh (Sparkle Effect)
-*   **Màu Lấp lánh (Sparkle Col):** Chọn màu sắc riêng cho hiệu ứng lấp lánh.
-*   **Tần số lấp lánh (Spark Freq):** Tần suất nhấp nháy.
-*   **Số lượng lấp lánh (Spark Qty):** Số lượng drone tham gia chớp sáng lấp lánh cùng lúc.
 ---
 
-## Liên kết điều hướng
+## 3. Hiệu ứng Bổ trợ trong Hành trình Bay (Flight Dynamics & Light Effects)
 
-*   [**Bài tiếp theo: Hiệu ứng Giữ vị trí Hold & Đèn LED**](./hold-effect.md)
+Để tăng tính chân thực và sinh động trong thời gian chuyển bước:
+
+### 1. Hiệu ứng Vi động Quỹ đạo (Flight Move Effect)
+*   **Biên độ dao động (Move Speed):** Thiết lập độ lệch vị trí ngẫu nhiên nhỏ so với đường bay thẳng nhằm mô phỏng luồng gió tự nhiên.
+*   **Tần số dao động (Move Freq):** Tốc độ nhấp nhô lượn sóng của drone trong quá trình bay.
+
+### 2. Hiệu ứng Ánh sáng Đèn LED khi Bay (Flight Light Effect)
+*   **Tốc độ xung sáng (Light Speed) & Tần số nháy (Light Freq):** Chu kỳ chớp sáng của hệ thống đèn LED trong giai đoạn di chuyển.
+
+### 3. Hiệu ứng Ánh sáng Lấp lánh (Sparkle Effect)
+*   **Màu sắc ánh chớp (Sparkle Col):** Mã màu riêng biệt cho các điểm sáng chớp nháy.
+*   **Tần số lấp lánh (Spark Freq):** Chu kỳ nhấp nháy phát sáng ngẫu nhiên.
+*   **Mật độ lấp lánh (Spark Qty):** Tỉ lệ phần trăm hoặc số lượng drone phát sáng chớp tắt đồng thời trong đội hình.
+
+---
+
+## Liên kết Điều hướng
+
+*   [**Bài tiếp theo: Hiệu ứng Giữ vị trí Hold & Kịch bản Đèn LED**](./hold-effect.md)
 *   [**Trở về Mục lục Animation Formation Editor**](./README.md)
-*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)
+*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)
