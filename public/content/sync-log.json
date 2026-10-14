@@ -1,72 +1,126 @@
-[
-  {
-    "timestamp": "2026-08-05T14:06:44.096+07:00",
-    "added": [
-      "show-viewer/audio-block.md"
-    ],
-    "removed": [],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-06-16T09:19:40.000+07:00",
-    "added": [
-      "show-viewer/property-inspector.md"
-    ],
-    "removed": [],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-06-11T15:53:55.000+07:00",
-    "added": [
-      "show-viewer/import-json.md"
-    ],
-    "removed": [],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-06-11T15:40:25.000+07:00",
-    "added": [
-      "show-viewer/keyboard-shortcuts.md"
-    ],
-    "removed": [],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-06-11T15:32:48.000+07:00",
-    "added": [],
-    "removed": [
-      "test-dir/test-doc.md"
-    ],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-06-11T15:32:30.000+07:00",
-    "added": [
-      "test-dir/test-doc.md"
-    ],
-    "removed": [],
-    "status": "success"
-  },
-  {
-    "timestamp": "2026-06-11T15:32:15.000+07:00",
-    "added": [
-      "README.md",
-      "animated-editor/README.md",
-      "animated-editor/grizmo.md",
-      "animated-editor/hold-effect.md",
-      "animated-editor/step.md",
-      "animated-editor/transition-effect.md",
-      "show-viewer/README.md",
-      "show-viewer/sequences.md",
-      "show-viewer/show-view.md",
-      "show-viewer/timeline-editor.md",
-      "static-formation/README.md",
-      "static-formation/add-3d-2d.md",
-      "static-formation/grizmo.md",
-      "static-formation/group-and-grizmo.md",
-      "static-formation/shape.md"
-    ],
-    "removed": [],
-    "status": "success"
-  }
+﻿[
+    {
+        "timestamp":  "2026-10-14T09:33:17.009+07:00",
+        "added":  [
+
+                  ],
+        "updated":  [
+                        "manifest.json",
+                        "README.md",
+                        "show-viewer/README.md",
+                        "static-formation/README.md",
+                        "animated-editor/README.md",
+                        "fireworks/README.md",
+                        "all sub-article navigation links"
+                    ],
+        "removed":  [
+
+                    ],
+        "status":  "success"
+    },
+    {
+        "timestamp":  "2026-10-14T09:19:30.438+07:00",
+        "added":  [
+                      "fireworks/README.md",
+                      "fireworks/add-firework.md",
+                      "fireworks/preset-guide.md",
+                      "fireworks/shell-customization.md",
+                      "fireworks/bouquet-and-comet.md"
+                  ],
+        "updated":  [
+                        "animated-editor/grizmo.md",
+                        "show-viewer/audio-block.md",
+                        "show-viewer/timeline-editor.md",
+                        "show-viewer/import-json.md",
+                        "show-viewer/keyboard-shortcuts.md"
+                    ],
+        "removed":  [
+
+                    ],
+        "status":  "success"
+    },
+    {
+        "timestamp":  "2026-08-05T14:06:44.096+07:00",
+        "added":  [
+                      "show-viewer/audio-block.md"
+                  ],
+        "removed":  [
+
+                    ],
+        "status":  "success"
+    },
+    {
+        "timestamp":  "2026-06-16T09:19:40.000+07:00",
+        "added":  [
+                      "show-viewer/property-inspector.md"
+                  ],
+        "removed":  [
+
+                    ],
+        "status":  "success"
+    },
+    {
+        "timestamp":  "2026-06-11T15:53:55.000+07:00",
+        "added":  [
+                      "show-viewer/import-json.md"
+                  ],
+        "removed":  [
+
+                    ],
+        "status":  "success"
+    },
+    {
+        "timestamp":  "2026-06-11T15:40:25.000+07:00",
+        "added":  [
+                      "show-viewer/keyboard-shortcuts.md"
+                  ],
+        "removed":  [
+
+                    ],
+        "status":  "success"
+    },
+    {
+        "timestamp":  "2026-06-11T15:32:48.000+07:00",
+        "added":  [
+
+                  ],
+        "removed":  [
+                        "test-dir/test-doc.md"
+                    ],
+        "status":  "success"
+    },
+    {
+        "timestamp":  "2026-06-11T15:32:30.000+07:00",
+        "added":  [
+                      "test-dir/test-doc.md"
+                  ],
+        "removed":  [
+
+                    ],
+        "status":  "success"
+    },
+    {
+        "timestamp":  "2026-06-11T15:32:15.000+07:00",
+        "added":  [
+                      "README.md",
+                      "animated-editor/README.md",
+                      "animated-editor/grizmo.md",
+                      "animated-editor/hold-effect.md",
+                      "animated-editor/step.md",
+                      "animated-editor/transition-effect.md",
+                      "show-viewer/README.md",
+                      "show-viewer/sequences.md",
+                      "show-viewer/show-view.md",
+                      "show-viewer/timeline-editor.md",
+                      "static-formation/README.md",
+                      "static-formation/add-3d-2d.md",
+                      "static-formation/grizmo.md",
+                      "static-formation/group-and-grizmo.md",
+                      "static-formation/shape.md"
+                  ],
+        "removed":  [
+
+                    ],
+        "status":  "success"
+    }
 ]

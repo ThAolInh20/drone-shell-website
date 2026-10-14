@@ -48,5 +48,10 @@ Nhấn vào block trên timeline để mở bảng Property Inspector ở góc d
         * Kích nổ tức thì (`instantBurst`)
         * Hiệu ứng nhấp nháy (`strobe`)
         * Và hiệu ứng nổ giòn (`crackle`)
+---
 
+## Liên kết điều hướng
 
+*   [**Bài tiếp theo: Xuất và Nhập kịch bản JSON**](./import-json.md)
+*   [**Trở về Mục lục Show Viewer**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)

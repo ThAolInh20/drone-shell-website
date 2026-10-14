@@ -172,9 +172,10 @@ animate();
 // 1. Definition of categories for Vietnamese styling
 const CATEGORY_LABELS = {
   'root': 'Tổng quan',
-  'animated-editor': 'Animation formation editor (Ctr + 2)',
-  'show-viewer': 'Show viewer (Ctr + 1)',
-  'static-formation': 'Static formation editor (Ctr + 3)'
+  'show-viewer': 'Show Viewer (Ctrl + 1)',
+  'static-formation': 'Static Formation Editor (Ctrl + 3)',
+  'animated-editor': 'Animation Formation Editor (Ctrl + 2)',
+  'fireworks': 'Hệ thống Pháo hoa 3D (Fireworks)'
 };
 
 // 2. Scan markdown files dynamically at runtime (moved from Vite build-time glob import)
@@ -256,17 +257,21 @@ async function loadDocs() {
     parsedDocs.length = 0;
     parsedDocs.push(...validDocs);
 
-    // Sort documents: README.md first in category, then alphabetical
+    // Sort documents: by category order, then by exact priority in manifest.json
+    const pathIndexMap = new Map();
+    paths.forEach((p, idx) => pathIndexMap.set(p, idx));
+
+    const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor', 'fireworks'];
     parsedDocs.sort((a, b) => {
       if (a.category !== b.category) {
-        const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor'];
-        return categoriesOrder.indexOf(a.category) - categoriesOrder.indexOf(b.category);
+        const catA = categoriesOrder.indexOf(a.category);
+        const catB = categoriesOrder.indexOf(b.category);
+        return (catA === -1 ? 999 : catA) - (catB === -1 ? 999 : catB);
       }
 
-      if (a.filename === 'README.md') return -1;
-      if (b.filename === 'README.md') return 1;
-
-      return a.filename.localeCompare(b.filename);
+      const indexA = pathIndexMap.has(a.path) ? pathIndexMap.get(a.path) : 999;
+      const indexB = pathIndexMap.has(b.path) ? pathIndexMap.get(b.path) : 999;
+      return indexA - indexB;
     });
 
     // Render sidebar
@@ -310,7 +315,7 @@ function renderSidebar() {
   });
 
   // Render
-  const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor'];
+  const categoriesOrder = ['root', 'show-viewer', 'static-formation', 'animated-editor', 'fireworks'];
   categoriesOrder.forEach(cat => {
     if (!grouped[cat]) return;
 
@@ -387,16 +392,18 @@ function parseMarkdown(md) {
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
       .replace(/`(.*?)`/g, '<code>$1</code>')
       .replace(/\[(.*?)\]\((.*?)\)/g, (match, label, href) => {
-        if (href.endsWith('.md')) {
+        const cleanHref = href.split('#')[0];
+        const hash = href.includes('#') ? '#' + href.split('#')[1] : '';
+        if (cleanHref.endsWith('.md')) {
           let targetPath = '';
-          if (href.startsWith('./') || !href.startsWith('../')) {
+          if (cleanHref.startsWith('./') || !cleanHref.startsWith('../')) {
             const currentDir = currentDocPath.includes('/') ? currentDocPath.substring(0, currentDocPath.lastIndexOf('/')) : '';
-            const normalizedHref = href.replace(/^\.\//, '');
+            const normalizedHref = cleanHref.replace(/^\.\//, '');
             targetPath = currentDir ? `${currentDir}/${normalizedHref}` : normalizedHref;
-          } else if (href.startsWith('../')) {
-            targetPath = href.replace(/^\.\.\//, '');
+          } else if (cleanHref.startsWith('../')) {
+            targetPath = cleanHref.replace(/^\.\.\//, '');
           }
-          return `<a href="#" class="docs-internal-link" data-doc-path="${targetPath}">${label}</a>`;
+          return `<a href="#docs/${targetPath}${hash}" class="docs-internal-link" data-doc-path="${targetPath}">${label}</a>`;
         }
         return `<a href="${href}" target="_blank">${label}</a>`;
       });

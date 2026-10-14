@@ -40,3 +40,10 @@ Thay đổi thứ tự xuất hiện của các hình khối trong kịch bản:
 Cạnh nút phát có một menu thả xuống: **`Nhóm đang chọn`** (Active Group).
 *   Mặc định áp dụng cho toàn bộ drone.
 *   Nếu chọn một nhóm cụ thể (ví dụ: `Group A`): Các thay đổi về tọa độ, hiệu ứng bay, hiệu ứng màu sắc ở Step hiện tại chỉ tác động lên các drone thuộc `Group A`. Các drone thuộc nhóm khác được giữ nguyên trạng thái cũ.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Cấu hình Hiệu ứng Chuyển trạng thái Transition**](./transition-effect.md)
+*   [**Trở về Mục lục Animation Formation Editor**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)

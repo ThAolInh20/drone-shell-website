@@ -46,3 +46,10 @@ Tâm xoay (Pivot) quyết định vị trí trung tâm mà nhóm drone sẽ xoay
 
 *   **Hiển thị Tâm xoay:** Tích chọn **`Hiển thị Tâm xoay`** ở panel bên phải để hiển thị chấm sáng tại tâm xoay.
 *   **Căn tâm xoay tự động:** Nhấp vào nút **`Đặt Tâm vào Nhóm đã Chọn (Center to Selection)`** để hệ thống tự động đặt tâm xoay vào trọng tâm hình học của các drone đang chọn.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Công cụ Vẽ & Kéo cong Bezier**](./grizmo.md)
+*   [**Trở về Mục lục Static Formation Editor**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)

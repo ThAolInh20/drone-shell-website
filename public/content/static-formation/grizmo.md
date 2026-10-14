@@ -31,3 +31,10 @@ Công cụ này cho phép tạo dải drone theo đường cong Bezier trong kh�
     *   *Tạo drone mới*: Tạo thêm số lượng drone tương ứng dọc theo đường cong.
     *   *Áp dụng vào nhóm chọn*: Di chuyển các drone đang chọn bám theo đường cong.
 *   Nhấp nút **`Áp dụng tạo hình`** để hoàn tất phân bổ.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Công cụ Tạo hình Cơ bản**](./shape.md)
+*   [**Trở về Mục lục Static Formation Editor**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)

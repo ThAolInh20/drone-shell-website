@@ -45,3 +45,10 @@ Cách bật bảng HUD theo dõi thông số kỹ thuật (số hạt particle, 
     *   **Fallback S/E:** Số lượng hình dáng hoặc hiệu ứng bị lỗi phải dùng cấu hình dự phòng.
     *   **Warnings / Last Warn:** Số lượng cảnh báo và chi tiết lỗi gần nhất.
     *   **Stats Chart:** Biểu đồ hiển thị thời gian dựng khung hình (ms), FPS thực tế và dung lượng bộ nhớ RAM/GPU chiếm dụng sơ bộ.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Bắn thử Thủ công & Thư viện Preset**](./sequences.md)
+*   [**Trở về Mục lục Show Viewer**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)
