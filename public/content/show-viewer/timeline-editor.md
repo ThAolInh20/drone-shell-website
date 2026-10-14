@@ -35,22 +35,27 @@ Giao diện Timeline vận hành dựa trên hai loại kim chỉ thời gian đ
 
 ---
 
-## 3. Thao tác Chọn và Sắp xếp Khối Sự kiện (Blocks)
+## 3. Thao tác Chọn, Nhóm và Sắp xếp Khối Sự kiện (Blocks)
 
 *   **Chọn một khối:** Nhấp chuột trái trực tiếp vào khối cần thao tác.
 *   **Quét chọn vùng (Box Selection):** Nhấn giữ chuột trái trên vùng trống của Timeline và kéo để tạo khung chữ nhật bao quanh các khối cần chọn.
 *   **Chọn bổ sung (Multi-select):** Nhấn giữ phím `Ctrl` hoặc `Shift` rồi lần lượt nhấp chuột trái vào từng khối.
-*   **Di chuyển đồng bộ:** Sau khi chọn nhiều khối, kéo một khối bất kỳ; toàn bộ các khối được chọn sẽ dịch chuyển đồng thời, giữ nguyên khoảng cách thời gian tương đối giữa các sự kiện.
+*   **Gộp nhóm khối (Group Blocks - Phím `G`):** Sau khi chọn nhiều khối sự kiện, nhấn phím `G` để gộp chúng thành một nhóm liên kết duy nhất.
+*   **Hủy gộp nhóm khối (Ungroup Blocks - Phím `Shift + G`):** Nhấn phím `Shift + G` để rã nhóm các khối đang chọn trở về trạng thái độc lập.
+*   **Di chuyển đồng bộ:** Sau khi chọn nhiều khối hoặc một nhóm khối, kéo một khối bất kỳ; toàn bộ các khối liên quan sẽ dịch chuyển đồng thời, giữ nguyên khoảng cách thời gian tương đối giữa các sự kiện.
 *   **Thay đổi thời lượng khối:** Di chuyển con trỏ chuột vào mép phải của khối drone. Khi con trỏ chuyển sang biểu tượng mũi tên hai chiều, nhấn giữ chuột trái và kéo sang trái/phải để rút ngắn hoặc kéo dài thời lượng của bước diễn.
 
 ---
 
-## 4. Chế độ Bắt dính (Snap & Snap-to-beat)
+## 4. Chế độ Bắt dính & Điều hướng Nhịp phách (Snap-to-beat & Seeking)
 
 Nhấp vào biểu tượng **Nam châm** trên thanh công cụ Timeline để kích hoạt các chế độ bắt dính tự động:
 
 *   **Bắt dính cạnh khối (Snap-to-edge):** Khi kéo một khối lại gần khối liền trước hoặc liền sau, mép của hai khối sẽ tự động hút dính vào nhau, tránh tạo ra các khoảng trống thời gian không mong muốn giữa các bước diễn.
-*   **Bắt dính nhịp phách (Snap-to-beat):** Khi làn âm thanh đã được đánh dấu các mốc nhịp trống (Beat markers), các khối sự kiện pháo hoa và drone sẽ tự động bắt dính vào mốc nhịp gần nhất, đảm bảo tính đồng bộ chuẩn xác với tiết tấu âm nhạc.
+*   **Bắt dính nhịp phách (Snap-to-beat):** Khi làn âm thanh đã được đánh dấu các mốc nhịp trống (Beat markers), các khối sự kiện pháo hoa và drone sẽ tự động bắt dính vào mốc nhịp gần nhất (ngưỡng bắt dính `0.15s`), đảm bảo tính đồng bộ chuẩn xác với tiết tấu âm nhạc.
+*   **Nhảy nhanh qua các mốc nhịp:**
+    *   Nhấn phím `]` hoặc `Alt + Mũi tên phải` để nhảy kim Playhead tiến tới mốc beat tiếp theo.
+    *   Nhấn phím `[` hoặc `Alt + Mũi tên trái` để nhảy kim Playhead lùi về mốc beat liền trước.
 
 ---
 
@@ -61,12 +66,16 @@ Nhấp vào biểu tượng **Nam châm** trên thanh công cụ Timeline để 
 | `Space` | Phát hoặc tạm dừng kịch bản từ vị trí hiện tại của kim Playhead |
 | `Ctrl + T` | Mở hoặc đóng giao diện Timeline Sequencer |
 | `Shift + 0` hoặc `)` | Chuyển đổi các mức thu phóng dòng thời gian (`25`, `50`, `100`, `200 px/s`) |
-| `B` | Đặt mốc nhịp phách (Beat Marker) tại vị trí Playhead trên làn âm thanh |
+| `B` | Đặt mốc nhịp phách (**Tap Beat**) tại vị trí Playhead trên làn âm thanh |
+| `[` hoặc `Alt + Mũi tên trái` | Nhảy kim Playhead lùi về mốc nhịp beat trước đó |
+| `]` hoặc `Alt + Mũi tên phải` | Nhảy kim Playhead tiến tới mốc nhịp beat tiếp theo |
+| `G` | Gộp các khối sự kiện đang chọn thành một nhóm (**Group**) |
+| `Shift + G` | Hủy gộp nhóm các khối sự kiện (**Ungroup**) |
 | `Ctrl + C` | Sao chép khối hoặc nhóm khối đang được chọn |
 | `Ctrl + V` | Dán khối đã sao chép vào vị trí kim neo Anchor Head |
 | `Delete` hoặc `Backspace` | Xóa các khối đang được chọn |
 | `Ctrl + Z` | Hoàn tác (Undo) thao tác vừa thực hiện |
-| `Ctrl + Y` | Làm lại (Redo) thao tác vừa hoàn tác |
+| `Ctrl + Y` / `Ctrl + Shift + Z` | Làm lại (Redo) thao tác vừa hoàn tác |
 | `Ctrl + S` | Lưu kịch bản dự án |
 
 ---

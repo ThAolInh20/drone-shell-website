@@ -9,9 +9,9 @@ Không gian quan sát 3D (**Viewport**) của phân hệ Show Viewer cung cấp 
 Để xoay góc nhìn camera tự do trong không gian mô phỏng 3D:
 
 ### Các bước thực hiện:
-1.  Nhấp chuột trái vào bất kỳ vị trí nào trên vùng không gian 3D của Viewport để kích hoạt chế độ khóa con trỏ.
-2.  Di chuyển chuột để quay góc nhìn theo các trục ngang (Yaw) và trục dọc (Pitch).
-3.  Nhấn phím `Esc` để thoát chế độ khóa con trỏ chuột và mở Menu tạm dừng hệ thống.
+*   **Bước 1:** Nhấp chuột trái vào bất kỳ vị trí nào trên vùng không gian 3D của Viewport để kích hoạt chế độ khóa con trỏ.
+*   **Bước 2:** Di chuyển chuột để quay góc nhìn theo các trục ngang (Yaw) và trục dọc (Pitch).
+*   **Bước 3:** Nhấn phím `Esc` để thoát chế độ khóa con trỏ chuột và mở Menu tạm dừng hệ thống.
 
 ---
 
@@ -21,12 +21,12 @@ Khi đang ở chế độ khóa con trỏ chuột, điều khiển vị trí c�
 
 | Phím bấm | Thao tác điều khiển |
 | :--- | :--- |
-| `W` hoặc `Mũi tên lên` | Di chuyển camera tiến về phía trước theo hướng nhìn |
-| `S` hoặc `Mũi tên xuống` | Di chuyển camera lùi về phía sau |
-| `A` hoặc `Mũi tên trái` | Trượt camera sang bên trái (Strafe Left) |
-| `D` hoặc `Mũi tên phải` | Trượt camera sang bên phải (Strafe Right) |
-| `Q` | Hạ thấp độ cao camera theo phương thẳng đứng |
-| `E` | Nâng cao độ camera theo phương thẳng đứng |
+| `W` / `A` / `S` / `D` hoặc `Mũi tên` | Di chuyển camera tiến, lùi, sang trái hoặc sang phải theo hướng ngắm |
+| `Shift + W` / `Shift + S` | Bay nâng cao độ / hạ thấp cao độ camera tự do |
+| `Q` / `E` | Hạ thấp / nâng cao độ camera theo phương thẳng đứng |
+| `Shift + R` | **Đặt lại vị trí camera (Reset Camera):** Đưa camera và góc nhìn về tọa độ mặc định ban đầu |
+| `Enter` | **Chạy thử kịch bản (Demo Show):** Bắt đầu hoặc dừng phát kịch bản diễn tập mẫu ngay trong khung nhìn |
+| `Chuột trái` | Kích hỏa phát bắn thử pháo hoa theo tâm ngắm ngắm giữa màn hình |
 | `Cuộn chuột giữa` | Thu phóng (Zoom) khoảng cách quan sát tới điểm ngắm |
 
 > [!NOTE]
@@ -39,7 +39,7 @@ Khi đang ở chế độ khóa con trỏ chuột, điều khiển vị trí c�
 Để theo dõi tải trọng đồ họa, tốc độ khung hình và số lượng hạt pháo hoa phát tán trong quá trình diễn tập:
 
 ### Bật / Tắt bảng chẩn đoán:
-Nhấn tổ hợp phím `Shift + Y` tại bất kỳ thời điểm nào trong khi mô phỏng đang chạy.
+Nhấn tổ hợp phím `Shift + Y` tại bất kỳ thời điểm nào trong khi mô phỏng đang chạy để hiển thị hoặc ẩn bảng thông số HUD.
 
 ### Ý nghĩa các chỉ số giám sát:
 
