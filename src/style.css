@@ -1413,7 +1413,19 @@ code {
 }
 
 .docs-body li {
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.docs-body li:last-child {
   margin-bottom: 8px;
+}
+
+.docs-body li .list-item-desc {
+  margin-top: 6px;
+  color: #94a3b8;
+  font-size: 14.5px;
+  line-height: 1.65;
 }
 
 .docs-body code {

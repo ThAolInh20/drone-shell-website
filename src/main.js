@@ -583,11 +583,10 @@ function parseMarkdown(md) {
       continue;
     }
 
-    // Handle text inside lists or normal paragraphs
+    // Handle text inside lists (descriptions or continuations)
     if (listStack.length > 0 && leadingSpaces > listStack[listStack.length - 1].indent) {
       const cleanText = trimmed.replace(/<br\/?>$/i, '').trim();
       const parsedText = parseInlineMarkdown(cleanText);
-      const nbspIndent = '&nbsp;'.repeat(leadingSpaces);
 
       let targetIdx = -1;
       for (let j = processedBlocks.length - 1; j >= 0; j--) {
@@ -598,9 +597,16 @@ function parseMarkdown(md) {
       }
 
       if (targetIdx !== -1) {
-        processedBlocks[targetIdx] += `<br>${nbspIndent}${parsedText}`;
+        if (processedBlocks[targetIdx].endsWith('</li>')) {
+          const inner = processedBlocks[targetIdx].slice(0, -5);
+          processedBlocks[targetIdx] = `${inner}<div class="list-item-desc">${parsedText}</div></li>`;
+        } else if (processedBlocks[targetIdx].includes('<div class="list-item-desc">')) {
+          processedBlocks[targetIdx] = processedBlocks[targetIdx].replace('</div></li>', `<br>${parsedText}</div></li>`);
+        } else {
+          processedBlocks[targetIdx] += `<div class="list-item-desc">${parsedText}</div>`;
+        }
       } else {
-        processedBlocks.push(`${nbspIndent}${parsedText}`);
+        processedBlocks.push(`<div class="list-item-desc">${parsedText}</div>`);
       }
     } else {
       closeAllLists();
