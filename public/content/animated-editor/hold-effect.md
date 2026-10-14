@@ -50,3 +50,10 @@ Thiết lập chiều xoay đối với các hiệu ứng xoay (như Vortex hay 
 *   **Theo chiều kim đồng hồ (CW):** Xoay theo hướng kim đồng hồ.
 *   **Ngược chiều kim đồng hồ (CCW):** Xoay ngược hướng kim đồng hồ.
 *   **Xen kẽ (Alternate):** Các hàng drone xen kẽ nhau sẽ xoay ngược chiều nhau.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Công cụ Gizmo 3D & Uốn nhóm Group Bending**](./grizmo.md)
+*   [**Trở về Mục lục Animation Formation Editor**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)

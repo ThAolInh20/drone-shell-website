@@ -27,3 +27,10 @@ Mặc định hệ thống bắn pháo hoa ở chế độ ngẫu nhiên (`Rando
 Sau khi chọn xong Preset và `Esc`:
 
 *   **Nhấp chuột trái:** Phóng pháo hoa từ mặt đất lên điểm ngắm.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Bảng tổng hợp Phím tắt toàn hệ thống**](./keyboard-shortcuts.md)
+*   [**Trở về Mục lục Show Viewer**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)

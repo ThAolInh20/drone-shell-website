@@ -47,3 +47,10 @@ Lựa chọn hành vi sinh drone:
     *   Sinh thêm các drone mới vào cảnh theo số lượng đã chọn.
 2.  **Áp dụng vào nhóm chọn (Apply to selected):**
     *   Không sinh thêm drone mới. Sắp xếp lại tọa độ của những drone đang được chọn trong khung nhìn theo hình học mới.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Hệ thống Dẫn hướng: Mô hình 3D & Ảnh mẫu 2D**](./add-3d-2d.md)
+*   [**Trở về Mục lục Static Formation Editor**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)

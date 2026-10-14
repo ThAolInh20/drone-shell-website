@@ -41,3 +41,10 @@ Tạo dao động vị trí lệch nhỏ để quỹ đạo bay tự nhiên:
 *   **Màu Lấp lánh (Sparkle Col):** Chọn màu sắc riêng cho hiệu ứng lấp lánh.
 *   **Tần số lấp lánh (Spark Freq):** Tần suất nhấp nháy.
 *   **Số lượng lấp lánh (Spark Qty):** Số lượng drone tham gia chớp sáng lấp lánh cùng lúc.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Hiệu ứng Giữ vị trí Hold & Đèn LED**](./hold-effect.md)
+*   [**Trở về Mục lục Animation Formation Editor**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)

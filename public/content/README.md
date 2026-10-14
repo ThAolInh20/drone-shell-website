@@ -1,4 +1,4 @@
-# Hướng dẫn Cài đặt & Khởi chạy Hệ thống
+﻿# Hướng dẫn Cài đặt & Khởi chạy Hệ thống
 
 Chào mừng bạn đến với tài liệu hướng dẫn kỹ thuật của **Drone Shell Editor** — Hệ thống hỗ trợ biên tập trình diễn drone và pháo hoa 3D.
 
@@ -41,6 +41,7 @@ Hãy thực hiện theo các bước sau để cài đặt Drone Shell Editor tr
 
 Sau khi cài đặt xong, bạn có thể tham khảo chi tiết hướng dẫn của từng phân hệ qua menu bên trái:
 
-*   **[Show editor](./show-viewer/README.md):** Cách bay tự do, bắn thử pháo hoa thủ công, chẩn đoán HUD và nạp kịch bản show từ file âm thanh / file JSON.
-*   **[Static formation editor](./static-formation/README.md):** Các công cụ để thiết kế đội hình tĩnh của drone.
-*   **[Animation formation editor](./animated-editor/README.md):** Các công cụ để thiết kế đội hình động của drone theo từng step.
+*   **[Show Viewer (Ctrl + 1)](./show-viewer/README.md):** Điều khiển dòng thời gian Timeline, đồng bộ âm thanh Waveform, bảng thuộc tính Inspector và xuất nhập kịch bản JSON.
+*   **[Static Formation Editor (Ctrl + 3)](./static-formation/README.md):** Các công cụ dựng đội hình tĩnh, tạo hình cơ bản, mô hình dẫn hướng 3D/2D, vẽ cong Bezier và sử dụng Gizmo 3D.
+*   **[Animation Formation Editor (Ctrl + 2)](./animated-editor/README.md):** Thiết kế hoạt cảnh chuyển động theo các bước (Step Card), hiệu ứng chuyển trạng thái (Transition), giữ vị trí (Hold) và uốn nhóm (Group Bending).
+*   **[Hệ thống Pháo hoa 3D (Fireworks)](./fireworks/README.md):** Biên đạo pháo hoa 3D trên Timeline, danh mục mẫu pháo nghệ thuật (Cúc đại đóa, Liễu rủ, Xoắn DNA, Thiên hà) và kỹ thuật bắn pháo chùm Bouquet.

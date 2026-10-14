@@ -45,3 +45,10 @@ Sử dụng các thanh trượt để chỉnh:
 *   **Rotation:** Xoay góc nghiêng của ảnh.
 *   **Opacity:** Chỉnh độ trong suốt của ảnh.
 *   **Xoá ảnh tham chiếu:** Gỡ bỏ hình ảnh mẫu.
+---
+
+## Liên kết điều hướng
+
+*   [**Bài tiếp theo: Quản lý Nhóm drone & Gizmo điều khiển**](./group-and-grizmo.md)
+*   [**Trở về Mục lục Static Formation Editor**](./README.md)
+*   [**Về Trang chủ Tài liệu Tổng quan**](../README.md)
