@@ -20,7 +20,7 @@ Tài liệu phân hệ Show Viewer được tổ chức theo trình tự quy tr�
     Các thao tác điều khiển góc nhìn camera tự do, chế độ khóa con trỏ chuột và theo dõi chỉ số hiệu năng đồ họa (FPS, GPU).
 6.  [**Chuỗi Pháo hoa Tuần tự & Thư viện Mẫu (Sequences & Presets)**](./sequences.md)  
     Định cấu hình chuỗi bắn tự động, phân loại kiểu bắn (Comet, Finale) và kiểm tra kích nổ trực tiếp.
-7.  [**Bảng Tổng hợp Phím tắt Toàn hệ thống**](./keyboard-shortcuts.md)  
+7.  [**Bảng Tổng hợp Phím tắt Toàn hệ thống**](../keyboard-shortcuts.md)  
     Danh mục toàn bộ phím tắt thao tác nhanh trên giao diện dòng thời gian, điều khiển camera 3D và quản lý dự án.
 
 ---

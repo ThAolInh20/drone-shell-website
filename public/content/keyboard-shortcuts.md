@@ -77,6 +77,8 @@ Tài liệu này tổng hợp toàn bộ phím tắt thao tác nhanh trong phầ
 
 ## Liên kết Điều hướng
 
-*   [**Bộ biên tập Dòng thời gian Timeline**](./timeline-editor.md)
-*   [**Trở về Mục lục Show Viewer**](./README.md)
-*   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)
+*   [**Trang chủ Cài đặt & Khởi chạy**](./README.md)
+*   [**Phân hệ Diễn tập & Trình diễn (Show Viewer)**](./show-viewer/README.md)
+*   [**Thiết kế Đội hình Tĩnh (Static Formation)**](./static-formation/README.md)
+*   [**Biên tập Hoạt cảnh Chuyển động (Animated Editor)**](./animated-editor/README.md)
+*   [**Hệ thống Hiệu ứng Pháo hoa 3D (Fireworks)**](./fireworks/README.md)

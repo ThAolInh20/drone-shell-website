@@ -49,10 +49,9 @@ Tại mục phát hành mới nhất (Latest Release), lựa chọn một trong 
 
 ---
 
-## 4. Các Phân hệ Chức năng Chính
+## 4. Các Phân hệ Chức năng Chính & Tra cứu Nhanh
 
-Ứng dụng Drone Shell Editor được chia thành 4 phân hệ làm việc chuyên biệt:
-
+*   [**Bảng Tổng hợp Phím tắt Toàn hệ thống**](./keyboard-shortcuts.md): Tra cứu nhanh phím tắt điều khiển không gian 3D, dòng thời gian Timeline, công cụ Gizmo và chuyển đổi phân hệ.
 *   [**Show Viewer (`Ctrl + 1`)**](./show-viewer/README.md): Quản lý dòng thời gian đa làn (Multi-track Timeline), đồ thị âm thanh Waveform, bảng thuộc tính Inspector và xuất nhập khẩu kịch bản diễn tập JSON.
 *   [**Static Formation Editor (`Ctrl + 3`)**](./static-formation/README.md): Dựng đội hình tĩnh, tạo hình khối hình học 3D/2D cơ bản, vẽ đường cong dẫn hướng Bezier và hiệu chỉnh tọa độ thông qua bộ công cụ Gizmo 3D.
 *   [**Animation Formation Editor (`Ctrl + 2`)**](./animated-editor/README.md): Thiết kế chuỗi bước diễn nối tiếp (Step Cards), thiết lập thời lượng chuyển động (Transition), thời gian giữ hình (Hold) và uốn biến dạng nhóm drone.

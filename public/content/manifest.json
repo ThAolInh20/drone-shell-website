@@ -1,5 +1,6 @@
-﻿[
+[
     "README.md",
+    "keyboard-shortcuts.md",
     "show-viewer/README.md",
     "show-viewer/timeline-editor.md",
     "show-viewer/audio-block.md",
@@ -7,7 +8,6 @@
     "show-viewer/import-json.md",
     "show-viewer/show-view.md",
     "show-viewer/sequences.md",
-    "show-viewer/keyboard-shortcuts.md",
     "static-formation/README.md",
     "static-formation/shape.md",
     "static-formation/add-3d-2d.md",

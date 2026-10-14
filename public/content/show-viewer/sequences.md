@@ -38,6 +38,6 @@ Sau khi đã chỉ định Preset:
 
 ## Liên kết Điều hướng
 
-*   [**Bài tiếp theo: Bảng Tổng hợp Phím tắt Toàn hệ thống**](./keyboard-shortcuts.md)
+*   [**Bài tiếp theo: Bảng Tổng hợp Phím tắt Toàn hệ thống**](../keyboard-shortcuts.md)
 *   [**Trở về Mục lục Show Viewer**](./README.md)
 *   [**Trang chủ Tài liệu Hướng dẫn**](../README.md)
